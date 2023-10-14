@@ -3,3 +3,7 @@
 
 # PyCharm
 .idea/
+
+# Byte-compiled
+__pycache__/
+
