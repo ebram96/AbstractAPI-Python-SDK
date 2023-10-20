@@ -1,12 +1,10 @@
-from typing import Iterable
-
-import requests
+from typing import Iterable, Any
 
 from ._base_service import _BaseService
 
 
 class IPGeolocation(_BaseService):
-    """AbstractAPI IP Geolocation service
+    """AbstractAPI IP geolocation service
 
     Used to determine the location and other details of IP addresses.
 
@@ -77,7 +75,7 @@ class IPGeolocation(_BaseService):
         """
         return ",".join(fields or self.fields)
 
-    def analyze(self, ip: str, fields: Iterable[str] | None = None):
+    def analyze(self, ip: str, fields: Iterable[str] | None = None) -> dict[str | Any]:
         """Analyzes an IP address for geographical data
 
         Args:
@@ -87,12 +85,7 @@ class IPGeolocation(_BaseService):
         Returns:
             A dict that contains the response to API call.
         """
-        result = requests.get(
-            self._service_url,
-            params={
-                "api_key": self._api_key,
-                "ip_address": ip,
-                "fields": self._request_fields(fields)
-            }
+        result = self._service_request(
+            ip_address=ip, fields=self._request_fields(fields)
         )
-        return result.json()
+        return result
