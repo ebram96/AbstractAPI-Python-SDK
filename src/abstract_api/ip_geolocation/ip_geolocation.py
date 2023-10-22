@@ -50,11 +50,9 @@ class IPGeolocation(BaseService):
             raise ValueError
         self._response_fields = frozenset(fields)
 
-    def _response_fields_as_param(
-        self,
-        response_fields: Iterable[str] | None = None
-    ) -> str:
-        """Builds a string that contains selected return fields that can be
+    @staticmethod
+    def _response_fields_as_param(response_fields: Iterable[str]) -> str:
+        """Builds a string that contains selected response fields that can be
         used as a URL query parameter.
 
         Args:
@@ -63,7 +61,7 @@ class IPGeolocation(BaseService):
         Returns:
             Comma-separated string with all selected response fields.
         """
-        return ",".join(response_fields or self.response_fields)
+        return ",".join(response_fields)
 
     def check(
         self,
@@ -74,19 +72,27 @@ class IPGeolocation(BaseService):
 
         Args:
             ip: A valid IP address to analyze.
-            fields: Selected return fields.
+            fields: Selected response fields.
 
         Returns:
             A dict that contains the response to API call.
         """
+        response_fields = (
+            frozenset(fields) if fields
+            else self.response_fields
+        )
+
         # TODO: Handle request errors.
         response = self._service_request(
             ip_address=ip,
-            fields=self._response_fields_as_param(fields)
+            fields=self._response_fields_as_param(response_fields)
         )
 
         try:
-            ip_geolocation_response = IPGeolocationResponse(response)
+            ip_geolocation_response = IPGeolocationResponse(
+                response=response,
+                response_fields=response_fields
+            )
         except Exception as e:
             raise ResponseParseError(
                 "Failed to parse response as IPGeolocationResponse"
