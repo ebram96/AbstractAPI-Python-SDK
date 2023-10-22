@@ -4,7 +4,7 @@ from typing import Any
 import requests
 
 
-class _BaseService(ABC):
+class BaseService(ABC):
     """Base class for all AbstractAPI service classes.
 
     Attributes:
@@ -19,7 +19,7 @@ class _BaseService(ABC):
     _api_key: str = None
 
     def __init__(self, api_key: str) -> None:
-        """Constructs a _BaseService.
+        """Constructs a BaseService.
 
         Args:
             api_key: API key to be used to authenticate with AbstractAPI.
