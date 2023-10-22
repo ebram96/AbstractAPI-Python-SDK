@@ -155,6 +155,7 @@ class Connection:
         return self._organization_name
 
 
+# TODO: Disallow modifications.
 class IPGeolocationResponse(BaseResponse):
     """IP Geolocation service response."""
     _nested_entities: dict[str, Type] = {

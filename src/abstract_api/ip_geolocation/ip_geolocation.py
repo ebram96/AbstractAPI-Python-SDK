@@ -1,7 +1,7 @@
 from typing import Iterable
 
 from abstract_api._base_service import BaseService
-from abstract_api.exceptions import ResponseParseError
+from abstract_api.exceptions import ResponseParseError, ClientRequestError
 
 from .acceptable_fields import ACCEPTABLE_FIELDS
 from .ip_geolocation_response import IPGeolocationResponse
@@ -35,6 +35,20 @@ class IPGeolocation(BaseService):
         if response_fields is not None:
             self.response_fields = response_fields
 
+    @staticmethod
+    def _validate_response_fields(response_fields: Iterable[str]) -> None:
+        """Validates whether all the given fields are acceptable.
+
+        Args:
+            response_fields: Selected response fields.
+        """
+        for field in response_fields:
+            if field not in ACCEPTABLE_FIELDS:
+                raise ClientRequestError(
+                    f"Field '{field}' is not a valid response field for IP "
+                    f"Geolocation service."
+                )
+
     @property
     def response_fields(self) -> frozenset[str]:
         """Gets selected response fields."""
@@ -45,9 +59,7 @@ class IPGeolocation(BaseService):
     @response_fields.setter
     def response_fields(self, fields: Iterable[str]) -> None:
         """Sets selected response fields."""
-        if any(f not in ACCEPTABLE_FIELDS for f in fields):
-            # TODO: Enhance this
-            raise ValueError
+        self._validate_response_fields(fields)
         self._response_fields = frozenset(fields)
 
     @staticmethod
@@ -77,10 +89,11 @@ class IPGeolocation(BaseService):
         Returns:
             A dict that contains the response to API call.
         """
-        response_fields = (
-            frozenset(fields) if fields
-            else self.response_fields
-        )
+        if fields:
+            self._validate_response_fields(fields)
+            response_fields = fields
+        else:
+            response_fields = self.response_fields
 
         # TODO: Handle request errors.
         response = self._service_request(
