@@ -1,5 +1,4 @@
 from abc import ABC
-from typing import Any
 
 import requests
 
@@ -35,16 +34,16 @@ class BaseService(ABC):
         """
         return self.__base_url.format(subdomain=self._subdomain)
 
-    def _service_request(self, **params) -> dict[str, Any]:
+    def _service_request(self, **params) -> requests.models.Response:
         """Makes the HTTP call to Abstract API service endpoint.
 
         Args:
             params: The URL parameter that should be used when calling the API
                 endpoints.
         Returns:
-            A dictionary that contains Abstract API's response.
+            AbstractAPI's response.
         """
-        result = requests.get(
+        response = requests.get(
             self._service_url, params={"api_key": self._api_key} | params
         )
-        return result.json()
+        return response
