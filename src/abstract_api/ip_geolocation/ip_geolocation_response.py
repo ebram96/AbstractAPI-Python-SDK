@@ -155,7 +155,6 @@ class Connection:
         return self._organization_name
 
 
-# TODO: Disallow modifications.
 class IPGeolocationResponse(BaseResponse):
     """IP Geolocation service response."""
     _nested_entities: dict[str, Type] = {
@@ -191,115 +190,115 @@ class IPGeolocationResponse(BaseResponse):
         """Gets attribute value or raises an exception if attribute was not
         requested in response fields.
         """
-        if attr_name[1:] not in self._response_fields:
+        if attr_name not in self._response_fields:
             raise AttributeError(
-                f"Field '{attr_name[1:]}' was not returned in API response. "
+                f"Field '{attr_name}' was not returned in API response. "
                 f"Did you request it?"
             )
 
-        return getattr(self, attr_name)
+        return getattr(self, f"_{attr_name}")
 
     @property
     def ip_address(self) -> str | None:
         """The IP address submitted for geolocation."""
-        return self._get_response_field("_ip_address")
+        return self._get_response_field("ip_address")
 
     @property
     def city(self) -> str | None:
         """City’s name."""
-        return self._get_response_field("_city")
+        return self._get_response_field("city")
 
     @property
     def city_geoname_id(self) -> int | None:
         """City’s geoname ID."""
-        return self._get_response_field("_city_geoname_id")
+        return self._get_response_field("city_geoname_id")
 
     @property
     def region(self) -> str | None:
         """State or province in which the city is located."""
-        return self._get_response_field("_region")
+        return self._get_response_field("region")
 
     @property
     def region_iso_code(self) -> str | None:
         """State or province’s ISO 3166-2 code."""
-        return self._get_response_field("_region_iso_code")
+        return self._get_response_field("region_iso_code")
 
     @property
     def region_geoname_id(self) -> int | None:
         """State or province’s geoname ID."""
-        return self._get_response_field("_region_geoname_id")
+        return self._get_response_field("region_geoname_id")
 
     @property
     def postal_code(self) -> str | None:
         """ZIP or postal code."""
-        return self._get_response_field("_postal_code")
+        return self._get_response_field("postal_code")
 
     @property
     def country(self) -> str | None:
         """Country’s name."""
-        return self._get_response_field("_country")
+        return self._get_response_field("country")
 
     @property
     def country_code(self) -> str | None:
         """Country’s ISO 3166-1 alpha-2 code."""
-        return self._get_response_field("_country_code")
+        return self._get_response_field("country_code")
 
     @property
     def country_geoname_id(self) -> int | None:
         """Country’s geoname ID."""
-        return self._get_response_field("_country_geoname_id")
+        return self._get_response_field("country_geoname_id")
 
     @property
     def country_is_eu(self) -> bool | None:
         """True if the country is in the EU, false if it is not."""
-        return self._get_response_field("_country_is_eu")
+        return self._get_response_field("country_is_eu")
 
     @property
     def continent(self) -> str | None:
         """Continent’s name."""
-        return self._get_response_field("_continent")
+        return self._get_response_field("continent")
 
     @property
     def continent_code(self) -> str | None:
         """2 letter continent code: AF, AS, EU, NA, OC, SA, AN."""
-        return self._get_response_field("_continent_code")
+        return self._get_response_field("continent_code")
 
     @property
     def continent_geoname_id(self) -> int | None:
         """Continent’s geoname ID."""
-        return self._get_response_field("_continent_geoname_id")
+        return self._get_response_field("continent_geoname_id")
 
     @property
     def longitude(self) -> float | None:
         """Decimal of the longitude."""
-        return self._get_response_field("_longitude")
+        return self._get_response_field("longitude")
 
     @property
     def latitude(self) -> float | None:
         """Decimal of the latitude."""
-        return self._get_response_field("_latitude")
+        return self._get_response_field("latitude")
 
     @property
     def security(self) -> Security | None:
         """Whether the IP address is using from a VPN or using a proxy"""
-        return self._get_response_field("_security")
+        return self._get_response_field("security")
 
     @property
     def timezone(self) -> Timezone | None:
         """Timezone details."""
-        return self._get_response_field("_timezone")
+        return self._get_response_field("timezone")
 
     @property
     def flag(self) -> Flag | None:
         """Flag details."""
-        return self._get_response_field("_flag")
+        return self._get_response_field("flag")
 
     @property
     def currency(self) -> Currency | None:
         """Currency details."""
-        return self._get_response_field("_currency")
+        return self._get_response_field("currency")
 
     @property
     def connection(self) -> Connection | None:
         """Connection details."""
-        return self._get_response_field("_connection")
+        return self._get_response_field("connection")
