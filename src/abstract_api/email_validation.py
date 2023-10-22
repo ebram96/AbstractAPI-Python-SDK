@@ -1,9 +1,9 @@
 from typing import Any
 
-from _base_service import _BaseService
+from abstract_api._base_service import BaseService
 
 
-class EmailValidation(_BaseService):
+class EmailValidation(BaseService):
     """AbstractAPI email validation and verification service
 
     Used to validate and verify and email address.

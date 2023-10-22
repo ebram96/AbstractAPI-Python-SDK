@@ -1,9 +1,9 @@
 from typing import Iterable, Any
 
-from ._base_service import _BaseService
+from abstract_api._base_service import BaseService
 
 
-class IPGeolocation(_BaseService):
+class IPGeolocation(BaseService):
     """AbstractAPI IP geolocation service
 
     Used to determine the location and other details of IP addresses.
