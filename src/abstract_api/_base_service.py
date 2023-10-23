@@ -1,6 +1,9 @@
 from abc import ABC
 
 import requests
+from requests import codes
+
+from abstract_api.exceptions import APIRequestError
 
 
 class BaseService(ABC):
@@ -46,4 +49,6 @@ class BaseService(ABC):
         response = requests.get(
             self._service_url, params={"api_key": self._api_key} | params
         )
+        if response.status_code not in [codes.OK, codes.NO_CONTENT]:
+            APIRequestError.raise_from_response(response)
         return response

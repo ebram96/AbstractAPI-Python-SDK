@@ -1,2 +1,2 @@
 class AbstractAPIException(Exception):
-    """Abstract API exception."""
+    """Base AbstractAPI library exception."""
