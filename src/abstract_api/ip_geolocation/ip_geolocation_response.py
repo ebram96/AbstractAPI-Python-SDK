@@ -1,4 +1,4 @@
-from typing import Any, Type
+from typing import Type
 
 import requests.models
 
@@ -174,8 +174,8 @@ class IPGeolocationResponse(BaseResponse):
         """Initializes a new IPGeolocationResponse."""
         super().__init__(response)
         self._response_fields = response_fields
+        not_in_response = object()
         for field in response_fields:
-            not_in_response = object()
             value = self.meta.body_json.get(field, not_in_response)
             # Set property only if field was returned
             if value is not not_in_response:
@@ -185,21 +185,6 @@ class IPGeolocationResponse(BaseResponse):
                     value if field not in self._nested_entities
                     else self._nested_entities[field](**value)
                 )
-
-    def _get_response_field(self, attr_name: str) -> Any:
-        """Gets the value of a field that was returned in response.
-
-        Raises:
-            AttributeError: When trying to get a value of a field that was
-                not returned in response.
-        """
-        if attr_name not in self._response_fields:
-            raise AttributeError(
-                f"Field '{attr_name}' was not returned in API response. "
-                f"Did you request it?"
-            )
-
-        return getattr(self, f"_{attr_name}")
 
     @property
     def ip_address(self) -> str | None:

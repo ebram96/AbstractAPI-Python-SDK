@@ -18,7 +18,6 @@ class IPGeolocation(BaseService):
             Geolocation service endpoint.
     """
     _subdomain: str = "ipgeolocation"
-    _response_fields: frozenset[str] | None = None
 
     def __init__(
         self,
@@ -34,6 +33,8 @@ class IPGeolocation(BaseService):
         super().__init__(**kwargs)
         if response_fields is not None:
             self.response_fields = frozenset(response_fields)
+        else:
+            self.response_fields = ACCEPTABLE_FIELDS
 
     @staticmethod
     def _validate_response_fields(response_fields: Iterable[str]) -> None:
