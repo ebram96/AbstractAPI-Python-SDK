@@ -1,6 +1,7 @@
-# from typing import Any
-
 from abstract_api._base_service import BaseService
+from abstract_api.exceptions import ResponseParseError
+
+from .email_validation_response import EmailValidationResponse
 
 
 class EmailValidation(BaseService):
@@ -17,7 +18,7 @@ class EmailValidation(BaseService):
         self,
         email: str,
         auto_correct: bool | None = False
-    ):  # TODO: Add type hint
+    ) -> EmailValidationResponse:
         """Validates and verifies an email address.
 
         Args:
@@ -28,5 +29,18 @@ class EmailValidation(BaseService):
         Returns:
             A dict that contains the response to API call.
         """
-        result = self._service_request(email=email, auto_correct=auto_correct)
-        return result
+        response = self._service_request(
+            email=email,
+            auto_correct=auto_correct
+        )
+
+        try:
+            email_validation_response = EmailValidationResponse(
+                response=response
+            )
+        except Exception as e:
+            raise ResponseParseError(
+                "Failed to parse response as EmailValidationResponse"
+            ) from e
+
+        return email_validation_response
