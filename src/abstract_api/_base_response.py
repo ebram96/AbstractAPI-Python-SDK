@@ -13,7 +13,7 @@ class ResponseMeta:
         self._body: bytes = response.content
         try:
             self._body_json = response.json()
-        except:
+        except:  # noqa: E722
             self._body_json = None
 
     @property

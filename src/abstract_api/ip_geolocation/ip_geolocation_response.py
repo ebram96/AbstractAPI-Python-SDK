@@ -1,4 +1,4 @@
-from typing import Iterable, Type, Any
+from typing import Any, Type
 
 import requests.models
 
@@ -14,6 +14,7 @@ class Security:
 
     @property
     def is_vpn(self) -> bool | None:
+        """Whether the IP address is using from a VPN or using a proxy."""
         return self._is_vpn
 
 
@@ -141,7 +142,7 @@ class Connection:
 
     @property
     def connection_type(self) -> str | None:
-        """Type of network connection: Dialup, Cable/DSL, Cellular, Corporate."""
+        """Network connection type: Dialup, Cable/DSL, Cellular, Corporate."""
         return self._connection_type
 
     @property
@@ -164,7 +165,6 @@ class IPGeolocationResponse(BaseResponse):
         "currency": Currency,
         "connection": Connection
     }
-    _response_fields: Iterable[str] = None
 
     def __init__(
         self,
@@ -187,8 +187,11 @@ class IPGeolocationResponse(BaseResponse):
                 )
 
     def _get_response_field(self, attr_name: str) -> Any:
-        """Gets attribute value or raises an exception if attribute was not
-        requested in response fields.
+        """Gets the value of a field that was returned in response.
+
+        Raises:
+            AttributeError: When trying to get a value of a field that was
+                not returned in response.
         """
         if attr_name not in self._response_fields:
             raise AttributeError(
@@ -280,7 +283,7 @@ class IPGeolocationResponse(BaseResponse):
 
     @property
     def security(self) -> Security | None:
-        """Whether the IP address is using from a VPN or using a proxy"""
+        """Whether the IP address is using from a VPN or using a proxy."""
         return self._get_response_field("security")
 
     @property

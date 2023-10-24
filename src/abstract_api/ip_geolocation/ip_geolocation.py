@@ -1,14 +1,14 @@
 from typing import Iterable
 
 from abstract_api._base_service import BaseService
-from abstract_api.exceptions import ResponseParseError, ClientRequestError
+from abstract_api.exceptions import ClientRequestError, ResponseParseError
 
 from .acceptable_fields import ACCEPTABLE_FIELDS
 from .ip_geolocation_response import IPGeolocationResponse
 
 
 class IPGeolocation(BaseService):
-    """AbstractAPI IP geolocation service
+    """AbstractAPI IP geolocation service.
 
     Used to determine the location and other details of IP addresses.
 
@@ -33,7 +33,7 @@ class IPGeolocation(BaseService):
         """
         super().__init__(**kwargs)
         if response_fields is not None:
-            self.response_fields = response_fields
+            self.response_fields = frozenset(response_fields)
 
     @staticmethod
     def _validate_response_fields(response_fields: Iterable[str]) -> None:
@@ -64,8 +64,10 @@ class IPGeolocation(BaseService):
 
     @staticmethod
     def _response_fields_as_param(response_fields: Iterable[str]) -> str:
-        """Builds a string that contains selected response fields that can be
-        used as a URL query parameter.
+        """Builds 'fields' URL query parameter.
+
+         Builds a string that contains selected response fields to be used
+         as a URL query parameter.
 
         Args:
             response_fields: Selected response fields.
@@ -80,7 +82,7 @@ class IPGeolocation(BaseService):
         ip: str,
         fields: Iterable[str] | None = None
     ) -> IPGeolocationResponse:
-        """Analyzes an IP address for geographical data
+        """Analyzes an IP address for geographical data.
 
         Args:
             ip: A valid IP address to analyze.
@@ -91,7 +93,7 @@ class IPGeolocation(BaseService):
         """
         if fields:
             self._validate_response_fields(fields)
-            response_fields = fields
+            response_fields = frozenset(fields)
         else:
             response_fields = self.response_fields
 
