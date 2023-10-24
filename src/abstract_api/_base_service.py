@@ -17,8 +17,7 @@ class BaseService(ABC):
         _api_key: API key to be used to authenticate with AbstractAPI.
     """
     __base_url: str = "https://{subdomain}.abstractapi.com/v1/"
-    _subdomain: str = None
-    _api_key: str = None
+    _subdomain: str
 
     def __init__(self, api_key: str) -> None:
         """Constructs a BaseService.
@@ -30,7 +29,7 @@ class BaseService(ABC):
 
     @property
     def _service_url(self):
-        """Builds and returns an API URL for a service using its subdomain
+        """Builds and returns an API URL for a service using its subdomain.
 
         Returns:
             A str that can be used to make API calls to a service.
@@ -43,6 +42,7 @@ class BaseService(ABC):
         Args:
             params: The URL parameter that should be used when calling the API
                 endpoints.
+
         Returns:
             AbstractAPI's response.
         """

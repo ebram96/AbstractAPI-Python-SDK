@@ -1,10 +1,10 @@
-from typing import Any
+# from typing import Any
 
 from abstract_api._base_service import BaseService
 
 
 class EmailValidation(BaseService):
-    """AbstractAPI email validation and verification service
+    """AbstractAPI email validation and verification service.
 
     Used to validate and verify and email address.
 
@@ -13,7 +13,11 @@ class EmailValidation(BaseService):
     """
     _subdomain: str = "emailvalidation"
 
-    def check(self, email: str, auto_correct: bool | None = False) -> dict[str, Any]:
+    def check(
+        self,
+        email: str,
+        auto_correct: bool | None = False
+    ):  # TODO: Add type hint
         """Validates and verifies an email address.
 
         Args:

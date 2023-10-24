@@ -1,4 +1,4 @@
-from typing import NoReturn, Any
+from typing import Any, NoReturn
 
 import requests.models
 
@@ -14,7 +14,7 @@ class APIRequestError(AbstractAPIException):
         raised_error_message: str,
         message: str | None = None,
         code: str | None = None,
-        details: str | None = None,
+        details: dict[str, Any] | None = None,
     ) -> None:
         """Initializes a new APIRequestError."""
         super().__init__(raised_error_message)
@@ -83,7 +83,8 @@ class APIRequestError(AbstractAPIException):
         Returns:
             Raised exception error message.
         """
-        raised_error_message = f"API request failed (HTTP status: {http_status})."
+        raised_error_message = f"API request failed "\
+                               f"(HTTP status: {http_status})."
         if error_details.get("message"):
             raised_error_message += f" {error_details["message"]}"
             if error_details["details"]:
@@ -92,7 +93,10 @@ class APIRequestError(AbstractAPIException):
         return raised_error_message
 
     @classmethod
-    def raise_from_response(cls, response: requests.models.Response) -> NoReturn:
+    def raise_from_response(
+        cls,
+        response: requests.models.Response
+    ) -> NoReturn:
         """Raises an exception from given response.
 
         Args:

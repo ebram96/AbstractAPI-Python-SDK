@@ -1,6 +1,4 @@
-"""
-Fields that are available to be returned from IP Geolocation service endpoint.
-"""
+"""Response fields of IP Geolocation service endpoint."""
 
 
 ACCEPTABLE_FIELDS: frozenset[str] = frozenset({
