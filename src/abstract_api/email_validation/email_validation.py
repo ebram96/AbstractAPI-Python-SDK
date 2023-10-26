@@ -7,7 +7,7 @@ from .email_validation_response import EmailValidationResponse
 class EmailValidation(BaseService):
     """AbstractAPI email validation and verification service.
 
-    Used to validate and verify and email address.
+    Used to validate and verify an email address.
 
     Attributes:
         _subdomain: Email validation service subdomain.
