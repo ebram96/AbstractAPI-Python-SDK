@@ -1,4 +1,4 @@
-from abstract_api._base_service import BaseService
+from abstract_api.bases import BaseService
 from abstract_api.exceptions import ResponseParseError
 
 from .email_validation_response import EmailValidationResponse
@@ -27,7 +27,7 @@ class EmailValidation(BaseService):
                 autocorrected and returned in API response.
 
         Returns:
-            A dict that contains the response to API call.
+            EmailValidationResponse representing API call response.
         """
         response = self._service_request(
             email=email,

@@ -2,7 +2,7 @@ from typing import Type
 
 import requests.models
 
-from abstract_api._base_response import BaseResponse
+from abstract_api.bases import JSONResponse
 
 
 class Security:
@@ -156,7 +156,7 @@ class Connection:
         return self._organization_name
 
 
-class IPGeolocationResponse(BaseResponse):
+class IPGeolocationResponse(JSONResponse):
     """IP Geolocation service response."""
     _nested_entities: dict[str, Type] = {
         "security": Security,

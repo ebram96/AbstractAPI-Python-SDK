@@ -1,30 +1,20 @@
-from abc import ABC
-from typing import Any
+from typing import Any, ClassVar, Type
 
-import requests.models
+import requests
+
+from ._base_response import BaseResponse, BaseResponseMeta
 
 
-class ResponseMeta:
-    """Response meta data for Abstract API service response."""
+class JSONResponseMeta(BaseResponseMeta):
+    """TODO."""
 
     def __init__(self, response: requests.models.Response) -> None:
-        """Initialize a new ResponseMeta."""
-        self._http_status: int = response.status_code
-        self._body: bytes = response.content
+        """Initialize a new JSONResponseMeta."""
+        super().__init__(response)
         try:
             self._body_json = response.json()
         except:  # noqa: E722
             self._body_json = None
-
-    @property
-    def http_status(self) -> int:
-        """HTTP status code of API request."""
-        return self._http_status
-
-    @property
-    def body(self) -> bytes:
-        """Raw response body returned from API request."""
-        return self._body
 
     @property
     def body_json(self) -> dict[str, Any]:
@@ -32,14 +22,11 @@ class ResponseMeta:
         return self._body_json
 
 
-class BaseResponse(ABC):
-    """Base Abstract API service response."""
-    meta: ResponseMeta
+class JSONResponse(BaseResponse):
+    """TODO."""
     _response_fields: frozenset[str]
-
-    def __init__(self, response: requests.models.Response) -> None:
-        """Initialize a new BaseResponse."""
-        self.meta = ResponseMeta(response)
+    _meta_class: ClassVar[Type] = JSONResponseMeta
+    meta: JSONResponseMeta
 
     def _get_response_field(self, attr_name: str) -> Any:
         """Gets the value of a field that was returned in response.

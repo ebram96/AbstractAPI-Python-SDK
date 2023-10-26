@@ -1,6 +1,6 @@
 from typing import Iterable
 
-from abstract_api._base_service import BaseService
+from abstract_api.bases import BaseService
 from abstract_api.exceptions import ClientRequestError, ResponseParseError
 
 from .acceptable_fields import ACCEPTABLE_FIELDS
@@ -90,7 +90,7 @@ class IPGeolocation(BaseService):
             fields: Selected response fields.
 
         Returns:
-            A dict that contains the response to API call.
+            IPGeolocationResponse representing API call response.
         """
         if fields:
             self._validate_response_fields(fields)
