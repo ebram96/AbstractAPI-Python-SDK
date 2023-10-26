@@ -2,12 +2,12 @@ from typing import Final
 
 import requests
 
-from abstract_api._base_response import BaseResponse
+from abstract_api.bases import JSONResponse
 
 from .response_fields import RESPONSE_FIELDS
 
 
-class EmailValidationResponse(BaseResponse):
+class EmailValidationResponse(JSONResponse):
     """Email validation service response."""
 
     _bool_fields: Final[frozenset[str]] = frozenset({
