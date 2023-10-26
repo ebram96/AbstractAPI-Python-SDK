@@ -12,6 +12,7 @@ class Security:
         """Initializes a new Security."""
         self._is_vpn = is_vpn
 
+    # TODO: type hint
     @property
     def is_vpn(self) -> bool | None:
         """Whether the IP address is using from a VPN or using a proxy."""
