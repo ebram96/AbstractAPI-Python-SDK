@@ -3,6 +3,7 @@ from typing import Iterable
 from abstract_api.bases import BaseService
 from abstract_api.exceptions import ResponseParseError
 
+from .exchange_rates_conversion_response import ExchangeRatesConversionResponse
 from .live_exchange_rates_response import LiveExchangeRatesResponse
 
 
@@ -70,3 +71,49 @@ class ExchangeRates(BaseService):
             ) from e
 
         return live_exchange_rates_response
+
+    def convert(
+        self,
+        base: str,
+        target: str,
+        date: str | None = None,
+        base_amount: float | None = None
+    ) -> ExchangeRatesConversionResponse:
+        """Finds exchange rates from base currency to target currency/ies.
+
+        Args:
+            base: Base currency used to get the latest exchange rate(s) for.
+                Uses the ISO 4217 currency standard (e.g., USD for United
+                States Dollars).
+            target: The target currency to convert the base_amount to.
+                Like the base parameters, any currency passed here follows the
+                ISO 4217 standard. Note that unlike the other endpoints,
+                convert only accepts one target currency at a time.
+            date: The historical date you’d like to get rates from, in the
+                format of YYYY-MM-DD. If you leave this blank, it will use the
+                latest available rate.
+            base_amount: The amount of the base currency you would like to
+                convert to the target currency.
+
+        Returns:
+            ExchangeRatesConversionResponse representing API call response.
+        """
+        response = self._service_request(
+            action="convert",
+            base=base,
+            target=target,
+            date=date,
+            base_amount=base_amount
+        )
+
+        try:
+            exchange_rate_conversion_response = (
+                ExchangeRatesConversionResponse(response=response)
+            )
+        except Exception as e:
+            raise ResponseParseError(
+                "Failed to parse response as "
+                "ExchangeRatesConversionResponse"
+            ) from e
+
+        return exchange_rate_conversion_response
