@@ -28,19 +28,28 @@ class BaseService(ABC):
         """
         self._api_key = api_key
 
-    @property
-    def _service_url(self):
+    def _service_url(self, action: str = "") -> str:
         """Builds and returns an API URL for a service using its subdomain.
+
+        Args:
+            action: Action to be performed using the service.
+                Only for services that have it (i.e. VAT).
 
         Returns:
             A str that can be used to make API calls to a service.
         """
-        return self._base_url.format(subdomain=self._subdomain)
+        return self._base_url.format(subdomain=self._subdomain) + action
 
-    def _service_request(self, **params) -> requests.models.Response:
+    def _service_request(
+        self,
+        action: str = "",
+        **params
+    ) -> requests.models.Response:
         """Makes the HTTP call to Abstract API service endpoint.
 
         Args:
+            action: Action to be performed using the service.
+                Only for services that have it (i.e. VAT).
             params: The URL parameter that should be used when calling the API
                 endpoints.
 
@@ -48,7 +57,8 @@ class BaseService(ABC):
             AbstractAPI's response.
         """
         response = requests.get(
-            self._service_url, params={"api_key": self._api_key} | params
+            self._service_url(action),
+            params={"api_key": self._api_key} | params
         )
         if response.status_code not in [codes.OK, codes.NO_CONTENT]:
             APIRequestError.raise_from_response(response)
