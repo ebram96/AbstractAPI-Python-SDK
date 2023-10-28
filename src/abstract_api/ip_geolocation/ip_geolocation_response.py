@@ -1,4 +1,4 @@
-from typing import Type
+from typing import TYPE_CHECKING, Type
 
 import requests.models
 
@@ -177,6 +177,8 @@ class IPGeolocationResponse(JSONResponse):
         self._response_fields = response_fields
         not_in_response = object()
         for field in response_fields:
+            if TYPE_CHECKING:
+                assert isinstance(self.meta.body_json, dict)
             value = self.meta.body_json.get(field, not_in_response)
             # Set property only if field was returned
             if value is not not_in_response:

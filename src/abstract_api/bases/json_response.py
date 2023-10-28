@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, Type
+from typing import Any, ClassVar, Type, Union
 
 import requests
 
@@ -17,7 +17,7 @@ class JSONResponseMeta(BaseResponseMeta):
             self._body_json = None
 
     @property
-    def body_json(self) -> dict[str, Any]:
+    def body_json(self) -> Union[dict[str, Any], list[dict[str, Any]]]:
         """JSON representation of response body returned from API request."""
         return self._body_json
 
