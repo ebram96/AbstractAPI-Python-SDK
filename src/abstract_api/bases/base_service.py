@@ -11,13 +11,13 @@ class BaseService(ABC):
     """Base class for all AbstractAPI service classes.
 
     Attributes:
-        _base_url: Base AbstractAPI services URL.
+        __base_url: Base AbstractAPI services URL.
             Used to generate service-specific API URL.
         _subdomain: A service's subdomain.
             Used with __base_url to generate service-specific API URL.
         _api_key: API key to be used to authenticate with AbstractAPI.
     """
-    _base_url: Final[str] = "https://{subdomain}.abstractapi.com/v1/"
+    __base_url: Final[str] = "https://{subdomain}.abstractapi.com/v1/"
     _subdomain: str
 
     def __init__(self, api_key: str) -> None:
@@ -38,7 +38,7 @@ class BaseService(ABC):
         Returns:
             A str that can be used to make API calls to a service.
         """
-        return self._base_url.format(subdomain=self._subdomain) + action
+        return self.__base_url.format(subdomain=self._subdomain) + action
 
     def _service_request(
         self,
