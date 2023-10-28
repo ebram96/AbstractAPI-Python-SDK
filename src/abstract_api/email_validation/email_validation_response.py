@@ -1,4 +1,4 @@
-from typing import Final
+from typing import TYPE_CHECKING, Final
 
 import requests
 
@@ -29,6 +29,8 @@ class EmailValidationResponse(JSONResponse):
         self._response_fields = RESPONSE_FIELDS
         not_in_response = object()
         for field in RESPONSE_FIELDS:
+            if TYPE_CHECKING:
+                assert isinstance(self.meta.body_json, dict)
             value = self.meta.body_json.get(field, not_in_response)
             # Set property only if field was returned
             if value is not not_in_response:

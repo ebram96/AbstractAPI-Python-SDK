@@ -2,6 +2,7 @@ from abstract_api.bases import BaseService
 from abstract_api.exceptions import ResponseParseError
 
 from .vat_calculation_response import VATCalculationResponse
+from .vat_categories_response import VATCategoriesResponse
 from .vat_validation_response import VATValidationResponse
 
 
@@ -84,3 +85,29 @@ class VAT(BaseService):
             ) from e
 
         return vat_calculation_response
+
+    def categories(self, country_code: str) -> VATCategoriesResponse:
+        """Gets the list of VAT categories for a country.
+
+        Args:
+            country_code: The two-letter ISO 3166-1 alpha-2 code of the
+                country in which the transaction takes place.
+
+        Returns:
+            VATCategoriesResponse representing API call response.
+        """
+        response = self._service_request(
+            action="categories",
+            country_code=country_code,
+        )
+
+        try:
+            vat_categories_response = VATCategoriesResponse(
+                response=response
+            )
+        except Exception as e:
+            raise ResponseParseError(
+                "Failed to parse response as VATCategoriesResponse"
+            ) from e
+
+        return vat_categories_response

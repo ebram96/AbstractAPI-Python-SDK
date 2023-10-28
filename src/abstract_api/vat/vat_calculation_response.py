@@ -1,4 +1,4 @@
-from typing import Type
+from typing import TYPE_CHECKING, Type
 
 import requests
 
@@ -42,6 +42,8 @@ class VATCalculationResponse(JSONResponse):
         self._response_fields = CALCULATION_RESPONSE_FIELDS
         not_in_response = object()
         for field in CALCULATION_RESPONSE_FIELDS:
+            if TYPE_CHECKING:
+                assert isinstance(self.meta.body_json, dict)
             value = self.meta.body_json.get(field, not_in_response)
             # Set property only if field was returned
             if value is not not_in_response:
