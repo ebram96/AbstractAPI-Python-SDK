@@ -143,7 +143,7 @@ class ExchangeRates(BaseService):
         response = self._service_request(
             action="historical",
             base=base,
-            target=target,
+            target=self._target_as_param(target),
             date=date
         )
 
