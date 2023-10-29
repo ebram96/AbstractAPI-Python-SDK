@@ -40,7 +40,7 @@ class ExchangeRatesConversionResponse(JSONResponse):
 
         This is per successful request.
         """
-        return self._get_response_field("target")
+        return self._get_response_field("date")
 
     @property
     def base_amount(self) -> str | None:
