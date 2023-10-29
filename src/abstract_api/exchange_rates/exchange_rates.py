@@ -4,6 +4,7 @@ from abstract_api.bases import BaseService
 from abstract_api.exceptions import ResponseParseError
 
 from .exchange_rates_conversion_response import ExchangeRatesConversionResponse
+from .historical_exchange_rates_response import HistoricalExchangeRatesResponse
 from .live_exchange_rates_response import LiveExchangeRatesResponse
 
 
@@ -117,3 +118,43 @@ class ExchangeRates(BaseService):
             ) from e
 
         return exchange_rate_conversion_response
+
+    def historical(
+        self,
+        base: str,
+        date: str,
+        target: Iterable[str] | None = None
+    ) -> HistoricalExchangeRatesResponse:
+        """Finds historical exchange rates from base to target currencies.
+
+        Args:
+            base: Base currency used to get the latest exchange rate(s) for.
+                Uses the ISO 4217 currency standard (e.g., USD for United
+                States Dollars).
+            date: The historical date you’d like to get rates from, in the
+                format of YYYY-MM-DD.
+            target: The target currency or currencies to get the exchange rate
+                of versus the base currency. Like the base parameters, any
+                currency passed here follows the ISO 4217 standard.
+
+        Returns:
+            HistoricalExchangeRatesResponse representing API call response.
+        """
+        response = self._service_request(
+            action="historical",
+            base=base,
+            target=target,
+            date=date
+        )
+
+        try:
+            historical_exchange_rate_response = (
+                HistoricalExchangeRatesResponse(response=response)
+            )
+        except Exception as e:
+            raise ResponseParseError(
+                "Failed to parse response as "
+                "HistoricalExchangeRatesResponse"
+            ) from e
+
+        return historical_exchange_rate_response
