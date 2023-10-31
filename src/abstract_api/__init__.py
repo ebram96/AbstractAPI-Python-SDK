@@ -10,6 +10,7 @@ from .ip_geolocation import IPGeolocation
 from .phone_validation import PhoneValidation
 from .timezone import Timezone
 from .vat import VAT
+from .web_scraping import WebScraping
 from .website_screenshot import WebsiteScreenshot
 
 __all__: Final[list[str]] = [
@@ -23,5 +24,6 @@ __all__: Final[list[str]] = [
     "PhoneValidation",
     "Timezone",
     "VAT",
+    "WebScraping",
     "WebsiteScreenshot"
 ]
