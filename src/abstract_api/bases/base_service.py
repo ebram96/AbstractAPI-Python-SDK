@@ -1,10 +1,11 @@
 from abc import ABC
-from typing import Final
+from io import BytesIO
+from typing import Any, Final
 
 import requests
 from requests import codes
 
-from abstract_api.exceptions import APIRequestError
+from abstract_api.exceptions import APIRequestError, ClientRequestError
 
 
 class BaseService(ABC):
@@ -42,12 +43,18 @@ class BaseService(ABC):
 
     def _service_request(
         self,
+        _method: str = "GET",
+        _body: dict[str, Any] | None = None,
+        _files: dict[str, BytesIO] | None = None,
         action: str = "",
         **params
     ) -> requests.models.Response:
         """Makes the HTTP call to Abstract API service endpoint.
 
         Args:
+            _method: HTTP method to use.
+            _body: Request body.
+            _files: Files to be attached to the request body (uploading files).
             action: Action to be performed using the service.
                 Only for services that have it (i.e. VAT).
             params: The URL parameter that should be used when calling the API
@@ -56,10 +63,27 @@ class BaseService(ABC):
         Returns:
             AbstractAPI's response.
         """
-        response = requests.get(
-            self._service_url(action),
-            params={"api_key": self._api_key} | params
-        )
+        if _method.lower() not in ["get", "post"]:
+            raise ClientRequestError(
+                f"Invalid or not allowed HTTP method '{_method}'"
+            )
+
+        request_kwargs: dict[str, Any] = {
+            "method": _method,
+            "url": self._service_url(action)
+        }
+
+        _method = _method.lower()
+        if _method == "get":
+            request_kwargs["params"] = {"api_key": self._api_key} | params
+        else:
+            if _files:
+                request_kwargs["files"] = _files
+            if _body:
+                request_kwargs["json"] = _body
+
+        response = requests.request(**request_kwargs)
+
         if response.status_code not in [codes.OK, codes.NO_CONTENT]:
             APIRequestError.raise_from_response(response)
         return response
