@@ -117,7 +117,10 @@ class ImageProcessing(BaseService):
             data["quality"] = quality
 
         action = "upload/" if image is not None else "url/"
-        service_kwargs: dict[str, Any] = {"action": action, "_method": "POST"}
+        service_kwargs: dict[str, Any] = {
+            "_action": action,
+            "_method": "POST"
+        }
         if action == "upload/":
             service_kwargs["_files"] = {
                 "image": image,

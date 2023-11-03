@@ -57,7 +57,7 @@ class ExchangeRates(BaseService):
             VATValidationResponse representing API call response.
         """
         response = self._service_request(
-            action="live",
+            _action="live",
             base=base,
             target=self._target_as_param(target)
         )
@@ -100,7 +100,7 @@ class ExchangeRates(BaseService):
             ExchangeRatesConversionResponse representing API call response.
         """
         response = self._service_request(
-            action="convert",
+            _action="convert",
             base=base,
             target=target,
             date=date,
@@ -141,7 +141,7 @@ class ExchangeRates(BaseService):
             HistoricalExchangeRatesResponse representing API call response.
         """
         response = self._service_request(
-            action="historical",
+            _action="historical",
             base=base,
             target=self._target_as_param(target),
             date=date

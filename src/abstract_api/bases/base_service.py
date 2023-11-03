@@ -46,7 +46,7 @@ class BaseService(ABC):
         _method: str = "GET",
         _body: dict[str, Any] | None = None,
         _files: dict[str, BytesIO] | None = None,
-        action: str = "",
+        _action: str = "",
         **params
     ) -> requests.models.Response:
         """Makes the HTTP call to Abstract API service endpoint.
@@ -55,7 +55,7 @@ class BaseService(ABC):
             _method: HTTP method to use.
             _body: Request body.
             _files: Files to be attached to the request body (uploading files).
-            action: Action to be performed using the service.
+            _action: Action to be performed using the service.
                 Only for services that have it (i.e. VAT).
             params: The URL parameter that should be used when calling the API
                 endpoints.
@@ -70,7 +70,7 @@ class BaseService(ABC):
 
         request_kwargs: dict[str, Any] = {
             "method": _method,
-            "url": self._service_url(action)
+            "url": self._service_url(_action)
         }
 
         _method = _method.lower()
