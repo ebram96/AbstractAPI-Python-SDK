@@ -6,6 +6,7 @@ from .email_validation import EmailValidation
 from .exchange_rates import ExchangeRates
 from .holidays import Holidays
 from .iban_validation import IBANValidation
+from .image_processing import ImageProcessing
 from .ip_geolocation import IPGeolocation
 from .phone_validation import PhoneValidation
 from .timezone import Timezone
@@ -20,6 +21,7 @@ __all__: Final[list[str]] = [
     "ExchangeRates",
     "Holidays",
     "IBANValidation",
+    "ImageProcessing",
     "IPGeolocation",
     "PhoneValidation",
     "Timezone",

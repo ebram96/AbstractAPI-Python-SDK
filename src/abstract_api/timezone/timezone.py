@@ -53,7 +53,7 @@ class Timezone(BaseService):
             CurrentTimezoneResponse representing API call response.
         """
         response = self._service_request(
-            action="current_time",
+            _action="current_time",
             location=self._location_as_param(location)
         )
 
@@ -96,7 +96,7 @@ class Timezone(BaseService):
             TimezoneConversionResponse representing API call response.
         """
         response = self._service_request(
-            action="convert_time",
+            _action="convert_time",
             base_location=self._location_as_param(base_location),
             target_location=self._location_as_param(target_location),
             base_datetime=base_datetime

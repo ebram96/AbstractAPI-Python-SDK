@@ -27,7 +27,7 @@ class VAT(BaseService):
             VATValidationResponse representing API call response.
         """
         response = self._service_request(
-            action="validate", vat_number=vat_number
+            _action="validate", vat_number=vat_number
         )
 
         try:
@@ -68,7 +68,7 @@ class VAT(BaseService):
             VATCalculationResponse representing API call response.
         """
         response = self._service_request(
-            action="calculate",
+            _action="calculate",
             amount=amount,
             country_code=country_code,
             is_vat_incl=is_vat_incl,
@@ -97,7 +97,7 @@ class VAT(BaseService):
             VATCategoriesResponse representing API call response.
         """
         response = self._service_request(
-            action="categories",
+            _action="categories",
             country_code=country_code,
         )
 
