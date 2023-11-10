@@ -1,31 +1,8 @@
-from enum import Enum
-
-from ._mixins import HeightMixin, WidthMixin
-from .base_strategy import BaseStrategy
+from .._mixins import CropModeMixin, HeightMixin, WidthMixin
+from ..base_strategy import BaseStrategy
 
 
-class CropMode(Enum):
-    """Direction of cropping."""
-    NORTH = "n"
-    TOP = "t"
-    NORTH_WEST = "nw"
-    TOP_LEFT = "tl"
-    NORTH_EAST = "ne"
-    TOP_RIGHT = "tr"
-    WEST = "w"
-    LEFT = "l"
-    CENTER = "c"
-    EAST = "e"
-    RIGHT = "r"
-    SOUTH_EAST = "se"
-    BOTTOM_RIGHT = "br"
-    SOUTH_WEST = "sw"
-    BOTTOM_LEFT = "bl"
-    SOUTH = "s"
-    BOTTOM = "b"
-
-
-class Crop(HeightMixin, WidthMixin, BaseStrategy):
+class Crop(HeightMixin, WidthMixin, CropModeMixin, BaseStrategy):
     """Crop an image to a specified exact size.
 
     The resulting cropped image can optionally be scaled by inclusion of a
@@ -58,10 +35,9 @@ class Crop(HeightMixin, WidthMixin, BaseStrategy):
 
     def __init__(
         self,
-        scale: int,
+        scale: int | None = None,
         x: int | None = None,
         y: int | None = None,
-        crop_mode: CropMode | str | None = None,
         *args,
         **kwargs
     ) -> None:
@@ -71,47 +47,26 @@ class Crop(HeightMixin, WidthMixin, BaseStrategy):
         self._x = x
         self._y = y
 
-        if crop_mode is not None:
-            if isinstance(crop_mode, str):
-                if crop_mode not in CropMode:
-                    raise ValueError(
-                        f"'{crop_mode}' is not a valid crop mode"
-                    )
-                crop_mode = CropMode(crop_mode)
-
-        self._crop_mode = crop_mode
-
     def json(self) -> dict[str, int | str]:
         """Returns a dict with strategy attributes to be used with requests."""
         json = super().json()
-        json["scale"] = self.scale
-        optionals = ["x", "y", "crop_mode"]
+        optionals = ["x", "y", "scale"]
         for attr in optionals:
             if getattr(self, attr) is not None:
-                if attr == "crop_mode":
-                    # TODO: Not clean but no worries, it'll be moved to a mixin
-                    assert self.crop_mode is not None
-                    json[attr] = self.crop_mode.value
-                else:
-                    json[attr] = getattr(self, attr)
+                json[attr] = getattr(self, attr)
         return json
 
     @property
-    def scale(self) -> int:
+    def scale(self) -> int | None:
         """The percentage by which you would like to scale the image."""
         return self._scale
 
     @property
     def x(self) -> int | None:
-        """X dimension of the rectangular area to be cropped, if needed."""
+        """X position of the rectangular area to be cropped, if needed."""
         return self._x
 
     @property
     def y(self) -> int | None:
-        """Y dimension of the rectangular area to be cropped, if needed."""
+        """Y position of the rectangular area to be cropped, if needed."""
         return self._y
-
-    @property
-    def crop_mode(self) -> CropMode | None:
-        """Direction of cropping."""
-        return self._crop_mode
