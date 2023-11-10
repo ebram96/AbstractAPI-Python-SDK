@@ -4,6 +4,7 @@ from .auto import Auto
 from .base_strategy import BaseStrategy
 from .crop import Crop
 from .exact import Exact
+from .fill import Fill
 from .fit import Fit
 from .landscape import Landscape
 from .portrait import Portrait
@@ -14,6 +15,7 @@ __all__: Final[list[str]] = [
     "BaseStrategy",
     "Crop",
     "Exact",
+    "Fill",
     "Fit",
     "Landscape",
     "Portrait",
