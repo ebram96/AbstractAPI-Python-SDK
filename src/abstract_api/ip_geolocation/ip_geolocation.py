@@ -28,20 +28,16 @@ class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):
 
         Args:
             ip: A valid IP address to analyze.
-            fields: Selected response fields.
+            fields: Selected response fields (optional)..
 
         Returns:
             IPGeolocationResponse representing API call response.
         """
-        if fields:
-            self._validate_response_fields(fields)
-            response_fields = frozenset(fields)
-        else:
-            response_fields = self.response_fields
+        selected_fields = self._prepare_selected_fields(fields)
 
         return self._service_request(
             _response_class=IPGeolocationResponse,
-            _response_class_kwargs={"response_fields": response_fields},
+            _response_class_kwargs={"response_fields": selected_fields},
             ip_address=ip,
-            fields=self._response_fields_as_param(response_fields)
+            fields=self._response_fields_as_param(selected_fields)
         )

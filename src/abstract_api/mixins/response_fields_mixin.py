@@ -65,3 +65,21 @@ class ResponseFieldsMixin:
             Comma-separated string with all selected response fields.
         """
         return ",".join(response_fields)
+
+    def _prepare_selected_fields(
+        self,
+        fields: Iterable[str] | None = None
+    ) -> frozenset[str]:
+        """Prepares selected fields to be used in service call.
+
+        Args:
+            fields: Selected response fields (optional).
+
+        Returns:
+            Valid selected fields as a frozenset.
+        """
+        if fields:
+            self._validate_response_fields(fields)
+            return frozenset(fields)
+
+        return self.response_fields
