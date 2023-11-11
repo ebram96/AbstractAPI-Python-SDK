@@ -3,6 +3,7 @@ from typing import Iterable
 from ..bases import BaseService
 from ..mixins import ResponseFieldsMixin
 from .ip_geolocation_response import IPGeolocationResponse
+from .response_fields import RESPONSE_FIELDS
 
 
 class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):
@@ -16,29 +17,7 @@ class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):
             Geolocation service endpoint.
     """
     _subdomain: str = "ipgeolocation"
-    _response_fields = frozenset({
-        "ip_address",
-        "city",
-        "city_geoname_id",
-        "region",
-        "region_iso_code",
-        "region_geoname_id",
-        "postal_code",
-        "country",
-        "country_code",
-        "country_geoname_id",
-        "country_is_eu",
-        "continent",
-        "continent_code",
-        "continent_geoname_id",
-        "longitude",
-        "latitude",
-        "security",
-        "timezone",
-        "flag",
-        "currency",
-        "connection"
-    })
+    _response_fields = RESPONSE_FIELDS
 
     def check(
         self,

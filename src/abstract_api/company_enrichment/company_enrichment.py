@@ -3,6 +3,7 @@ from typing import Iterable
 from ..bases import BaseService
 from ..mixins import ResponseFieldsMixin
 from .company_enrichment_response import CompanyEnrichmentResponse
+from .response_fields import RESPONSE_FIELDS
 
 
 class CompanyEnrichment(
@@ -17,16 +18,7 @@ class CompanyEnrichment(
         _subdomain: Company enrichment service subdomain.
     """
     _subdomain: str = "companyenrichment"
-    _response_fields = frozenset({
-        "name",
-        "domain",
-        "year_founded",
-        "industry",
-        "employees_count",
-        "locality",
-        "country",
-        "linkedin_url"
-    })
+    _response_fields = RESPONSE_FIELDS
 
     def check(
         self,
