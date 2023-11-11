@@ -22,6 +22,6 @@ class HeightMixin(_Base):
         }
 
     @property
-    def height(self):
+    def height(self) -> int:
         """Height to resize the image to."""
         return self._height

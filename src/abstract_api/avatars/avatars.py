@@ -15,7 +15,7 @@ class Avatars(BaseService[AvatarsResponse]):
 
     def create(
         self,
-        name,
+        name: str,
         image_size: int | None = None,
         image_format: str | None = None,
         font_size: float | None = None,

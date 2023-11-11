@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, ClassVar, Type, Union
+from typing import TYPE_CHECKING, Any, ClassVar, Type
 
 import requests
 
@@ -17,7 +17,7 @@ class JSONResponseMeta(BaseResponseMeta):
             self._body_json = None
 
     @property
-    def body_json(self) -> Union[dict[str, Any], list[dict[str, Any]]]:
+    def body_json(self) -> dict[str, Any] | list[dict[str, Any]]:
         """JSON representation of response body returned from API request."""
         return self._body_json
 
@@ -37,7 +37,7 @@ class JSONResponse(BaseResponse):
         response: requests.models.Response,
         response_fields: frozenset[str],
         list_response: bool = False
-    ):
+    ) -> None:
         """TODO."""
         super().__init__(response)
         self._response_fields = response_fields

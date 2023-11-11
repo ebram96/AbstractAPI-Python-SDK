@@ -34,7 +34,7 @@ class BaseService(Generic[BaseResponseT]):
         Args:
             api_key: API key to be used to authenticate with AbstractAPI.
         """
-        self._api_key = api_key
+        self._api_key: str = api_key
 
     def _service_url(self, action: str = "") -> str:
         """Builds and returns an API URL for a service using its subdomain.
