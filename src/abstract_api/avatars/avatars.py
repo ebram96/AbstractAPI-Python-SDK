@@ -1,4 +1,4 @@
-from ..bases import BaseService
+from ..core.bases import BaseService
 from .avatars_response import AvatarsResponse
 
 

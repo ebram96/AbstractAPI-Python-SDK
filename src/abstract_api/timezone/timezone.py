@@ -1,4 +1,4 @@
-from ..bases import BaseService
+from ..core.bases import BaseService
 from .current_timezone_response import CurrentTimezoneResponse
 from .timezone_conversion_response import TimezoneConversionResponse
 

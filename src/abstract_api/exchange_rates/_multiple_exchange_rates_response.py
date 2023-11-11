@@ -1,6 +1,6 @@
 from typing import Any
 
-from ..bases import JSONResponse
+from ..core.bases import JSONResponse
 
 
 class ExchangeRate:

@@ -1,6 +1,6 @@
 import requests
 
-from ..bases import JSONResponse
+from ..core.bases import JSONResponse
 from .response_fields import RESPONSE_FIELDS
 
 

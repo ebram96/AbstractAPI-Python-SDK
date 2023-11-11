@@ -1,4 +1,4 @@
-from ..bases import BaseService
+from ..core.bases import BaseService
 from .web_scraping_response import WebScrapingResponse
 
 

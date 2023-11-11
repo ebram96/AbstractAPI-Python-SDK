@@ -1,7 +1,7 @@
 from typing import Iterable
 
-from ..bases import BaseService
-from ..mixins import ResponseFieldsMixin
+from ..core.bases import BaseService
+from ..core.mixins import ResponseFieldsMixin
 from .ip_geolocation_response import IPGeolocationResponse
 from .response_fields import RESPONSE_FIELDS
 

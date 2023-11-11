@@ -1,5 +1,5 @@
-from ..bases import JSONResponse
-from ..mixins import NestedEntitiesMixin
+from ..core.bases import JSONResponse
+from ..core.mixins import NestedEntitiesMixin
 
 
 class Security:

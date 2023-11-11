@@ -1,4 +1,4 @@
-from ..bases import JSONResponse
+from ..core.bases import JSONResponse
 
 
 class CompanyEnrichmentResponse(JSONResponse):

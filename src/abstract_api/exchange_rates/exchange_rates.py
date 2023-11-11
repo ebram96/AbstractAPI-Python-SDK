@@ -1,6 +1,6 @@
 from typing import Iterable
 
-from ..bases import BaseService
+from ..core.bases import BaseService
 from .exchange_rates_conversion_response import ExchangeRatesConversionResponse
 from .historical_exchange_rates_response import HistoricalExchangeRatesResponse
 from .live_exchange_rates_response import LiveExchangeRatesResponse

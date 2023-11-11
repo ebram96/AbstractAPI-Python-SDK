@@ -1,7 +1,7 @@
 import requests
 
-from ..bases import JSONResponse
-from ..mixins import NestedEntitiesMixin
+from ..core.bases import JSONResponse
+from ..core.mixins import NestedEntitiesMixin
 from .response_fields.calculation import CALCULATION_RESPONSE_FIELDS
 
 

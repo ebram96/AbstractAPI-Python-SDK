@@ -1,4 +1,4 @@
-from ..bases import FileResponse
+from ..core.bases import FileResponse
 
 
 class WebScrapingResponse(FileResponse):
