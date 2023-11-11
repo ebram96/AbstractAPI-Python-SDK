@@ -117,7 +117,11 @@ class Holiday:
 class HolidaysResponse(JSONResponse):
     """Holidays service response."""
 
-    def _init_response_field(self, field: str, value: Any) -> None:
+    def _init_response_field(
+        self,
+        field: str,
+        value: list[dict[str, Any]]
+    ) -> None:
         """TODO."""
         holidays = []
         for c in value:

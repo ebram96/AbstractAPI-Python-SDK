@@ -50,7 +50,11 @@ class Category:
 class VATCategoriesResponse(JSONResponse):
     """VAT categories service response."""
 
-    def _init_response_field(self, field: str, value: Any) -> None:
+    def _init_response_field(
+        self,
+        field: str,
+        value: list[dict[str, Any]]
+    ) -> None:
         """TODO."""
         categories = []
         for c in value:
