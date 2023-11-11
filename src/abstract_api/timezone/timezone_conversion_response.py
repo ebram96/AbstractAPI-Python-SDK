@@ -1,8 +1,7 @@
-from typing import Any, Final, Type
-
 import requests
 
 from ..bases import JSONResponse
+from ..mixins import NestedEntitiesMixin
 from .response_fields import CONVERSION_RESPONSE_FIELDS
 
 
@@ -90,22 +89,13 @@ class Timezone:
         return self._longitude
 
 
-class TimezoneConversionResponse(JSONResponse):
+class TimezoneConversionResponse(NestedEntitiesMixin, JSONResponse):
     """Timezone conversion service response."""
 
-    _nested_entities: Final[dict[str, Type[Timezone]]] = {
+    _nested_entities = {
         "base_location": Timezone,
         "target_location": Timezone
     }
-
-    def _init_response_field(self, field: str, value: Any) -> None:
-        """TODO."""
-        setattr(
-            self,
-            f"_{field}",
-            value if field not in self._nested_entities
-            else self._nested_entities[field](**value)
-        )
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new TimezoneConversionResponse."""

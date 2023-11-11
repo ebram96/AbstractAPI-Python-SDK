@@ -1,6 +1,5 @@
-from typing import Any, Type
-
 from ..bases import JSONResponse
+from ..mixins import NestedEntitiesMixin
 
 
 class Security:
@@ -155,24 +154,15 @@ class Connection:
         return self._organization_name
 
 
-class IPGeolocationResponse(JSONResponse):
+class IPGeolocationResponse(NestedEntitiesMixin, JSONResponse):
     """IP Geolocation service response."""
-    _nested_entities: dict[str, Type] = {
+    _nested_entities = {
         "security": Security,
         "timezone": Timezone,
         "flag": Flag,
         "currency": Currency,
         "connection": Connection
     }
-
-    def _init_response_field(self, field: str, value: Any) -> None:
-        """TODO."""
-        setattr(
-            self,
-            f"_{field}",
-            value if field not in self._nested_entities
-            else self._nested_entities[field](**value)
-        )
 
     @property
     def ip_address(self) -> str | None:

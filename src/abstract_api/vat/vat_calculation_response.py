@@ -1,8 +1,7 @@
-from typing import Any, Type
-
 import requests
 
 from ..bases import JSONResponse
+from ..mixins import NestedEntitiesMixin
 from .response_fields.calculation import CALCULATION_RESPONSE_FIELDS
 
 
@@ -28,21 +27,12 @@ class Country:
         return self._name
 
 
-class VATCalculationResponse(JSONResponse):
+class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
     """VAT calculation service response."""
 
-    _nested_entities: dict[str, Type] = {
+    _nested_entities = {
         "country": Country
     }
-
-    def _init_response_field(self, field: str, value: Any) -> None:
-        """TODO."""
-        setattr(
-            self,
-            f"_{field}",
-            value if field not in self._nested_entities
-            else self._nested_entities[field](**value)
-        )
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new PhoneCalculationResponse."""
