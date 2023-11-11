@@ -1,10 +1,8 @@
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
-
+from ..core.bases import BaseService
 from .holidays_response import HolidaysResponse
 
 
-class Holidays(BaseService):
+class Holidays(BaseService[HolidaysResponse]):
     """AbstractAPI Holidays service.
 
     Used to get the public, local, religious, and other holidays of a
@@ -43,18 +41,10 @@ class Holidays(BaseService):
         Returns:
             HolidaysResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=HolidaysResponse,
             country=country,
             year=year,
             month=month,
             day=day
         )
-
-        try:
-            holidays_response = HolidaysResponse(response=response)
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as HolidaysResponse"
-            ) from e
-
-        return holidays_response

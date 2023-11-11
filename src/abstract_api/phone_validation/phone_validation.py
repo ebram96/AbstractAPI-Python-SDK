@@ -1,10 +1,8 @@
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
-
+from ..core.bases import BaseService
 from .phone_validation_response import PhoneValidationResponse
 
 
-class PhoneValidation(BaseService):
+class PhoneValidation(BaseService[PhoneValidationResponse]):
     """AbstractAPI phone validation and verification service.
 
     Used to validate and verify a phone number.
@@ -23,16 +21,7 @@ class PhoneValidation(BaseService):
         Returns:
             PhoneValidationResponse representing API call response.
         """
-        response = self._service_request(phone=phone)
-
-        # TODO: Move to parent
-        try:
-            phone_validation_response = PhoneValidationResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as PhoneValidationResponse"
-            ) from e
-
-        return phone_validation_response
+        return self._service_request(
+            _response_class=PhoneValidationResponse,
+            phone=phone
+        )

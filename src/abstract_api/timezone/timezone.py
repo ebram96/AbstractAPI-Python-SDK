@@ -1,6 +1,4 @@
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
-
+from ..core.bases import BaseService
 from .current_timezone_response import CurrentTimezoneResponse
 from .timezone_conversion_response import TimezoneConversionResponse
 
@@ -52,21 +50,11 @@ class Timezone(BaseService):
         Returns:
             CurrentTimezoneResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=CurrentTimezoneResponse,
             _action="current_time",
             location=self._location_as_param(location)
         )
-
-        try:
-            current_timezone_response = CurrentTimezoneResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as CurrentTimezoneResponse"
-            ) from e
-
-        return current_timezone_response
 
     def convert(
         self,
@@ -95,20 +83,10 @@ class Timezone(BaseService):
         Returns:
             TimezoneConversionResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=TimezoneConversionResponse,
             _action="convert_time",
             base_location=self._location_as_param(base_location),
             target_location=self._location_as_param(target_location),
             base_datetime=base_datetime
         )
-
-        try:
-            timezone_conversion_response = TimezoneConversionResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as TimezoneConversionResponse"
-            ) from e
-
-        return timezone_conversion_response

@@ -1,10 +1,8 @@
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
-
+from ..core.bases import BaseService
 from .web_scraping_response import WebScrapingResponse
 
 
-class WebScraping(BaseService):
+class WebScraping(BaseService[WebScrapingResponse]):
     """AbstractAPI web scraping service.
 
     Used to extract data from a given URL.
@@ -40,18 +38,10 @@ class WebScraping(BaseService):
         Returns:
             WebScrapingResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=WebScrapingResponse,
             url=url,
             render_js=render_js,
             block_ads=block_ads,
             proxy_country=proxy_country
         )
-
-        try:
-            web_scraping_response = WebScrapingResponse(response=response)
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as WebScrapingResponse"
-            ) from e
-
-        return web_scraping_response

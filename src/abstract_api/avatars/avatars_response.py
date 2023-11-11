@@ -1,4 +1,4 @@
-from abstract_api.bases import FileResponse
+from ..core.bases import FileResponse
 
 
 class AvatarsResponse(FileResponse):

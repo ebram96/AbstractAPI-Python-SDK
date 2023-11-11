@@ -1,9 +1,7 @@
-from typing import TYPE_CHECKING, Type
-
 import requests
 
-from abstract_api.bases import JSONResponse
-
+from ..core.bases import JSONResponse
+from ..core.mixins import NestedEntitiesMixin
 from .response_fields import RESPONSE_FIELDS
 
 
@@ -59,32 +57,17 @@ class Country:
         return self._prefix
 
 
-class PhoneValidationResponse(JSONResponse):
+class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
     """Phone validation service response."""
 
-    _nested_entities: dict[str, Type] = {
+    _nested_entities = {
         "format": Format,
         "country": Country
     }
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new PhoneValidationResponse."""
-        super().__init__(response)
-        self._response_fields = RESPONSE_FIELDS
-        not_in_response = object()
-        for field in RESPONSE_FIELDS:
-            if TYPE_CHECKING:
-                assert isinstance(self.meta.body_json, dict)
-            value = self.meta.body_json.get(field, not_in_response)
-            # Set property only if field was returned
-            if value is not not_in_response:
-                # TODO: Move to parent class
-                setattr(
-                    self,
-                    f"_{field}",
-                    value if field not in self._nested_entities
-                    else self._nested_entities[field](**value)
-                )
+        super().__init__(response, RESPONSE_FIELDS)
 
     @property
     def phone(self) -> str | None:

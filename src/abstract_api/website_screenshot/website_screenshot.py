@@ -1,10 +1,8 @@
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
-
+from ..core.bases import BaseService
 from .website_screenshot_response import WebsiteScreenshotResponse
 
 
-class WebsiteScreenshot(BaseService):
+class WebsiteScreenshot(BaseService[WebsiteScreenshotResponse]):
     """AbstractAPI website screenshot service.
 
     Used to request a screenshot of a webpage in a given URL.
@@ -47,7 +45,8 @@ class WebsiteScreenshot(BaseService):
         Returns:
             WebsiteScreenshotResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=WebsiteScreenshotResponse,
             url=url,
             capture_full_page=capture_full_page,
             width=width,
@@ -57,14 +56,3 @@ class WebsiteScreenshot(BaseService):
             user_agent=user_agent,
             export_format=export_format
         )
-
-        try:
-            website_screenshot_response = WebsiteScreenshotResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as WebsiteScreenshotResponse"
-            ) from e
-
-        return website_screenshot_response

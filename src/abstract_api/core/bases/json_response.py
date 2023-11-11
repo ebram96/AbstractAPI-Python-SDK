@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, Type, Union
+from typing import TYPE_CHECKING, Any, ClassVar, Type, Union
 
 import requests
 
@@ -27,6 +27,37 @@ class JSONResponse(BaseResponse):
     _response_fields: frozenset[str]
     _meta_class: ClassVar[Type] = JSONResponseMeta
     meta: JSONResponseMeta
+
+    def _init_response_field(self, field: str, value: Any) -> None:
+        """TODO."""
+        setattr(self, f"_{field}", value)
+
+    def __init__(
+        self,
+        response: requests.models.Response,
+        response_fields: frozenset[str],
+        list_response: bool = False
+    ):
+        """TODO."""
+        super().__init__(response)
+        self._response_fields = response_fields
+
+        if self.meta.body_json is None:
+            return
+
+        if TYPE_CHECKING:
+            assert isinstance(self.meta.body_json, dict)
+
+        not_in_response = object()
+        for field in response_fields:
+            value = (
+                self.meta.body_json.get(field, not_in_response)
+                if not list_response
+                else self.meta.body_json
+            )
+            # Initialize property only if field was returned
+            if value is not not_in_response:
+                self._init_response_field(field, value)
 
     def _get_response_field(self, attr_name: str) -> Any:
         """Gets the value of a field that was returned in response.

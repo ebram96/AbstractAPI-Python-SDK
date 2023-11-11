@@ -1,9 +1,6 @@
-from typing import TYPE_CHECKING
-
 import requests
 
-from abstract_api.bases import JSONResponse
-
+from ..core.bases import JSONResponse
 from .response_fields import RESPONSE_FIELDS
 
 
@@ -14,16 +11,7 @@ class ImageProcessingResponse(JSONResponse):
         response: requests.models.Response
     ) -> None:
         """Initializes a new ImageProcessingResponse."""
-        super().__init__(response)
-        self._response_fields = RESPONSE_FIELDS
-        not_in_response = object()
-        for field in RESPONSE_FIELDS:
-            if TYPE_CHECKING:
-                assert isinstance(self.meta.body_json, dict)
-            value = self.meta.body_json.get(field, not_in_response)
-            # Set property only if field was returned
-            if value is not not_in_response:
-                setattr(self, f"_{field}", value)
+        super().__init__(response, RESPONSE_FIELDS)
 
     @property
     def original_size(self) -> str | None:

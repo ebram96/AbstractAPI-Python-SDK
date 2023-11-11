@@ -1,10 +1,8 @@
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
-
+from ..core.bases import BaseService
 from .iban_validation_response import IBANValidationResponse
 
 
-class IBANValidation(BaseService):
+class IBANValidation(BaseService[IBANValidationResponse]):
     """AbstractAPI IBAN validation and verification service.
 
     Used to validate and verify a IBAN number.
@@ -25,16 +23,7 @@ class IBANValidation(BaseService):
         Returns:
             IBANValidationResponse representing API call response.
         """
-        response = self._service_request(iban=iban)
-
-        # TODO: Move to parent
-        try:
-            iban_validation_response = IBANValidationResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as IBANValidationResponse"
-            ) from e
-
-        return iban_validation_response
+        return self._service_request(
+            _response_class=IBANValidationResponse,
+            iban=iban
+        )

@@ -1,8 +1,6 @@
 from typing import Iterable
 
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
-
+from ..core.bases import BaseService
 from .exchange_rates_conversion_response import ExchangeRatesConversionResponse
 from .historical_exchange_rates_response import HistoricalExchangeRatesResponse
 from .live_exchange_rates_response import LiveExchangeRatesResponse
@@ -56,22 +54,12 @@ class ExchangeRates(BaseService):
         Returns:
             VATValidationResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=LiveExchangeRatesResponse,
             _action="live",
             base=base,
             target=self._target_as_param(target)
         )
-
-        try:
-            live_exchange_rates_response = LiveExchangeRatesResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as LiveExchangeRatesResponse"
-            ) from e
-
-        return live_exchange_rates_response
 
     def convert(
         self,
@@ -99,25 +87,14 @@ class ExchangeRates(BaseService):
         Returns:
             ExchangeRatesConversionResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=ExchangeRatesConversionResponse,
             _action="convert",
             base=base,
             target=target,
             date=date,
             base_amount=base_amount
         )
-
-        try:
-            exchange_rate_conversion_response = (
-                ExchangeRatesConversionResponse(response=response)
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as "
-                "ExchangeRatesConversionResponse"
-            ) from e
-
-        return exchange_rate_conversion_response
 
     def historical(
         self,
@@ -140,21 +117,10 @@ class ExchangeRates(BaseService):
         Returns:
             HistoricalExchangeRatesResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=HistoricalExchangeRatesResponse,
             _action="historical",
             base=base,
             target=self._target_as_param(target),
             date=date
         )
-
-        try:
-            historical_exchange_rate_response = (
-                HistoricalExchangeRatesResponse(response=response)
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as "
-                "HistoricalExchangeRatesResponse"
-            ) from e
-
-        return historical_exchange_rate_response

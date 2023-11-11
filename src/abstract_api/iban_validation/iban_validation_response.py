@@ -1,9 +1,6 @@
-from typing import TYPE_CHECKING
-
 import requests
 
-from abstract_api.bases import JSONResponse
-
+from ..core.bases import JSONResponse
 from .response_fields import RESPONSE_FIELDS
 
 
@@ -12,14 +9,7 @@ class IBANValidationResponse(JSONResponse):
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new IBANValidationResponse."""
-        super().__init__(response)
-        self._response_fields = RESPONSE_FIELDS
-        for field in RESPONSE_FIELDS:
-            if TYPE_CHECKING:
-                assert isinstance(self.meta.body_json, dict)
-            value = self.meta.body_json.get(field)
-            # TODO: Move to parent class
-            setattr(self, f"_{field}", value)
+        super().__init__(response, RESPONSE_FIELDS)
 
     @property
     def iban(self) -> str:

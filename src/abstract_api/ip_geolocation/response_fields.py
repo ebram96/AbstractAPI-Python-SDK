@@ -1,7 +1,6 @@
 """Response fields of IP geolocation service endpoint."""
 
-# todo: rename
-ACCEPTABLE_FIELDS: frozenset[str] = frozenset({
+RESPONSE_FIELDS: frozenset[str] = frozenset({
     "ip_address",
     "city",
     "city_geoname_id",

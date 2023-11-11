@@ -1,13 +1,12 @@
 from typing import Iterable
 
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ClientRequestError, ResponseParseError
-
-from .acceptable_fields import ACCEPTABLE_FIELDS
+from ..core.bases import BaseService
+from ..core.mixins import ResponseFieldsMixin
 from .ip_geolocation_response import IPGeolocationResponse
+from .response_fields import RESPONSE_FIELDS
 
 
-class IPGeolocation(BaseService):
+class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):
     """AbstractAPI IP geolocation service.
 
     Used to determine the location and other details of IP addresses.
@@ -18,65 +17,7 @@ class IPGeolocation(BaseService):
             Geolocation service endpoint.
     """
     _subdomain: str = "ipgeolocation"
-
-    def __init__(
-        self,
-        *,
-        response_fields: Iterable[str] | None = None,
-        **kwargs
-    ) -> None:
-        """Constructs an IPGeolocation.
-
-        Args:
-            response_fields: Selected response fields.
-        """
-        super().__init__(**kwargs)
-        if response_fields is not None:
-            self.response_fields = frozenset(response_fields)
-        else:
-            self.response_fields = ACCEPTABLE_FIELDS
-
-    @staticmethod
-    def _validate_response_fields(response_fields: Iterable[str]) -> None:
-        """Validates whether all the given fields are acceptable.
-
-        Args:
-            response_fields: Selected response fields.
-        """
-        for field in response_fields:
-            if field not in ACCEPTABLE_FIELDS:
-                raise ClientRequestError(
-                    f"Field '{field}' is not a valid response field for IP "
-                    f"Geolocation service."
-                )
-
-    @property
-    def response_fields(self) -> frozenset[str]:
-        """Gets selected response fields."""
-        if self._response_fields:
-            return self._response_fields
-        return ACCEPTABLE_FIELDS
-
-    @response_fields.setter
-    def response_fields(self, fields: Iterable[str]) -> None:
-        """Sets selected response fields."""
-        self._validate_response_fields(fields)
-        self._response_fields = frozenset(fields)
-
-    @staticmethod
-    def _response_fields_as_param(response_fields: Iterable[str]) -> str:
-        """Builds 'fields' URL query parameter.
-
-         Builds a string that contains selected response fields to be used
-         as a URL query parameter.
-
-        Args:
-            response_fields: Selected response fields.
-
-        Returns:
-            Comma-separated string with all selected response fields.
-        """
-        return ",".join(response_fields)
+    _response_fields = RESPONSE_FIELDS
 
     def check(
         self,
@@ -87,31 +28,16 @@ class IPGeolocation(BaseService):
 
         Args:
             ip: A valid IP address to analyze.
-            fields: Selected response fields.
+            fields: Selected response fields (optional)..
 
         Returns:
             IPGeolocationResponse representing API call response.
         """
-        if fields:
-            self._validate_response_fields(fields)
-            response_fields = frozenset(fields)
-        else:
-            response_fields = self.response_fields
+        selected_fields = self._prepare_selected_fields(fields)
 
-        # TODO: Handle request errors.
-        response = self._service_request(
+        return self._service_request(
+            _response_class=IPGeolocationResponse,
+            _response_class_kwargs={"response_fields": selected_fields},
             ip_address=ip,
-            fields=self._response_fields_as_param(response_fields)
+            fields=self._response_fields_as_param(selected_fields)
         )
-
-        try:
-            ip_geolocation_response = IPGeolocationResponse(
-                response=response,
-                response_fields=response_fields
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as IPGeolocationResponse"
-            ) from e
-
-        return ip_geolocation_response

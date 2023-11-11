@@ -1,29 +1,8 @@
-from typing import TYPE_CHECKING
-
-import requests.models
-
-from abstract_api.bases import JSONResponse
+from ..core.bases import JSONResponse
 
 
 class CompanyEnrichmentResponse(JSONResponse):
     """Company enrichment service response."""
-
-    def __init__(
-        self,
-        response: requests.models.Response,
-        response_fields: frozenset[str]
-    ) -> None:
-        """Initializes a new CompanyEnrichmentResponse."""
-        super().__init__(response)
-        self._response_fields = response_fields
-        not_in_response = object()
-        for field in response_fields:
-            if TYPE_CHECKING:
-                assert isinstance(self.meta.body_json, dict)
-            value = self.meta.body_json.get(field, not_in_response)
-            # Set property only if field was returned
-            if value is not not_in_response:
-                setattr(self, f"_{field}", value)
 
     @property
     def name(self) -> str | None:

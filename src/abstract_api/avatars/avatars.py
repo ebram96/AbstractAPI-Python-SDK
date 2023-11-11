@@ -1,10 +1,8 @@
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
-
+from ..core.bases import BaseService
 from .avatars_response import AvatarsResponse
 
 
-class Avatars(BaseService):
+class Avatars(BaseService[AvatarsResponse]):
     """AbstractAPI avatar generation service.
 
     Used for creating highly customizable avatar images with a person's name or
@@ -66,7 +64,8 @@ class Avatars(BaseService):
             AvatarsResponse representing API call response.
         """
         # TODO: Validation
-        response = self._service_request(
+        return self._service_request(
+            _response_class=AvatarsResponse,
             name=name,
             image_size=image_size,
             image_format=image_format,
@@ -79,12 +78,3 @@ class Avatars(BaseService):
             is_italic=is_italic,
             is_bold=is_bold
         )
-
-        try:
-            avatars_response = AvatarsResponse(response=response)
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as AvatarsResponse"
-            ) from e
-
-        return avatars_response

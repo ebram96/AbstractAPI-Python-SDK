@@ -1,14 +1,21 @@
-from abc import ABC
 from io import BytesIO
-from typing import Any, Final
+from typing import TYPE_CHECKING, Any, Final, Generic, Type, TypeVar
 
 import requests
 from requests import codes
 
-from abstract_api.exceptions import APIRequestError, ClientRequestError
+from ..exceptions import (
+    APIRequestError,
+    ClientRequestError,
+    ResponseParseError
+)
+
+if TYPE_CHECKING:
+    from ._base_response import BaseResponse
+BaseResponseT = TypeVar("BaseResponseT", bound="BaseResponse")
 
 
-class BaseService(ABC):
+class BaseService(Generic[BaseResponseT]):
     """Base class for all AbstractAPI service classes.
 
     Attributes:
@@ -43,12 +50,14 @@ class BaseService(ABC):
 
     def _service_request(
         self,
+        _response_class: Type[BaseResponseT],
+        _response_class_kwargs: dict[str, Any] | None = None,
         _method: str = "GET",
         _body: dict[str, Any] | None = None,
         _files: dict[str, BytesIO] | None = None,
         _action: str = "",
         **params
-    ) -> requests.models.Response:
+    ) -> BaseResponseT:
         """Makes the HTTP call to Abstract API service endpoint.
 
         Args:
@@ -86,4 +95,17 @@ class BaseService(ABC):
 
         if response.status_code not in [codes.OK, codes.NO_CONTENT]:
             APIRequestError.raise_from_response(response)
-        return response
+
+        if _response_class_kwargs is None:
+            _response_class_kwargs = {}
+
+        try:
+            parsed_response = _response_class(
+                response=response, **_response_class_kwargs
+            )
+        except Exception as e:
+            raise ResponseParseError(
+                f"Failed to parse response as {_response_class.__name__}"
+            ) from e
+
+        return parsed_response
