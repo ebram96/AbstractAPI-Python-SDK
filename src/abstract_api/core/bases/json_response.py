@@ -25,7 +25,7 @@ class JSONResponseMeta(BaseResponseMeta):
 class JSONResponse(BaseResponse):
     """TODO."""
     _response_fields: frozenset[str]
-    _meta_class: ClassVar[Type] = JSONResponseMeta
+    _meta_class: ClassVar[Type[JSONResponseMeta]] = JSONResponseMeta
     meta: JSONResponseMeta
 
     def _init_response_field(self, field: str, value: Any) -> None:

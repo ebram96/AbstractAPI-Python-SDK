@@ -17,7 +17,7 @@ class CompanyEnrichment(
     Attributes:
         _subdomain: Company enrichment service subdomain.
     """
-    _subdomain: str = "companyenrichment"
+    _subdomain = "companyenrichment"
     _response_fields = RESPONSE_FIELDS
 
     def check(

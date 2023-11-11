@@ -16,7 +16,7 @@ class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):
         _response_fields: Selected response fields to be returned from IP
             Geolocation service endpoint.
     """
-    _subdomain: str = "ipgeolocation"
+    _subdomain = "ipgeolocation"
     _response_fields = RESPONSE_FIELDS
 
     def check(

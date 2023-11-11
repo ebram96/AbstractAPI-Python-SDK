@@ -1,4 +1,4 @@
-from typing import Any, ClassVar
+from typing import Any
 
 import requests
 
@@ -9,7 +9,7 @@ from .response_fields import RESPONSE_FIELDS
 class EmailValidationResponse(JSONResponse):
     """Email validation service response."""
 
-    _complex_bool_fields: ClassVar[frozenset[str]] = frozenset({
+    _complex_bool_fields = frozenset({
         "is_valid_format",
         "is_free_email",
         "is_disposable_email",

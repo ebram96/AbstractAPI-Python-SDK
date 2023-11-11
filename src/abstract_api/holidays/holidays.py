@@ -11,7 +11,7 @@ class Holidays(BaseService[HolidaysResponse]):
     Attributes:
         _subdomain: Holidays service subdomain.
     """
-    _subdomain: str = "holidays"
+    _subdomain = "holidays"
 
     def lookup(
         self,
