@@ -1,5 +1,4 @@
-from abstract_api.bases import BaseService
-
+from ..bases import BaseService
 from .vat_calculation_response import VATCalculationResponse
 from .vat_categories_response import VATCategoriesResponse
 from .vat_validation_response import VATValidationResponse

@@ -1,9 +1,8 @@
 import json
 from typing import Any, BinaryIO
 
-from abstract_api.bases import BaseService
-from abstract_api.exceptions import ClientRequestError
-
+from ..bases import BaseService
+from ..exceptions import ClientRequestError
 from .image_processing_response import ImageProcessingResponse
 from .strategies import BaseStrategy
 

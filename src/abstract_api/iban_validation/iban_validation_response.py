@@ -1,7 +1,6 @@
 import requests
 
-from abstract_api.bases import JSONResponse
-
+from ..bases import JSONResponse
 from .response_fields import RESPONSE_FIELDS
 
 

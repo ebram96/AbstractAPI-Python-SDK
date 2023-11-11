@@ -1,7 +1,6 @@
 from typing import Iterable
 
-from abstract_api.bases import BaseService
-
+from ..bases import BaseService
 from .exchange_rates_conversion_response import ExchangeRatesConversionResponse
 from .historical_exchange_rates_response import HistoricalExchangeRatesResponse
 from .live_exchange_rates_response import LiveExchangeRatesResponse

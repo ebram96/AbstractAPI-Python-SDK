@@ -2,8 +2,7 @@ from typing import Any, Type
 
 import requests
 
-from abstract_api.bases import JSONResponse
-
+from ..bases import JSONResponse
 from .response_fields.calculation import CALCULATION_RESPONSE_FIELDS
 
 

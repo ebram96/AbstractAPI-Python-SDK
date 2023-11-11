@@ -1,5 +1,4 @@
-from abstract_api.bases import BaseService
-
+from ..bases import BaseService
 from .web_scraping_response import WebScrapingResponse
 
 

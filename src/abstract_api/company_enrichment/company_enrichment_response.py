@@ -1,4 +1,4 @@
-from abstract_api.bases import JSONResponse
+from ..bases import JSONResponse
 
 
 class CompanyEnrichmentResponse(JSONResponse):

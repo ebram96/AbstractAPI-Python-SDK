@@ -1,5 +1,4 @@
-from abstract_api.bases import BaseService
-
+from ..bases import BaseService
 from .current_timezone_response import CurrentTimezoneResponse
 from .timezone_conversion_response import TimezoneConversionResponse
 

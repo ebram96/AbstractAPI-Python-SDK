@@ -1,7 +1,6 @@
 from typing import Iterable
 
-from abstract_api.bases import BaseService
-
+from ..bases import BaseService
 from ..mixins import ResponseFieldsMixin
 from .company_enrichment_response import CompanyEnrichmentResponse
 
