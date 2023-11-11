@@ -1,13 +1,13 @@
 from typing import Iterable
 
 from abstract_api.bases import BaseService
-from abstract_api.exceptions import ClientRequestError, ResponseParseError
+from abstract_api.exceptions import ClientRequestError
 
 from .company_enrichment_response import CompanyEnrichmentResponse
 from .response_fields import RESPONSE_FIELDS
 
 
-class CompanyEnrichment(BaseService):
+class CompanyEnrichment(BaseService[CompanyEnrichmentResponse]):
     """AbstractAPI company enrichment service.
 
     Used to find a company's details using its domain.
@@ -96,20 +96,9 @@ class CompanyEnrichment(BaseService):
         else:
             response_fields = self.response_fields
 
-        # TODO: Handle request errors.
-        response = self._service_request(
+        return self._service_request(
+            _response_class=CompanyEnrichmentResponse,
+            _response_class_kwargs={"response_fields": response_fields},
             domain=domain,
             fields=self._response_fields_as_param(response_fields)
         )
-
-        try:
-            company_enrichment_response = CompanyEnrichmentResponse(
-                response=response,
-                response_fields=response_fields
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as CompanyEnrichmentResponse"
-            ) from e
-
-        return company_enrichment_response

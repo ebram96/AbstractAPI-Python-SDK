@@ -1,10 +1,9 @@
 from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
 
 from .email_validation_response import EmailValidationResponse
 
 
-class EmailValidation(BaseService):
+class EmailValidation(BaseService[EmailValidationResponse]):
     """AbstractAPI email validation and verification service.
 
     Used to validate and verify an email address.
@@ -29,18 +28,8 @@ class EmailValidation(BaseService):
         Returns:
             EmailValidationResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=EmailValidationResponse,
             email=email,
             auto_correct=auto_correct
         )
-
-        try:
-            email_validation_response = EmailValidationResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as EmailValidationResponse"
-            ) from e
-
-        return email_validation_response

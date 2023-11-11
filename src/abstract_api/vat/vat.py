@@ -1,5 +1,4 @@
 from abstract_api.bases import BaseService
-from abstract_api.exceptions import ResponseParseError
 
 from .vat_calculation_response import VATCalculationResponse
 from .vat_categories_response import VATCategoriesResponse
@@ -26,20 +25,11 @@ class VAT(BaseService):
         Returns:
             VATValidationResponse representing API call response.
         """
-        response = self._service_request(
-            _action="validate", vat_number=vat_number
+        return self._service_request(
+            _response_class=VATValidationResponse,
+            _action="validate",
+            vat_number=vat_number
         )
-
-        try:
-            vat_validation_response = VATValidationResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as VATValidationResponse"
-            ) from e
-
-        return vat_validation_response
 
     def calculate(
         self,
@@ -67,24 +57,14 @@ class VAT(BaseService):
         Returns:
             VATCalculationResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=VATCalculationResponse,
             _action="calculate",
             amount=amount,
             country_code=country_code,
             is_vat_incl=is_vat_incl,
             vat_category=vat_category
         )
-
-        try:
-            vat_calculation_response = VATCalculationResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as VATCalculationResponse"
-            ) from e
-
-        return vat_calculation_response
 
     def categories(self, country_code: str) -> VATCategoriesResponse:
         """Gets the list of VAT categories for a country.
@@ -96,18 +76,8 @@ class VAT(BaseService):
         Returns:
             VATCategoriesResponse representing API call response.
         """
-        response = self._service_request(
+        return self._service_request(
+            _response_class=VATCategoriesResponse,
             _action="categories",
             country_code=country_code,
         )
-
-        try:
-            vat_categories_response = VATCategoriesResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as VATCategoriesResponse"
-            ) from e
-
-        return vat_categories_response

@@ -1,13 +1,13 @@
 from typing import Iterable
 
 from abstract_api.bases import BaseService
-from abstract_api.exceptions import ClientRequestError, ResponseParseError
+from abstract_api.exceptions import ClientRequestError
 
 from .acceptable_fields import ACCEPTABLE_FIELDS
 from .ip_geolocation_response import IPGeolocationResponse
 
 
-class IPGeolocation(BaseService):
+class IPGeolocation(BaseService[IPGeolocationResponse]):
     """AbstractAPI IP geolocation service.
 
     Used to determine the location and other details of IP addresses.
@@ -98,20 +98,9 @@ class IPGeolocation(BaseService):
         else:
             response_fields = self.response_fields
 
-        # TODO: Handle request errors.
-        response = self._service_request(
+        return self._service_request(
+            _response_class=IPGeolocationResponse,
+            _response_class_kwargs={"response_fields": response_fields},
             ip_address=ip,
             fields=self._response_fields_as_param(response_fields)
         )
-
-        try:
-            ip_geolocation_response = IPGeolocationResponse(
-                response=response,
-                response_fields=response_fields
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as IPGeolocationResponse"
-            ) from e
-
-        return ip_geolocation_response

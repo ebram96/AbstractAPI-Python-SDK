@@ -2,13 +2,13 @@ import json
 from typing import Any, BinaryIO
 
 from abstract_api.bases import BaseService
-from abstract_api.exceptions import ClientRequestError, ResponseParseError
+from abstract_api.exceptions import ClientRequestError
 
 from .image_processing_response import ImageProcessingResponse
 from .strategies import BaseStrategy
 
 
-class ImageProcessing(BaseService):
+class ImageProcessing(BaseService[ImageProcessingResponse]):
     """AbstractAPI image processing service.
 
     Used to convert, compress, or optimize an image.
@@ -118,6 +118,7 @@ class ImageProcessing(BaseService):
 
         action = "upload/" if image is not None else "url/"
         service_kwargs: dict[str, Any] = {
+            "_response_class": ImageProcessingResponse,
             "_action": action,
             "_method": "POST"
         }
@@ -129,15 +130,4 @@ class ImageProcessing(BaseService):
         else:
             service_kwargs["_body"] = data | {"url": url}
 
-        response = self._service_request(**service_kwargs)
-
-        try:
-            image_processing_response = ImageProcessingResponse(
-                response=response
-            )
-        except Exception as e:
-            raise ResponseParseError(
-                "Failed to parse response as ImageProcessingResponse"
-            ) from e
-
-        return image_processing_response
+        return self._service_request(**service_kwargs)
