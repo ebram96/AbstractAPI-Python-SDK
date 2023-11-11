@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Final
+from typing import Any, ClassVar
 
 import requests
 
@@ -10,7 +10,7 @@ from .response_fields import RESPONSE_FIELDS
 class EmailValidationResponse(JSONResponse):
     """Email validation service response."""
 
-    _bool_fields: Final[frozenset[str]] = frozenset({
+    _complex_bool_fields: ClassVar[frozenset[str]] = frozenset({
         "is_valid_format",
         "is_free_email",
         "is_disposable_email",
@@ -20,26 +20,21 @@ class EmailValidationResponse(JSONResponse):
         "is_smtp_valid"
     })
 
+    def _init_response_field(self, field: str, value: Any) -> None:
+        """TODO."""
+        setattr(
+            self,
+            f"_{field}",
+            value if field not in self._complex_bool_fields
+            else value["value"]
+        )
+
     def __init__(
         self,
         response: requests.models.Response
     ) -> None:
         """Initializes a new EmailValidationResponse."""
-        super().__init__(response)
-        self._response_fields = RESPONSE_FIELDS
-        not_in_response = object()
-        for field in RESPONSE_FIELDS:
-            if TYPE_CHECKING:
-                assert isinstance(self.meta.body_json, dict)
-            value = self.meta.body_json.get(field, not_in_response)
-            # Set property only if field was returned
-            if value is not not_in_response:
-                setattr(
-                    self,
-                    f"_{field}",
-                    value if field not in self._bool_fields
-                    else value["value"]
-                )
+        super().__init__(response, RESPONSE_FIELDS)
 
     @property
     def email(self) -> str | None:

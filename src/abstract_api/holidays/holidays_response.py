@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import Any
 
 import requests
 
@@ -118,18 +118,16 @@ class Holiday:
 class HolidaysResponse(JSONResponse):
     """Holidays service response."""
 
+    def _init_response_field(self, field: str, value: Any) -> None:
+        """TODO."""
+        holidays = []
+        for c in value:
+            holidays.append(Holiday(**c))
+        self._holidays = frozenset(holidays)
+
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new VATValidationResponse."""
-        super().__init__(response)
-        self._response_fields = RESPONSE_FIELDS
-
-        if self.meta.body_json is not None:
-            holidays = []
-            for c in self.meta.body_json:
-                if TYPE_CHECKING:
-                    assert isinstance(c, dict)
-                holidays.append(Holiday(**c))
-            self._holidays = frozenset(holidays)
+        super().__init__(response, RESPONSE_FIELDS, list_response=True)
 
     @property
     def holidays(self) -> frozenset[Holiday]:

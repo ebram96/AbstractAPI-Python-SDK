@@ -1,6 +1,4 @@
-from typing import TYPE_CHECKING
-
-import requests
+from typing import Any
 
 from abstract_api.bases import JSONResponse
 
@@ -27,30 +25,16 @@ class ExchangeRate:
 class MultipleExchangeRatesResponse(JSONResponse):
     """Base response for services that return multiple exchange rates."""
 
-    def __init__(
-        self,
-        response: requests.models.Response,
-        response_fields: frozenset[str]
-    ) -> None:
-        """Initializes a new MultipleExchangeRatesResponse."""
-        super().__init__(response)
-        self._response_fields = response_fields
-        not_in_response = object()
-        for field in response_fields:
-            if TYPE_CHECKING:
-                assert isinstance(self.meta.body_json, dict)
-            value = self.meta.body_json.get(field, not_in_response)
-            # Set property only if field was returned
-            if value is not not_in_response:
-                # TODO: Move to parent class
-                if field == "exchange_rates":
-                    exchange_rates = []
-                    for currency, rate in value.items():
-                        exchange_rates.append(
-                            ExchangeRate(currency=currency, rate=rate)
-                        )
-                    value = frozenset(exchange_rates)
-                setattr(self, f"_{field}", value)
+    def _init_response_field(self, field: str, value: Any) -> None:
+        """TODO."""
+        if field == "exchange_rates":
+            exchange_rates = []
+            for currency, rate in value.items():
+                exchange_rates.append(
+                    ExchangeRate(currency=currency, rate=rate)
+                )
+            value = frozenset(exchange_rates)
+        super()._init_response_field(field, value)
 
     @property
     def base(self) -> str | None:

@@ -1,5 +1,3 @@
-from typing import TYPE_CHECKING
-
 import requests
 
 from abstract_api.bases import JSONResponse
@@ -12,17 +10,7 @@ class CurrentTimezoneResponse(JSONResponse):
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new CurrentTimezoneResponse."""
-        super().__init__(response)
-        self._response_fields = CURRENT_RESPONSE_FIELDS
-        not_in_response = object()
-        for field in CURRENT_RESPONSE_FIELDS:
-            if TYPE_CHECKING:
-                assert isinstance(self.meta.body_json, dict)
-            value = self.meta.body_json.get(field, not_in_response)
-            # Set property only if field was returned
-            if value is not not_in_response:
-                # TODO: Move to parent class
-                setattr(self, f"_{field}", value)
+        super().__init__(response, CURRENT_RESPONSE_FIELDS)
 
     @property
     def datetime(self) -> str | None:

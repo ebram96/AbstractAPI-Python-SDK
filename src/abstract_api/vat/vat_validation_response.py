@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Type
+from typing import Any, Type
 
 import requests
 
@@ -57,24 +57,18 @@ class VATValidationResponse(JSONResponse):
         "country": Country
     }
 
+    def _init_response_field(self, field: str, value: Any) -> None:
+        """TODO."""
+        setattr(
+            self,
+            f"_{field}",
+            value if field not in self._nested_entities
+            else self._nested_entities[field](**value)
+        )
+
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new VATValidationResponse."""
-        super().__init__(response)
-        self._response_fields = VALIDATION_RESPONSE_FIELDS
-        not_in_response = object()
-        for field in VALIDATION_RESPONSE_FIELDS:
-            if TYPE_CHECKING:
-                assert isinstance(self.meta.body_json, dict)
-            value = self.meta.body_json.get(field, not_in_response)
-            # Set property only if field was returned
-            if value is not not_in_response:
-                # TODO: Move to parent class
-                setattr(
-                    self,
-                    f"_{field}",
-                    value if field not in self._nested_entities
-                    else self._nested_entities[field](**value)
-                )
+        super().__init__(response, VALIDATION_RESPONSE_FIELDS)
 
     @property
     def vat_number(self) -> str | None:

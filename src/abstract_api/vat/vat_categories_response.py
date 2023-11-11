@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import Any
 
 import requests
 
@@ -51,18 +51,20 @@ class Category:
 class VATCategoriesResponse(JSONResponse):
     """VAT categories service response."""
 
+    def _init_response_field(self, field: str, value: Any) -> None:
+        """TODO."""
+        categories = []
+        for c in value:
+            categories.append(Category(**c))
+        self._categories = frozenset(categories)
+
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new VATValidationResponse."""
-        super().__init__(response)
-        self._response_fields = CATEGORIES_RESPONSE_FIELDS
-
-        if self.meta.body_json:
-            categories = []
-            for c in self.meta.body_json:
-                if TYPE_CHECKING:
-                    assert isinstance(c, dict)
-                categories.append(Category(**c))
-            self._categories = frozenset(categories)
+        super().__init__(
+            response,
+            CATEGORIES_RESPONSE_FIELDS,
+            list_response=True
+        )
 
     @property
     def categories(self) -> frozenset[Category] | None:

@@ -1,6 +1,4 @@
-from typing import TYPE_CHECKING, Type
-
-import requests.models
+from typing import Any, Type
 
 from abstract_api.bases import JSONResponse
 
@@ -167,27 +165,14 @@ class IPGeolocationResponse(JSONResponse):
         "connection": Connection
     }
 
-    def __init__(
-        self,
-        response: requests.models.Response,
-        response_fields: frozenset[str]
-    ) -> None:
-        """Initializes a new IPGeolocationResponse."""
-        super().__init__(response)
-        self._response_fields = response_fields
-        not_in_response = object()
-        for field in response_fields:
-            if TYPE_CHECKING:
-                assert isinstance(self.meta.body_json, dict)
-            value = self.meta.body_json.get(field, not_in_response)
-            # Set property only if field was returned
-            if value is not not_in_response:
-                setattr(
-                    self,
-                    f"_{field}",
-                    value if field not in self._nested_entities
-                    else self._nested_entities[field](**value)
-                )
+    def _init_response_field(self, field: str, value: Any) -> None:
+        """TODO."""
+        setattr(
+            self,
+            f"_{field}",
+            value if field not in self._nested_entities
+            else self._nested_entities[field](**value)
+        )
 
     @property
     def ip_address(self) -> str | None:
