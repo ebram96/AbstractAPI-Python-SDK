@@ -1,13 +1,12 @@
 from typing import Iterable
 
 from abstract_api.bases import BaseService
-from abstract_api.exceptions import ClientRequestError
 
-from .acceptable_fields import ACCEPTABLE_FIELDS
+from ..mixins import ResponseFieldsMixin
 from .ip_geolocation_response import IPGeolocationResponse
 
 
-class IPGeolocation(BaseService[IPGeolocationResponse]):
+class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):
     """AbstractAPI IP geolocation service.
 
     Used to determine the location and other details of IP addresses.
@@ -18,65 +17,29 @@ class IPGeolocation(BaseService[IPGeolocationResponse]):
             Geolocation service endpoint.
     """
     _subdomain: str = "ipgeolocation"
-
-    def __init__(
-        self,
-        *,
-        response_fields: Iterable[str] | None = None,
-        **kwargs
-    ) -> None:
-        """Constructs an IPGeolocation.
-
-        Args:
-            response_fields: Selected response fields.
-        """
-        super().__init__(**kwargs)
-        if response_fields is not None:
-            self.response_fields = frozenset(response_fields)
-        else:
-            self.response_fields = ACCEPTABLE_FIELDS
-
-    @staticmethod
-    def _validate_response_fields(response_fields: Iterable[str]) -> None:
-        """Validates whether all the given fields are acceptable.
-
-        Args:
-            response_fields: Selected response fields.
-        """
-        for field in response_fields:
-            if field not in ACCEPTABLE_FIELDS:
-                raise ClientRequestError(
-                    f"Field '{field}' is not a valid response field for IP "
-                    f"Geolocation service."
-                )
-
-    @property
-    def response_fields(self) -> frozenset[str]:
-        """Gets selected response fields."""
-        if self._response_fields:
-            return self._response_fields
-        return ACCEPTABLE_FIELDS
-
-    @response_fields.setter
-    def response_fields(self, fields: Iterable[str]) -> None:
-        """Sets selected response fields."""
-        self._validate_response_fields(fields)
-        self._response_fields = frozenset(fields)
-
-    @staticmethod
-    def _response_fields_as_param(response_fields: Iterable[str]) -> str:
-        """Builds 'fields' URL query parameter.
-
-         Builds a string that contains selected response fields to be used
-         as a URL query parameter.
-
-        Args:
-            response_fields: Selected response fields.
-
-        Returns:
-            Comma-separated string with all selected response fields.
-        """
-        return ",".join(response_fields)
+    _response_fields = frozenset({
+        "ip_address",
+        "city",
+        "city_geoname_id",
+        "region",
+        "region_iso_code",
+        "region_geoname_id",
+        "postal_code",
+        "country",
+        "country_code",
+        "country_geoname_id",
+        "country_is_eu",
+        "continent",
+        "continent_code",
+        "continent_geoname_id",
+        "longitude",
+        "latitude",
+        "security",
+        "timezone",
+        "flag",
+        "currency",
+        "connection"
+    })
 
     def check(
         self,
