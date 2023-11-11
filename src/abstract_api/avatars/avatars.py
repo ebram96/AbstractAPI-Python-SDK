@@ -11,11 +11,11 @@ class Avatars(BaseService[AvatarsResponse]):
     Attributes:
         _subdomain: Avatars service subdomain.
     """
-    _subdomain: str = "avatars"
+    _subdomain = "avatars"
 
     def create(
         self,
-        name,
+        name: str,
         image_size: int | None = None,
         image_format: str | None = None,
         font_size: float | None = None,

@@ -10,7 +10,7 @@ class WebScraping(BaseService[WebScrapingResponse]):
     Attributes:
         _subdomain: Web scraping service subdomain.
     """
-    _subdomain: str = "scrape"
+    _subdomain = "scrape"
 
     def scrape(
         self,

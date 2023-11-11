@@ -10,7 +10,7 @@ class WebsiteScreenshot(BaseService[WebsiteScreenshotResponse]):
     Attributes:
         _subdomain: Website screenshot service subdomain.
     """
-    _subdomain: str = "screenshot"
+    _subdomain = "screenshot"
 
     def capture(
         self,

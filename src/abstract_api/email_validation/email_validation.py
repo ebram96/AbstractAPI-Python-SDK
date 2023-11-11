@@ -10,7 +10,7 @@ class EmailValidation(BaseService[EmailValidationResponse]):
     Attributes:
         _subdomain: Email validation service subdomain.
     """
-    _subdomain: str = "emailvalidation"
+    _subdomain = "emailvalidation"
 
     def check(
         self,

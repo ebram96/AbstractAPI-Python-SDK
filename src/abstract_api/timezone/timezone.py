@@ -11,7 +11,7 @@ class Timezone(BaseService):
     Attributes:
         _subdomain: timezone service subdomain.
     """
-    _subdomain: str = "timezone"
+    _subdomain = "timezone"
 
     @staticmethod
     def _location_as_param(

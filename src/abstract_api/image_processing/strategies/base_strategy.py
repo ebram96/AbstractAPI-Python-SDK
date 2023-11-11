@@ -5,7 +5,7 @@ class BaseStrategy(ABC):
     """Base class for all image processing strategies."""
 
     @abstractmethod
-    def __init__(self):
+    def __init__(self) -> None:
         """This is to prevent direct instantiation of this base class."""
 
     def json(self) -> dict[str, int | str]:

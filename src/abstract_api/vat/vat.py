@@ -13,7 +13,7 @@ class VAT(BaseService):
     Attributes:
         _subdomain: VAT service subdomain.
     """
-    _subdomain: str = "vat"
+    _subdomain = "vat"
 
     def check(self, vat_number: str) -> VATValidationResponse:
         """Validates a VAT number.

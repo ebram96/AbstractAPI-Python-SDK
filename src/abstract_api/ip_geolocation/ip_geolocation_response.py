@@ -26,7 +26,7 @@ class Timezone:
         gmt_offset: int,
         current_time: str,
         is_dst: bool
-    ):
+    ) -> None:
         """Initializes a new Timezone."""
         self._name = name
         self._abbreviation = abbreviation
@@ -120,7 +120,7 @@ class Connection:
         connection_type: str,
         isp_name: str,
         organization_name: str
-    ):
+    ) -> None:
         """Initializes a new Connection."""
         self._autonomous_system_number = autonomous_system_number
         self._autonomous_system_organization = autonomous_system_organization

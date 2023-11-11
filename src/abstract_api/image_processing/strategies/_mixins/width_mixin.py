@@ -22,6 +22,6 @@ class WidthMixin(_Base):
         }
 
     @property
-    def width(self):
+    def width(self) -> int:
         """Width to resize the image to."""
         return self._width

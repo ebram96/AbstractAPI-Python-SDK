@@ -10,7 +10,7 @@ class IBANValidation(BaseService[IBANValidationResponse]):
     Attributes:
         _subdomain: IBAN validation service subdomain.
     """
-    _subdomain: str = "ibanvalidation"
+    _subdomain = "ibanvalidation"
 
     def check(self, iban: str) -> IBANValidationResponse:
         """Validates an IBAN.

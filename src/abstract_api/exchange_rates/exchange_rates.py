@@ -16,7 +16,7 @@ class ExchangeRates(BaseService):
     Attributes:
         _subdomain: Exchange rates service subdomain.
     """
-    _subdomain: str = "exchange-rates"
+    _subdomain = "exchange-rates"
 
     @staticmethod
     def _target_as_param(target: Iterable[str] | None = None) -> str | None:

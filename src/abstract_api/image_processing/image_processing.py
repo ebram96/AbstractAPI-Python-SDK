@@ -15,7 +15,7 @@ class ImageProcessing(BaseService[ImageProcessingResponse]):
     Attributes:
         _subdomain: Image processing service subdomain.
     """
-    _subdomain: str = "images"
+    _subdomain = "images"
 
     def upload(
         self,

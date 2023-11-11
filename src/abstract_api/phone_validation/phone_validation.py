@@ -10,7 +10,7 @@ class PhoneValidation(BaseService[PhoneValidationResponse]):
     Attributes:
         _subdomain: Phone validation service subdomain.
     """
-    _subdomain: str = "phonevalidation"
+    _subdomain = "phonevalidation"
 
     def check(self, phone: str) -> PhoneValidationResponse:
         """Validates and verifies a phone number.
