@@ -1,4 +1,4 @@
-"""Response fields of Email validation service endpoint."""
+"""Response fields of email validation service endpoint."""
 
 
 RESPONSE_FIELDS: frozenset[str] = frozenset({

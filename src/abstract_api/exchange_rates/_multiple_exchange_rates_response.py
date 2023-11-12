@@ -4,10 +4,10 @@ from ..core.bases import JSONResponse
 
 
 class ExchangeRate:
-    """Exchange rate entity in live/historical exchange rates response."""
+    """Exchange rate entity in response."""
 
     def __init__(self, currency: str, rate: float) -> None:
-        """Initializes a new Country."""
+        """Initializes a new ExchangeRate."""
         self._currency = currency
         self._rate = rate
 
@@ -26,7 +26,15 @@ class MultipleExchangeRatesResponse(JSONResponse):
     """Base response for services that return multiple exchange rates."""
 
     def _init_response_field(self, field: str, value: Any) -> None:
-        """TODO."""
+        """Sets a response field's value during instance initialization.
+
+        This should be used in/as a part of __init__ method.
+
+        Args:
+            field: Field name.
+            value: Value to be set. The value is parsed to a nested entity
+                if the field is a nested entity.
+        """
         if field == "exchange_rates":
             exchange_rates = []
             for currency, rate in value.items():

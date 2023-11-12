@@ -70,7 +70,7 @@ class BaseService(Generic[BaseResponseT]):
                 endpoints.
 
         Returns:
-            AbstractAPI's response.
+            Parsed AbstractAPI's response.
         """
         if _method.lower() not in ["get", "post"]:
             raise ClientRequestError(

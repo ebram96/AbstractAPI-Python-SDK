@@ -5,7 +5,7 @@ import requests.models
 
 
 class BaseResponseMeta(ABC):
-    """Base response meta data for Abstract API service response."""
+    """Base response metadata for Abstract API service response."""
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initialize a new ResponseMeta."""
@@ -27,7 +27,7 @@ class BaseResponse(ABC):
     """Base Abstract API service response.
 
     Attributes:
-        _meta_class: Class (type) of meta.
+        _meta_class: Class (type) of response metadata instance.
     """
     _meta_class: ClassVar[Type[BaseResponseMeta]]
 
@@ -37,5 +37,5 @@ class BaseResponse(ABC):
 
     @property
     def meta(self) -> BaseResponseMeta:
-        """Meta data about response."""
+        """Metadata about response."""
         return self._meta

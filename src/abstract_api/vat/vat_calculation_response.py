@@ -35,7 +35,7 @@ class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
     }
 
     def __init__(self, response: requests.models.Response) -> None:
-        """Initializes a new PhoneCalculationResponse."""
+        """Initializes a new VATCalculationResponse."""
         super().__init__(response, CALCULATION_RESPONSE_FIELDS)
 
     @property
@@ -45,15 +45,15 @@ class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
 
     @property
     def amount_including_vat(self) -> float | None:
-        """The calculated amount of VAT."""
-        return self._get_response_field("amount_including_vat")
-
-    @property
-    def vat_amount(self) -> float | None:
         """The sum of the base amount and the VAT.
 
         It is amount_excl_vat + vat_amount.
         """
+        return self._get_response_field("amount_including_vat")
+
+    @property
+    def vat_amount(self) -> float | None:
+        """The calculated amount of VAT."""
         return self._get_response_field("vat_amount")
 
     @property

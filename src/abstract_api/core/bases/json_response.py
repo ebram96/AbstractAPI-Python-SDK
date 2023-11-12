@@ -6,7 +6,7 @@ from ._base_response import BaseResponse, BaseResponseMeta
 
 
 class JSONResponseMeta(BaseResponseMeta):
-    """TODO."""
+    """Metadata about a JSON-based API response."""
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initialize a new JSONResponseMeta."""
@@ -23,13 +23,21 @@ class JSONResponseMeta(BaseResponseMeta):
 
 
 class JSONResponse(BaseResponse):
-    """TODO."""
+    """JSON-based API response."""
     _response_fields: frozenset[str]
     _meta_class: ClassVar[Type[JSONResponseMeta]] = JSONResponseMeta
     meta: JSONResponseMeta
 
     def _init_response_field(self, field: str, value: Any) -> None:
-        """TODO."""
+        """Sets a response field's value during instance initialization.
+
+        This should be used in/as a part of __init__ method.
+
+        Args:
+            field: Field name.
+            value: Value to be set. The value is parsed to a nested entity
+                if the field is a nested entity.
+        """
         setattr(self, f"_{field}", value)
 
     def __init__(
@@ -38,7 +46,7 @@ class JSONResponse(BaseResponse):
         response_fields: frozenset[str],
         list_response: bool = False
     ) -> None:
-        """TODO."""
+        """Initialize a new JSONResponse."""
         super().__init__(response)
         self._response_fields = response_fields
 

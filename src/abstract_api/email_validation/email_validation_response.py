@@ -20,7 +20,15 @@ class EmailValidationResponse(JSONResponse):
     })
 
     def _init_response_field(self, field: str, value: Any) -> None:
-        """TODO."""
+        """Sets a response field's value during instance initialization.
+
+        This should be used in/as a part of __init__ method.
+
+        Args:
+            field: Field name.
+            value: Value to be set. The value is parsed to a nested entity
+                if the field is a nested entity.
+        """
         setattr(
             self,
             f"_{field}",
@@ -54,7 +62,7 @@ class EmailValidationResponse(JSONResponse):
 
     @property
     def deliverability(self) -> str | None:
-        """Abstract’s evaluation of the deliverability of the email.
+        """Abstract's evaluation of the deliverability of the email.
 
         Possible values are: DELIVERABLE, UNDELIVERABLE, and UNKNOWN.
         """
@@ -64,7 +72,7 @@ class EmailValidationResponse(JSONResponse):
     def quality_score(self) -> float | None:
         """Decimal score for quality and deliverability of the submitted email.
 
-        It is between 0.01 and 0.99 reflecting AbstractAPI’s confidence in the
+        It is between 0.01 and 0.99 reflecting AbstractAPI's confidence in the
         quality and deliverability of the submitted email.
         """
         return self._get_response_field("quality_score")
@@ -80,9 +88,9 @@ class EmailValidationResponse(JSONResponse):
 
     @property
     def is_free_email(self) -> bool | None:
-        """Whether email’s domain is a free to use email.
+        """Whether email's domain is a free to use email.
 
-        True if email domain is found among Abstract’s list of free email
+        True if email domain is found among Abstract's list of free email
         providers (Gmail, Yahoo, etc.).
         """
         return self._get_response_field("is_free_email")
@@ -91,7 +99,7 @@ class EmailValidationResponse(JSONResponse):
     def is_disposable_email(self) -> bool | None:
         """Whether the email is disposable.
 
-        True if the email’s domain is found among Abstract’s list of disposable
+        True if the email's domain is found among Abstract's list of disposable
         email providers (e.g., Mailinator, Yopmail, etc.).
         """
         return self._get_response_field("is_disposable_email")
@@ -100,7 +108,7 @@ class EmailValidationResponse(JSONResponse):
     def is_role_email(self) -> bool | None:
         """Whether the email represents a role and not an individual.
 
-        True if the email’s local part (e.g., the “to” part) appears to be for
+        True if the email's local part (e.g., the “to” part) appears to be for
         a role rather than individual.
         Examples of this include “team@”, “sales@”, “info@”, etc.
         """

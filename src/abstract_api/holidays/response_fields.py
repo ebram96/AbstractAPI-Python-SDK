@@ -1,4 +1,4 @@
-"""Response fields of Holidays service endpoint."""
+"""Response fields of holidays service endpoint."""
 
 
 # The response body does not contain 'holidays' field. This is just to be

@@ -1,4 +1,4 @@
-"""Response fields of VAT calculation service endpoint."""
+"""Response fields of VAT categories service endpoint."""
 
 
 # The response body does not contain 'categories' field. This is just to be

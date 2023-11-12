@@ -6,7 +6,7 @@ from .abstract_api_exception import AbstractAPIException
 
 
 class APIRequestError(AbstractAPIException):
-    """Raised when there's after making an API request."""
+    """Raised when there's a problem with returned in API response."""
     def __init__(
         self,
         http_status: int,

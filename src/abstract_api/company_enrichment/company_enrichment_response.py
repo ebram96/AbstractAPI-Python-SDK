@@ -31,7 +31,7 @@ class CompanyEnrichmentResponse(JSONResponse):
 
     @property
     def locality(self) -> str | None:
-        """The city or region he company headquarter is based in."""
+        """The city or region the company headquarter is based in."""
         return self._get_response_field("locality")
 
     @property
