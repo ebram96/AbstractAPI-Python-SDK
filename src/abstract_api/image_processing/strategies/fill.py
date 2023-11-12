@@ -10,14 +10,9 @@ class Fill(HeightMixin, WidthMixin, BaseStrategy):
     The default background color is black.
     """
 
-    def __init__(
-        self,
-        background: str | None = None,
-        *args,
-        **kwargs
-    ) -> None:
+    def __init__(self, background: str | None = None, **kwargs) -> None:
         """Initialize a new Square instance."""
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
         self._background = background
 
     def json(self) -> dict[str, int | str]:

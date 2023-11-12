@@ -1,6 +1,7 @@
 import requests
 
 from ..core.bases import JSONResponse
+from ..core.common_entities import Country as CommonCountry
 from ..core.mixins import NestedEntitiesMixin
 from .response_fields import RESPONSE_FIELDS
 
@@ -32,24 +33,13 @@ class Format:
         return self._local
 
 
-class Country:
+class Country(CommonCountry):
     """Country entity in phone validation response."""
 
-    def __init__(self, code: str, name: str, prefix: str) -> None:
+    def __init__(self, prefix: str, **kwargs) -> None:
         """Initializes a new Country."""
-        self._code = code
-        self._name = name
+        super().__init__(**kwargs)
         self._prefix = prefix
-
-    @property
-    def code(self) -> str | None:
-        """The country's two-letter ISO 3166-1 alpha-2 code."""
-        return self._code
-
-    @property
-    def name(self) -> str | None:
-        """The name of the country in which the phone number is registered."""
-        return self._name
 
     @property
     def prefix(self) -> str | None:

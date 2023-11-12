@@ -1,30 +1,9 @@
 import requests
 
 from ..core.bases import JSONResponse
+from ..core.common_entities import Country
 from ..core.mixins import NestedEntitiesMixin
 from .response_fields.calculation import CALCULATION_RESPONSE_FIELDS
-
-
-class Country:
-    """Country entity in VAT calculation response."""
-
-    def __init__(self, code: str, name: str) -> None:
-        """Initializes a new Country."""
-        self._code = code
-        self._name = name
-
-    @property
-    def code(self) -> str | None:
-        """The two-letter ISO 3166-1 alpha-2 code of the country.
-
-        It is the code of the country in which the transaction takes place.
-        """
-        return self._code
-
-    @property
-    def name(self) -> str | None:
-        """The name of the country the VAT is being calculated from."""
-        return self._name
 
 
 class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
