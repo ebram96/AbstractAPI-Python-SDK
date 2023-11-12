@@ -10,9 +10,9 @@ else:
 
 class HeightMixin(_Base):
     """Height mixin."""
-    def __init__(self, height: int, *args, **kwargs) -> None:
+    def __init__(self, *, height: int, **kwargs) -> None:
         """Initializes a new instance."""
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
         self._height = height
 
     def json(self) -> dict[str, int | str]:

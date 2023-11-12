@@ -9,6 +9,7 @@ class Square(BaseStrategy):
 
     def __init__(self, size: int) -> None:
         """Initialize a new Square instance."""
+        super().__init__()
         self._size = size
 
     def json(self) -> dict[str, int | str]:

@@ -10,9 +10,9 @@ else:
 
 class WidthMixin(_Base):
     """Width mixin."""
-    def __init__(self, width: int, *args, **kwargs) -> None:
+    def __init__(self, *, width: int, **kwargs) -> None:
         """Initializes a new instance."""
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
         self._width = width
 
     def json(self) -> dict[str, int | str]:

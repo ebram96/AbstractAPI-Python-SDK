@@ -35,12 +35,12 @@ class CropModeMixin(_Base):
 
     def __init__(
         self,
+        *,
         crop_mode: CropMode | str | None = None,
-        *args,
         **kwargs
     ) -> None:
         """Initializes a new instance."""
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
 
         if crop_mode is not None:
             if isinstance(crop_mode, str):

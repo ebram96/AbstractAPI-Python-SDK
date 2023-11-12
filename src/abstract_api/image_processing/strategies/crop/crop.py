@@ -38,11 +38,10 @@ class Crop(HeightMixin, WidthMixin, CropModeMixin, BaseStrategy):
         scale: int | None = None,
         x: int | None = None,
         y: int | None = None,
-        *args,
         **kwargs
     ) -> None:
         """Initializes a new Crop instance."""
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
         self._scale = scale
         self._x = x
         self._y = y
