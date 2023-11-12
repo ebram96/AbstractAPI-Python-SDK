@@ -41,7 +41,7 @@ class MultipleExchangeRatesResponse(JSONResponse):
                 exchange_rates.append(
                     ExchangeRate(currency=currency, rate=rate)
                 )
-            value = frozenset(exchange_rates)
+            value = tuple(exchange_rates)
         super()._init_response_field(field, value)
 
     @property
@@ -50,6 +50,6 @@ class MultipleExchangeRatesResponse(JSONResponse):
         return self._get_response_field("base")
 
     @property
-    def exchange_rates(self) -> frozenset[ExchangeRate] | None:
+    def exchange_rates(self) -> tuple[ExchangeRate] | None:
         """Target currencies exchange rates versus the base currency."""
         return self._get_response_field("exchange_rates")

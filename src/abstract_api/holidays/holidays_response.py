@@ -134,13 +134,13 @@ class HolidaysResponse(JSONResponse):
         holidays = []
         for c in value:
             holidays.append(Holiday(**c))
-        self._holidays = frozenset(holidays)
+        self._holidays = tuple(holidays)
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new HolidaysResponse."""
         super().__init__(response, RESPONSE_FIELDS, list_response=True)
 
     @property
-    def holidays(self) -> frozenset[Holiday]:
+    def holidays(self) -> tuple[Holiday]:
         """The returned holidays."""
         return self._get_response_field("holidays")
