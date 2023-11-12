@@ -72,7 +72,8 @@ class BaseService(Generic[BaseResponseT]):
         Returns:
             Parsed AbstractAPI's response.
         """
-        if _method.lower() not in ["get", "post"]:
+        _method = _method.lower()
+        if _method not in ["get", "post"]:
             raise ClientRequestError(
                 f"Invalid or not allowed HTTP method '{_method}'"
             )
@@ -82,7 +83,6 @@ class BaseService(Generic[BaseResponseT]):
             "url": self._service_url(_action)
         }
 
-        _method = _method.lower()
         if _method == "get":
             request_kwargs["params"] = {"api_key": self._api_key} | params
         else:

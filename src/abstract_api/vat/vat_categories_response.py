@@ -67,7 +67,7 @@ class VATCategoriesResponse(JSONResponse):
         categories = []
         for c in value:
             categories.append(Category(**c))
-        self._categories = frozenset(categories)
+        self._categories = tuple(categories)
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new VATCategoriesResponse."""
@@ -78,6 +78,6 @@ class VATCategoriesResponse(JSONResponse):
         )
 
     @property
-    def categories(self) -> frozenset[Category] | None:
+    def categories(self) -> tuple[Category] | None:
         """The returned VAT categories."""
         return self._get_response_field("categories")
