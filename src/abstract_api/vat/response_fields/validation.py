@@ -1,4 +1,4 @@
-"""Response fields of phone validation service endpoint."""
+"""Response fields of VAT validation service endpoint."""
 
 
 VALIDATION_RESPONSE_FIELDS: frozenset[str] = frozenset({

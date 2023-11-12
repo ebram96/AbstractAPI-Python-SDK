@@ -6,16 +6,16 @@ from ._base_response import BaseResponse, BaseResponseMeta
 
 
 class FileResponseMeta(BaseResponseMeta):
-    """TODO."""
+    """Meta data about a file-based API response."""
 
 
 class FileResponse(BaseResponse):
-    """TODO."""
+    """File-based API response."""
     _meta_class: ClassVar[Type[FileResponseMeta]] = FileResponseMeta
     meta: FileResponseMeta
 
     def __init__(self, response: requests.models.Response) -> None:
-        """Initialize a new ResponseMeta."""
+        """Initialize a new FileResponse."""
         super().__init__(response)
         self._content: bytes = response.content
 

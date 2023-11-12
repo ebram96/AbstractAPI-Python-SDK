@@ -24,7 +24,7 @@ class ImageProcessing(BaseService[ImageProcessingResponse]):
         quality: int | None = None,
         resize: BaseStrategy | None = None
     ) -> ImageProcessingResponse:
-        """Can convert, compress, or optimize an image.
+        """Converts, compresses, or optimizes an image.
 
         Args:
             image: The image to be processed, it should be a file-like or a
@@ -63,7 +63,7 @@ class ImageProcessing(BaseService[ImageProcessingResponse]):
         quality: int | None = None,
         resize: BaseStrategy | None = None
     ) -> ImageProcessingResponse:
-        """Can convert, compress, or optimize an image in the given URL.
+        """Converts, compresses, or optimizes an image in the given URL.
 
         Args:
             url: The URL of the image that you would like to edit.

@@ -16,7 +16,7 @@ class Category:
         category: str,
         description: str
     ) -> None:
-        """Initializes a new Country."""
+        """Initializes a new Category."""
         self._country_code = country_code
         self._rate = rate
         self._category = category
@@ -24,7 +24,7 @@ class Category:
 
     @property
     def country_code(self) -> str:
-        """Country’s ISO 3166-1 alpha-2 code.
+        """Country's ISO 3166-1 alpha-2 code.
 
         The code of the country in which the transaction takes place, which
         is returned from the request.
@@ -55,14 +55,22 @@ class VATCategoriesResponse(JSONResponse):
         field: str,
         value: list[dict[str, Any]]
     ) -> None:
-        """TODO."""
+        """Sets a response field's value during instance initialization.
+
+        This should be used in/as a part of __init__ method.
+
+        Args:
+            field: Field name.
+            value: Value to be set. The value is parsed to a nested entity
+                if the field is a nested entity.
+        """
         categories = []
         for c in value:
             categories.append(Category(**c))
         self._categories = frozenset(categories)
 
     def __init__(self, response: requests.models.Response) -> None:
-        """Initializes a new VATValidationResponse."""
+        """Initializes a new VATCategoriesResponse."""
         super().__init__(
             response,
             CATEGORIES_RESPONSE_FIELDS,

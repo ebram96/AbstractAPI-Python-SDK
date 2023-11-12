@@ -7,7 +7,7 @@ from .response_fields import RESPONSE_FIELDS
 
 
 class Holiday:
-    """Holiday entity in VAT Holidays response."""
+    """Holiday entity in holidays service response."""
 
     def __init__(
         self,
@@ -122,14 +122,22 @@ class HolidaysResponse(JSONResponse):
         field: str,
         value: list[dict[str, Any]]
     ) -> None:
-        """TODO."""
+        """Sets a response field's value during instance initialization.
+
+        This should be used in/as a part of __init__ method.
+
+        Args:
+            field: Field name.
+            value: Value to be set. The value is parsed to a nested entity
+                if the field is a nested entity.
+        """
         holidays = []
         for c in value:
             holidays.append(Holiday(**c))
         self._holidays = frozenset(holidays)
 
     def __init__(self, response: requests.models.Response) -> None:
-        """Initializes a new VATValidationResponse."""
+        """Initializes a new HolidaysResponse."""
         super().__init__(response, RESPONSE_FIELDS, list_response=True)
 
     @property

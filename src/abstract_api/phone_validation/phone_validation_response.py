@@ -17,7 +17,7 @@ class Format:
     def international(self) -> str:
         """The international format of the submitted phone number.
 
-        This means appending the phone number’s country code and a "+" at
+        This means appending the phone number's country code and a "+" at
         the beginning.
         """
         return self._international
@@ -43,7 +43,7 @@ class Country:
 
     @property
     def code(self) -> str | None:
-        """The country’s two-letter ISO 3166-1 alpha-2 code."""
+        """The country's two-letter ISO 3166-1 alpha-2 code."""
         return self._code
 
     @property
@@ -53,7 +53,7 @@ class Country:
 
     @property
     def prefix(self) -> str | None:
-        """The country’s calling code prefix."""
+        """The country's calling code prefix."""
         return self._prefix
 
 
@@ -86,7 +86,7 @@ class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
 
     @property
     def country(self) -> Country | None:
-        """The of the phone number’s country."""
+        """The of the phone number's country."""
         return self._get_response_field("country")
 
     @property

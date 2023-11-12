@@ -1,4 +1,4 @@
-"""Response fields of Live exchange rates service endpoint."""
+"""Response fields of live exchange rates service endpoint."""
 
 
 LIVE_RESPONSE_FIELDS: frozenset[str] = frozenset({

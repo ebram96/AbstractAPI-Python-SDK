@@ -50,5 +50,5 @@ class ExchangeRatesConversionResponse(JSONResponse):
 
     @property
     def last_updated(self) -> str | None:
-        """The exchange rate used in conversion."""
+        """The Unix timestamp of when the returned data was last updated."""
         return self._get_response_field("last_updated")

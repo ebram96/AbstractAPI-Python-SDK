@@ -36,17 +36,17 @@ class Timezone:
 
     @property
     def name(self) -> str | None:
-        """Timezone’s name from the IANA Time Zone Database."""
+        """Timezone's name from the IANA Time Zone Database."""
         return self._name
 
     @property
     def abbreviation(self) -> str | None:
-        """Timezone’s abbreviation, also from the IANA Time Zone Database."""
+        """Timezone's abbreviation, also from the IANA Time Zone Database."""
         return self._abbreviation
 
     @property
     def gmt_offset(self) -> int | None:
-        """Timezone’s offset from Greenwich Mean Time (GMT)."""
+        """Timezone's offset from Greenwich Mean Time (GMT)."""
         return self._gmt_offset
 
     @property
@@ -72,22 +72,22 @@ class Flag:
 
     @property
     def emoji(self) -> str | None:
-        """Country’s flag as an emoji."""
+        """Country's flag as an emoji."""
         return self._emoji
 
     @property
     def unicode(self) -> str | None:
-        """Country’s flag in unicode."""
+        """Country's flag in unicode."""
         return self._unicode
 
     @property
     def png(self) -> str | None:
-        """Link to a hosted version of the country’s flag in PNG format."""
+        """Link to a hosted version of the country's flag in PNG format."""
         return self._png
 
     @property
     def svg(self) -> str | None:
-        """Link to a hosted version of the country’s flag in SVG format."""
+        """Link to a hosted version of the country's flag in SVG format."""
         return self._svg
 
 
@@ -101,12 +101,12 @@ class Currency:
 
     @property
     def currency_name(self) -> str | None:
-        """The currency’s name."""
+        """The currency's name."""
         return self._currency_name
 
     @property
     def currency_code(self) -> str | None:
-        """The currency’s code in ISO 4217 format."""
+        """The currency's code in ISO 4217 format."""
         return self._currency_code
 
 
@@ -171,12 +171,12 @@ class IPGeolocationResponse(NestedEntitiesMixin, JSONResponse):
 
     @property
     def city(self) -> str | None:
-        """City’s name."""
+        """City's name."""
         return self._get_response_field("city")
 
     @property
     def city_geoname_id(self) -> int | None:
-        """City’s geoname ID."""
+        """City's geoname ID."""
         return self._get_response_field("city_geoname_id")
 
     @property
@@ -186,12 +186,12 @@ class IPGeolocationResponse(NestedEntitiesMixin, JSONResponse):
 
     @property
     def region_iso_code(self) -> str | None:
-        """State or province’s ISO 3166-2 code."""
+        """State or province's ISO 3166-2 code."""
         return self._get_response_field("region_iso_code")
 
     @property
     def region_geoname_id(self) -> int | None:
-        """State or province’s geoname ID."""
+        """State or province's geoname ID."""
         return self._get_response_field("region_geoname_id")
 
     @property
@@ -201,17 +201,17 @@ class IPGeolocationResponse(NestedEntitiesMixin, JSONResponse):
 
     @property
     def country(self) -> str | None:
-        """Country’s name."""
+        """Country's name."""
         return self._get_response_field("country")
 
     @property
     def country_code(self) -> str | None:
-        """Country’s ISO 3166-1 alpha-2 code."""
+        """Country's ISO 3166-1 alpha-2 code."""
         return self._get_response_field("country_code")
 
     @property
     def country_geoname_id(self) -> int | None:
-        """Country’s geoname ID."""
+        """Country's geoname ID."""
         return self._get_response_field("country_geoname_id")
 
     @property
@@ -221,7 +221,7 @@ class IPGeolocationResponse(NestedEntitiesMixin, JSONResponse):
 
     @property
     def continent(self) -> str | None:
-        """Continent’s name."""
+        """Continent's name."""
         return self._get_response_field("continent")
 
     @property
@@ -231,7 +231,7 @@ class IPGeolocationResponse(NestedEntitiesMixin, JSONResponse):
 
     @property
     def continent_geoname_id(self) -> int | None:
-        """Continent’s geoname ID."""
+        """Continent's geoname ID."""
         return self._get_response_field("continent_geoname_id")
 
     @property

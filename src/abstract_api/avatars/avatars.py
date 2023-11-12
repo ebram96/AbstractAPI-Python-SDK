@@ -48,9 +48,9 @@ class Avatars(BaseService[AvatarsResponse]):
                 The characters will first be chosen from distinct words, then
                 from the second letter of distinct words.
             background_color: The hex color for the background.
-                It defaults to #335eea.  TODO: Remove # from prefix.
+                It defaults to #335eea.
             font_color: The hex color for the font.
-                It defaults to white, i.e.,ffffff.  TODO: Remove # from prefix.
+                It defaults to white, i.e.,ffffff.
             is_rounded: Create a rounded avatar picture instead of squared one.
                 It defaults to false.
             is_uppercase: Set the initials in the avatar to all capitals.

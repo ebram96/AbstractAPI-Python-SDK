@@ -9,7 +9,7 @@ class Timezone(BaseService):
     Used to find, convert, and manage time and timezone data across the world.
 
     Attributes:
-        _subdomain: timezone service subdomain.
+        _subdomain: Timezone service subdomain.
     """
     _subdomain = "timezone"
 
@@ -78,7 +78,7 @@ class Timezone(BaseService):
                 a string (e.g., Los Angeles, CA),
                 a longitude and latitude (e.g., -31.4173391,-64.183319),
                 or an IP address (e.g., 82.111.111.111).
-            base_datetime: The datetime you’re converting.
+            base_datetime: The datetime you're converting.
 
         Returns:
             TimezoneConversionResponse representing API call response.

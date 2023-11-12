@@ -68,7 +68,7 @@ class ExchangeRates(BaseService):
         date: str | None = None,
         base_amount: float | None = None
     ) -> ExchangeRatesConversionResponse:
-        """Finds exchange rates from base currency to target currency/ies.
+        """Converts amount of money from base currency to target currency/ies.
 
         Args:
             base: Base currency used to get the latest exchange rate(s) for.
@@ -78,7 +78,7 @@ class ExchangeRates(BaseService):
                 Like the base parameters, any currency passed here follows the
                 ISO 4217 standard. Note that unlike the other endpoints,
                 convert only accepts one target currency at a time.
-            date: The historical date you’d like to get rates from, in the
+            date: The historical date you'd like to get rates from, in the
                 format of YYYY-MM-DD. If you leave this blank, it will use the
                 latest available rate.
             base_amount: The amount of the base currency you would like to

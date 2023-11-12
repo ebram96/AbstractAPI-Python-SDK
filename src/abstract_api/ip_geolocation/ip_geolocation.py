@@ -28,7 +28,7 @@ class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):
 
         Args:
             ip: A valid IP address to analyze.
-            fields: Selected response fields (optional)..
+            fields: Selected response fields (optional).
 
         Returns:
             IPGeolocationResponse representing API call response.

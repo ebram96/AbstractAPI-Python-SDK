@@ -16,6 +16,7 @@ class CompanyEnrichment(
 
     Attributes:
         _subdomain: Company enrichment service subdomain.
+        _response_fields: API response fields.
     """
     _subdomain = "companyenrichment"
     _response_fields = RESPONSE_FIELDS
@@ -28,7 +29,7 @@ class CompanyEnrichment(
         """Finds a company's details using its domain.
 
         Args:
-            domain: The domain of the company you want to get data from.
+            domain: The domain of the company you want to get data for.
             fields: Selected response fields (optional).
 
         Returns:

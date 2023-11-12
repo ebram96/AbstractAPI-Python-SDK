@@ -18,7 +18,7 @@ class CurrentTimezoneResponse(JSONResponse):
 
     @property
     def timezone_name(self) -> str | None:
-        """Timezone’s name from IANA Time Zone Database.
+        """Timezone's name from IANA Time Zone Database.
 
         Read more: https://www.iana.org/time-zones
         """
@@ -26,17 +26,17 @@ class CurrentTimezoneResponse(JSONResponse):
 
     @property
     def timezone_location(self) -> str | None:
-        """Timezone’s location."""
+        """Timezone's location."""
         return self._get_response_field("timezone_location")
 
     @property
     def timezone_abbreviation(self) -> str | None:
-        """Timezone’s abbreviation, also from IANA Time Zone Database."""
+        """Timezone's abbreviation, also from IANA Time Zone Database."""
         return self._get_response_field("timezone_abbreviation")
 
     @property
     def gmt_offset(self) -> str | None:
-        """Timezone’s offset from Greenwich Mean Time (GMT).
+        """Timezone's offset from Greenwich Mean Time (GMT).
 
         Read more: https://greenwichmeantime.com/what-is-gmt
         """
