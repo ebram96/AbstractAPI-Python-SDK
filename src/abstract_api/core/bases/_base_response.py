@@ -8,7 +8,7 @@ class BaseResponseMeta(ABC):
     """Base response metadata for Abstract API service response."""
 
     def __init__(self, response: requests.models.Response) -> None:
-        """Initialize a new ResponseMeta."""
+        """Initialize a new BaseResponseMeta."""
         self._http_status: int = response.status_code
         self._body: bytes = response.content
 
