@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, ClassVar
 
 from ..core.bases import BaseService
 from ..core.exceptions import ClientRequestError
@@ -15,6 +15,7 @@ class Timezone(BaseService):
         _subdomain: Timezone service subdomain.
     """
     _subdomain = "timezone"
+    _service_name_env_var: ClassVar[str] = "TIMEZONE"
 
     @staticmethod
     def _validate_location(

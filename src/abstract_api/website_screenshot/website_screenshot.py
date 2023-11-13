@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from ..core.bases import BaseService
 from ..core.exceptions import ClientRequestError
 from ..core.validators import numerical
@@ -13,6 +15,7 @@ class WebsiteScreenshot(BaseService[WebsiteScreenshotResponse]):
         _subdomain: Website screenshot service subdomain.
     """
     _subdomain = "screenshot"
+    _service_name_env_var: ClassVar[str] = "WEBSITE_SCREENSHOT"
 
     @staticmethod
     def _validate_params(**kwargs) -> None:

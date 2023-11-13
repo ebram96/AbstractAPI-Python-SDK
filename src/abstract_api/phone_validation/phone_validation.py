@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from ..core.bases import BaseService
 from .phone_validation_response import PhoneValidationResponse
 
@@ -11,6 +13,7 @@ class PhoneValidation(BaseService[PhoneValidationResponse]):
         _subdomain: Phone validation service subdomain.
     """
     _subdomain = "phonevalidation"
+    _service_name_env_var: ClassVar[str] = "PHONE_VALIDATION"
 
     def check(self, phone: str) -> PhoneValidationResponse:
         """Validates and verifies a phone number.
