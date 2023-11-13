@@ -26,6 +26,8 @@ class BaseService(Generic[BaseResponseT]):
         _subdomain: A service's subdomain.
             Used with __base_url to generate service-specific API URL.
         _api_key: API key to be used to authenticate with AbstractAPI.
+        _service_name_env_var: Service name that should be used to read API key
+            from environment variables.
     """
     __base_url: Final[str] = "https://{subdomain}.abstractapi.com/v1/"
     _subdomain: str
