@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import requests
 
 from ..core.bases import JSONResponse
@@ -11,12 +13,12 @@ class CurrentTimezoneResponse(JSONResponse):
         """Initializes a new CurrentTimezoneResponse."""
         super().__init__(response, CURRENT_RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def datetime(self) -> str | None:
         """The current date and time of the requested_location."""
         return self._get_response_field("datetime")
 
-    @property
+    @cached_property
     def timezone_name(self) -> str | None:
         """Timezone's name from IANA Time Zone Database.
 
@@ -24,17 +26,17 @@ class CurrentTimezoneResponse(JSONResponse):
         """
         return self._get_response_field("timezone_name")
 
-    @property
+    @cached_property
     def timezone_location(self) -> str | None:
         """Timezone's location."""
         return self._get_response_field("timezone_location")
 
-    @property
+    @cached_property
     def timezone_abbreviation(self) -> str | None:
         """Timezone's abbreviation, also from IANA Time Zone Database."""
         return self._get_response_field("timezone_abbreviation")
 
-    @property
+    @cached_property
     def gmt_offset(self) -> str | None:
         """Timezone's offset from Greenwich Mean Time (GMT).
 
@@ -42,7 +44,7 @@ class CurrentTimezoneResponse(JSONResponse):
         """
         return self._get_response_field("gmt_offset")
 
-    @property
+    @cached_property
     def is_dst(self) -> str | None:
         """Whether the location is currently in Daylight Savings Time (DST).
 
@@ -50,17 +52,17 @@ class CurrentTimezoneResponse(JSONResponse):
         """
         return self._get_response_field("is_dst")
 
-    @property
+    @cached_property
     def requested_location(self) -> str | None:
         """The location from the request."""
         return self._get_response_field("requested_location")
 
-    @property
+    @cached_property
     def latitude(self) -> float | None:
         """Decimal of the longitude found for the requested_location."""
         return self._get_response_field("latitude")
 
-    @property
+    @cached_property
     def longitude(self) -> float | None:
         """Decimal of the longitude found for the requested_location."""
         return self._get_response_field("longitude")

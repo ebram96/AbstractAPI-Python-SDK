@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import requests
 
 from ..core.bases import JSONResponse
@@ -11,17 +13,17 @@ class ExchangeRatesConversionResponse(JSONResponse):
         """Initializes a new ExchangeRateConversionResponse."""
         super().__init__(response, CONVERSION_RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def base(self) -> str | None:
         """The base currency used to get the exchange rates."""
         return self._get_response_field("base")
 
-    @property
+    @cached_property
     def target(self) -> str | None:
         """The target currency that the base_amount was converted into."""
         return self._get_response_field("target")
 
-    @property
+    @cached_property
     def date(self) -> str | None:
         """The date the currencies were pulled from.
 
@@ -29,12 +31,12 @@ class ExchangeRatesConversionResponse(JSONResponse):
         """
         return self._get_response_field("date")
 
-    @property
+    @cached_property
     def base_amount(self) -> str | None:
         """The amount of the base currency from the request."""
         return self._get_response_field("base_amount")
 
-    @property
+    @cached_property
     def converted_amount(self) -> str | None:
         """The amount after conversion.
 
@@ -43,12 +45,12 @@ class ExchangeRatesConversionResponse(JSONResponse):
         """
         return self._get_response_field("converted_amount")
 
-    @property
+    @cached_property
     def exchange_rate(self) -> str | None:
         """The exchange rate used in conversion."""
         return self._get_response_field("exchange_rate")
 
-    @property
+    @cached_property
     def last_updated(self) -> str | None:
         """The Unix timestamp of when the returned data was last updated."""
         return self._get_response_field("last_updated")

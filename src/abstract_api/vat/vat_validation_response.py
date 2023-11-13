@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import requests
 
 from ..core.bases import JSONResponse
@@ -37,22 +39,22 @@ class VATValidationResponse(NestedEntitiesMixin, JSONResponse):
         """Initializes a new VATValidationResponse."""
         super().__init__(response, VALIDATION_RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def vat_number(self) -> str | None:
         """The submitted VAT number."""
         return self._get_response_field("vat_number")
 
-    @property
+    @cached_property
     def valid(self) -> bool | None:
         """Is true if the submitted VAT number is valid."""
         return self._get_response_field("valid")
 
-    @property
+    @cached_property
     def company(self) -> Company | None:
         """Company details."""
         return self._get_response_field("company")
 
-    @property
+    @cached_property
     def country(self) -> Country | None:
         """Country details."""
         return self._get_response_field("country")

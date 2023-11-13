@@ -1,3 +1,4 @@
+from functools import cached_property
 from typing import Any
 
 import requests
@@ -67,7 +68,7 @@ class VATCategoriesResponse(JSONResponse):
         categories = []
         for c in value:
             categories.append(Category(**c))
-        self._categories = tuple(categories)
+        self._categories: tuple[Category, ...] = tuple(categories)
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new VATCategoriesResponse."""
@@ -77,7 +78,7 @@ class VATCategoriesResponse(JSONResponse):
             list_response=True
         )
 
-    @property
-    def categories(self) -> tuple[Category] | None:
+    @cached_property
+    def categories(self) -> tuple[Category, ...] | None:
         """The returned VAT categories."""
         return self._get_response_field("categories")

@@ -1,3 +1,5 @@
+from functools import cache
+
 from .base_strategy import BaseStrategy
 
 
@@ -12,6 +14,7 @@ class Square(BaseStrategy):
         super().__init__()
         self._size = size
 
+    @cache
     def json(self) -> dict[str, int | str]:
         """Returns a dict with strategy attributes to be used with requests."""
         return super().json() | {"size": self.size}

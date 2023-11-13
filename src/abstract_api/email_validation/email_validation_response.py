@@ -1,3 +1,4 @@
+from functools import cached_property
 from typing import Any
 
 import requests
@@ -43,12 +44,12 @@ class EmailValidationResponse(JSONResponse):
         """Initializes a new EmailValidationResponse."""
         super().__init__(response, RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def email(self) -> str | None:
         """The value for “email” that was entered into the request."""
         return self._get_response_field("email")
 
-    @property
+    @cached_property
     def autocorrect(self) -> str | None:
         """The auto corrected email.
 
@@ -60,7 +61,7 @@ class EmailValidationResponse(JSONResponse):
         """
         return self._get_response_field("autocorrect")
 
-    @property
+    @cached_property
     def deliverability(self) -> str | None:
         """Abstract's evaluation of the deliverability of the email.
 
@@ -68,7 +69,7 @@ class EmailValidationResponse(JSONResponse):
         """
         return self._get_response_field("deliverability")
 
-    @property
+    @cached_property
     def quality_score(self) -> float | None:
         """Decimal score for quality and deliverability of the submitted email.
 
@@ -77,7 +78,7 @@ class EmailValidationResponse(JSONResponse):
         """
         return self._get_response_field("quality_score")
 
-    @property
+    @cached_property
     def is_valid_format(self) -> bool | None:
         """Whether the email follows the format of “address @ domain . TLD”.
 
@@ -86,7 +87,7 @@ class EmailValidationResponse(JSONResponse):
         """
         return self._get_response_field("is_valid_format")
 
-    @property
+    @cached_property
     def is_free_email(self) -> bool | None:
         """Whether email's domain is a free to use email.
 
@@ -95,7 +96,7 @@ class EmailValidationResponse(JSONResponse):
         """
         return self._get_response_field("is_free_email")
 
-    @property
+    @cached_property
     def is_disposable_email(self) -> bool | None:
         """Whether the email is disposable.
 
@@ -104,7 +105,7 @@ class EmailValidationResponse(JSONResponse):
         """
         return self._get_response_field("is_disposable_email")
 
-    @property
+    @cached_property
     def is_role_email(self) -> bool | None:
         """Whether the email represents a role and not an individual.
 
@@ -114,12 +115,12 @@ class EmailValidationResponse(JSONResponse):
         """
         return self._get_response_field("is_role_email")
 
-    @property
+    @cached_property
     def is_catchall_email(self) -> bool | None:
         """Whether the domain is configured to catch all email."""
         return self._get_response_field("is_catchall_email")
 
-    @property
+    @cached_property
     def is_mx_found(self) -> bool | None:
         """Whether MX Records for the domain can be found.
 
@@ -128,7 +129,7 @@ class EmailValidationResponse(JSONResponse):
         """
         return self._get_response_field("is_mx_found")
 
-    @property
+    @cached_property
     def is_smtp_valid(self) -> bool | None:
         """Whether the SMTP check of the email was successful.
 

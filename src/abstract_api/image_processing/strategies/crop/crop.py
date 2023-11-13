@@ -1,3 +1,5 @@
+from functools import cache
+
 from .._mixins import CropModeMixin, HeightMixin, WidthMixin
 from ..base_strategy import BaseStrategy
 
@@ -46,6 +48,7 @@ class Crop(HeightMixin, WidthMixin, CropModeMixin, BaseStrategy):
         self._x = x
         self._y = y
 
+    @cache
     def json(self) -> dict[str, int | str]:
         """Returns a dict with strategy attributes to be used with requests."""
         json = super().json()
