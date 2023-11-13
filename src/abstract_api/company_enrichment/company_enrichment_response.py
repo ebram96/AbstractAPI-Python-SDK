@@ -27,7 +27,7 @@ class CompanyEnrichmentResponse(JSONResponse):
         return self._get_response_field("industry")
 
     @cached_property
-    def employees_count(self) -> str | None:
+    def employees_count(self) -> int | None:
         """The approximate number of employees of the company."""
         return self._get_response_field("employees_count")
 

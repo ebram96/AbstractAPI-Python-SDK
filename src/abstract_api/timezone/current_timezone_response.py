@@ -37,7 +37,7 @@ class CurrentTimezoneResponse(JSONResponse):
         return self._get_response_field("timezone_abbreviation")
 
     @cached_property
-    def gmt_offset(self) -> str | None:
+    def gmt_offset(self) -> int | None:
         """Timezone's offset from Greenwich Mean Time (GMT).
 
         Read more: https://greenwichmeantime.com/what-is-gmt
@@ -45,7 +45,7 @@ class CurrentTimezoneResponse(JSONResponse):
         return self._get_response_field("gmt_offset")
 
     @cached_property
-    def is_dst(self) -> str | None:
+    def is_dst(self) -> bool | None:
         """Whether the location is currently in Daylight Savings Time (DST).
 
         Read more: https://wikipedia.org/wiki/Daylight_saving_time
