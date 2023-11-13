@@ -3,6 +3,7 @@ from typing import Any, BinaryIO
 
 from ..core.bases import BaseService
 from ..core.exceptions import ClientRequestError
+from ..core.validators import numerical
 from .image_processing_response import ImageProcessingResponse
 from .strategies import BaseStrategy
 
@@ -106,6 +107,8 @@ class ImageProcessing(BaseService[ImageProcessingResponse]):
 
         if image is None and url is None:
             raise ClientRequestError("Image or URL must be passed")
+
+        numerical.between("quality", quality, 0, 100)
 
         data: dict[str, Any] = {"api_key": self._api_key}
         if resize is not None:
