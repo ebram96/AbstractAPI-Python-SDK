@@ -1,4 +1,6 @@
 from ..core.bases import BaseService
+from ..core.exceptions import ClientRequestError
+from ..core.validators import numerical
 from .avatars_response import AvatarsResponse
 
 
@@ -12,6 +14,23 @@ class Avatars(BaseService[AvatarsResponse]):
         _subdomain: Avatars service subdomain.
     """
     _subdomain = "avatars"
+
+    @staticmethod
+    def _validate_params(**kwargs) -> None:
+        """Validates passed service parameters."""
+        ranged = {
+            "image_size": (6, 512),
+            "font_size": (0.1, 1.0),
+            "char_limit": (1, 2)
+        }
+        for param, allowed_range in ranged.items():
+            numerical.between(param, kwargs[param], *allowed_range)
+
+        image_format = kwargs["image_format"]
+        if image_format and image_format not in ["png", "svg"]:
+            raise ClientRequestError(
+                "'image_format' must be either 'png' or 'svg'"
+            )
 
     def create(
         self,
@@ -63,7 +82,7 @@ class Avatars(BaseService[AvatarsResponse]):
         Returns:
             AvatarsResponse representing API call response.
         """
-        # TODO: Validation
+        self._validate_params(**locals())
         return self._service_request(
             _response_class=AvatarsResponse,
             name=name,

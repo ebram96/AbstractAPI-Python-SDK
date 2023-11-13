@@ -1,6 +1,7 @@
 from typing import Iterable
 
 from ..core.bases import BaseService
+from ..core.validators import numerical
 from .exchange_rates_conversion_response import ExchangeRatesConversionResponse
 from .historical_exchange_rates_response import HistoricalExchangeRatesResponse
 from .live_exchange_rates_response import LiveExchangeRatesResponse
@@ -87,6 +88,7 @@ class ExchangeRates(BaseService):
         Returns:
             ExchangeRatesConversionResponse representing API call response.
         """
+        numerical.greater_or_equal("base_amount", base_amount, 0)
         return self._service_request(
             _response_class=ExchangeRatesConversionResponse,
             _action="convert",
