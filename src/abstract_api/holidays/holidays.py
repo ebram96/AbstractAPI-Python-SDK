@@ -1,4 +1,5 @@
 from ..core.bases import BaseService
+from ..core.validators import numerical
 from .holidays_response import HolidaysResponse
 
 
@@ -12,6 +13,17 @@ class Holidays(BaseService[HolidaysResponse]):
         _subdomain: Holidays service subdomain.
     """
     _subdomain = "holidays"
+
+    @staticmethod
+    def _validate_params(**kwargs) -> None:
+        """Validates passed service parameters."""
+        ranged = {
+            "year": (1800, 2100),
+            "month": (1, 12),
+            "day": (1, 31)
+        }
+        for param, allowed_range in ranged.items():
+            numerical.between(param, kwargs[param], *allowed_range)
 
     def lookup(
         self,
@@ -41,6 +53,7 @@ class Holidays(BaseService[HolidaysResponse]):
         Returns:
             HolidaysResponse representing API call response.
         """
+        self._validate_params(**locals())
         return self._service_request(
             _response_class=HolidaysResponse,
             country=country,
