@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from ..core.bases import BaseService
 from .iban_validation_response import IBANValidationResponse
 
@@ -11,6 +13,7 @@ class IBANValidation(BaseService[IBANValidationResponse]):
         _subdomain: IBAN validation service subdomain.
     """
     _subdomain = "ibanvalidation"
+    _service_name_env_var: ClassVar[str] = "IBAN_VALIDATION"
 
     def check(self, iban: str) -> IBANValidationResponse:
         """Validates an IBAN.

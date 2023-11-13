@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import ClassVar, Iterable
 
 from ..core.bases import BaseService
 from ..core.validators import numerical
@@ -18,6 +18,7 @@ class ExchangeRates(BaseService):
         _subdomain: Exchange rates service subdomain.
     """
     _subdomain = "exchange-rates"
+    _service_name_env_var: ClassVar[str] = "EXCHANGE_RATES"
 
     @staticmethod
     def _target_as_param(target: Iterable[str] | None = None) -> str | None:

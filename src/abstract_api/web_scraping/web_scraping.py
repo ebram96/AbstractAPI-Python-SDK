@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from ..core.bases import BaseService
 from .web_scraping_response import WebScrapingResponse
 
@@ -11,6 +13,7 @@ class WebScraping(BaseService[WebScrapingResponse]):
         _subdomain: Web scraping service subdomain.
     """
     _subdomain = "scrape"
+    _service_name_env_var: ClassVar[str] = "WEB_SCRAPING"
 
     def scrape(
         self,

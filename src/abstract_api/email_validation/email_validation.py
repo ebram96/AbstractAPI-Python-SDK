@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from ..core.bases import BaseService
 from .email_validation_response import EmailValidationResponse
 
@@ -11,6 +13,7 @@ class EmailValidation(BaseService[EmailValidationResponse]):
         _subdomain: Email validation service subdomain.
     """
     _subdomain = "emailvalidation"
+    _service_name_env_var: ClassVar[str] = "EMAIL_VALIDATION"
 
     def check(
         self,

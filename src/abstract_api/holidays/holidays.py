@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from ..core.bases import BaseService
 from ..core.validators import numerical
 from .holidays_response import HolidaysResponse
@@ -13,6 +15,7 @@ class Holidays(BaseService[HolidaysResponse]):
         _subdomain: Holidays service subdomain.
     """
     _subdomain = "holidays"
+    _service_name_env_var: ClassVar[str] = "HOLIDAYS"
 
     @staticmethod
     def _validate_params(**kwargs) -> None:
