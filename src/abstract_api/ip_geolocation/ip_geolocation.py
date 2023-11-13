@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import ClassVar, Iterable
 
 from ..core.bases import BaseService
 from ..core.mixins import ResponseFieldsMixin
@@ -17,6 +17,7 @@ class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):
             Geolocation service endpoint.
     """
     _subdomain = "ipgeolocation"
+    _service_name_env_var: ClassVar[str] = "IP_GEOLOCATION"
     _response_fields = RESPONSE_FIELDS
 
     def check(

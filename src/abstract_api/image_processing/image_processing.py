@@ -1,5 +1,5 @@
 import json
-from typing import Any, BinaryIO
+from typing import Any, BinaryIO, ClassVar
 
 from ..core.bases import BaseService
 from ..core.exceptions import ClientRequestError
@@ -17,6 +17,7 @@ class ImageProcessing(BaseService[ImageProcessingResponse]):
         _subdomain: Image processing service subdomain.
     """
     _subdomain = "images"
+    _service_name_env_var: ClassVar[str] = "IMAGE_PROCESSING"
 
     def upload(
         self,

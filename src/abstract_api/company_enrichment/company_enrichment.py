@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import ClassVar, Iterable
 
 from ..core.bases import BaseService
 from ..core.mixins import ResponseFieldsMixin
@@ -20,6 +20,7 @@ class CompanyEnrichment(
     """
     _subdomain = "companyenrichment"
     _response_fields = RESPONSE_FIELDS
+    _service_name_env_var: ClassVar[str] = "COMPANY_ENRICHMENT"
 
     def check(
         self,

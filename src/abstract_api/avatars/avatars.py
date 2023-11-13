@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from ..core.bases import BaseService
 from ..core.exceptions import ClientRequestError
 from ..core.validators import numerical
@@ -14,6 +16,7 @@ class Avatars(BaseService[AvatarsResponse]):
         _subdomain: Avatars service subdomain.
     """
     _subdomain = "avatars"
+    _service_name_env_var: ClassVar[str] = "AVATARS"
 
     @staticmethod
     def _validate_params(**kwargs) -> None:

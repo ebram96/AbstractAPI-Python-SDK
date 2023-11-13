@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from ..core.bases import BaseService
 from ..core.validators import numerical
 from .vat_calculation_response import VATCalculationResponse
@@ -15,6 +17,7 @@ class VAT(BaseService):
         _subdomain: VAT service subdomain.
     """
     _subdomain = "vat"
+    _service_name_env_var: ClassVar[str] = "VAT"
 
     def check(self, vat_number: str) -> VATValidationResponse:
         """Validates a VAT number.

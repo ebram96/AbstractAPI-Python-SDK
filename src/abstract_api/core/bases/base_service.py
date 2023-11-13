@@ -1,6 +1,7 @@
+import os
 from functools import lru_cache
 from io import BytesIO
-from typing import TYPE_CHECKING, Any, Final, Generic, Type, TypeVar
+from typing import TYPE_CHECKING, Any, ClassVar, Final, Generic, Type, TypeVar
 
 import requests
 from requests import codes
@@ -28,13 +29,37 @@ class BaseService(Generic[BaseResponseT]):
     """
     __base_url: Final[str] = "https://{subdomain}.abstractapi.com/v1/"
     _subdomain: str
+    _service_name_env_var: ClassVar[str]
 
-    def __init__(self, api_key: str) -> None:
+    @classmethod
+    def _read_api_key_from_env(cls) -> str | None:
+        """Reads service API key from environment variables.
+
+        API key exposed as an environment variable must be exposed using a
+        variable name with the pattern:
+        ABSTRACTAPI_{SERVICE_NAME}_API_KEY
+        Where SERVICE_NAME is the service name that the API key is for.
+        (service_name must be uppercase.)
+
+        Returns: API key read from environment variable.
+        """
+        pattern = "ABSTRACTAPI_{service_name}_API_KEY"
+        return os.environ.get(
+            pattern.format(service_name=cls._service_name_env_var)
+        )
+
+    def __init__(self, api_key: str | None = None) -> None:
         """Constructs a BaseService.
 
         Args:
             api_key: API key to be used to authenticate with AbstractAPI.
         """
+        api_key = api_key or self._read_api_key_from_env()
+        if api_key is None:
+            raise ValueError(
+                "API key was not provided nor exposed as an"
+                " environment variable"
+            )
         self._api_key: str = api_key
 
     @lru_cache(maxsize=5)
