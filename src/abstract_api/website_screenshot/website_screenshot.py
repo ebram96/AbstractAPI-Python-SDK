@@ -1,4 +1,6 @@
 from ..core.bases import BaseService
+from ..core.exceptions import ClientRequestError
+from ..core.validators import numerical
 from .website_screenshot_response import WebsiteScreenshotResponse
 
 
@@ -11,6 +13,21 @@ class WebsiteScreenshot(BaseService[WebsiteScreenshotResponse]):
         _subdomain: Website screenshot service subdomain.
     """
     _subdomain = "screenshot"
+
+    @staticmethod
+    def _validate_params(**kwargs) -> None:
+        """Validates passed service parameters."""
+        capture_full_page = kwargs["capture_full_page"]
+        dimensions = ["width", "height"]
+        for d in dimensions:
+            value = kwargs[d]
+            if value is not None:
+                if capture_full_page is not None and capture_full_page:
+                    raise ClientRequestError(
+                        f"'{d}' is not a valid option when"
+                        f" 'capture_full_page' is True"
+                    )
+                numerical.greater_or_equal(d, value, 0)
 
     def capture(
         self,
@@ -45,6 +62,7 @@ class WebsiteScreenshot(BaseService[WebsiteScreenshotResponse]):
         Returns:
             WebsiteScreenshotResponse representing API call response.
         """
+        self._validate_params(**locals())
         return self._service_request(
             _response_class=WebsiteScreenshotResponse,
             url=url,
