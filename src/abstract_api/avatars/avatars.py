@@ -1,6 +1,6 @@
 from ..core.bases import BaseService
 from ..core.exceptions import ClientRequestError
-from ..core.validators import range
+from ..core.validators import numerical
 from .avatars_response import AvatarsResponse
 
 
@@ -24,7 +24,7 @@ class Avatars(BaseService[AvatarsResponse]):
             "char_limit": (1, 2)
         }
         for param, allowed_range in ranged.items():
-            range.between(param, kwargs[param], *allowed_range)
+            numerical.between(param, kwargs[param], *allowed_range)
 
         image_format = kwargs["image_format"]
         if image_format and image_format not in ["png", "svg"]:
