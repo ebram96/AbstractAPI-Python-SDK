@@ -1,4 +1,5 @@
 from ..core.bases import BaseService
+from ..core.validators import numerical
 from .vat_calculation_response import VATCalculationResponse
 from .vat_categories_response import VATCategoriesResponse
 from .vat_validation_response import VATValidationResponse
@@ -56,6 +57,7 @@ class VAT(BaseService):
         Returns:
             VATCalculationResponse representing API call response.
         """
+        numerical.greater_or_equal("amount", amount, 0)
         return self._service_request(
             _response_class=VATCalculationResponse,
             _action="calculate",
