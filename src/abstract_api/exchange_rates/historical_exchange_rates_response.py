@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import requests
 
 from ._multiple_exchange_rates_response import MultipleExchangeRatesResponse
@@ -11,7 +13,7 @@ class HistoricalExchangeRatesResponse(MultipleExchangeRatesResponse):
         """Initializes a new HistoricalExchangeRatesResponse."""
         super().__init__(response, HISTORICAL_RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def date(self) -> str | None:
         """The date the currencies were pulled from.
 

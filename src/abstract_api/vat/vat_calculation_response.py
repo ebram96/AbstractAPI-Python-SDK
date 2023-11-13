@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import requests
 
 from ..core.bases import JSONResponse
@@ -17,12 +19,12 @@ class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
         """Initializes a new VATCalculationResponse."""
         super().__init__(response, CALCULATION_RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def amount_excluding_vat(self) -> float | None:
         """The amount excluding the VAT."""
         return self._get_response_field("amount_excluding_vat")
 
-    @property
+    @cached_property
     def amount_including_vat(self) -> float | None:
         """The sum of the base amount and the VAT.
 
@@ -30,12 +32,12 @@ class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
         """
         return self._get_response_field("amount_including_vat")
 
-    @property
+    @cached_property
     def vat_amount(self) -> float | None:
         """The calculated amount of VAT."""
         return self._get_response_field("vat_amount")
 
-    @property
+    @cached_property
     def vat_category(self) -> str | None:
         """The optional category of the purchase.
 
@@ -43,12 +45,12 @@ class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
         """
         return self._get_response_field("vat_category")
 
-    @property
+    @cached_property
     def vat_rate(self) -> float | None:
         """The VAT rate, from 0.01 to 0.99."""
         return self._get_response_field("vat_rate")
 
-    @property
+    @cached_property
     def country(self) -> Country | None:
         """Details of the country the VAT is calculated from."""
         return self._get_response_field("country")

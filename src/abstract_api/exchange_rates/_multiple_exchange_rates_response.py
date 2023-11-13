@@ -1,3 +1,4 @@
+from functools import cached_property
 from typing import Any
 
 from ..core.bases import JSONResponse
@@ -44,12 +45,12 @@ class MultipleExchangeRatesResponse(JSONResponse):
             value = tuple(exchange_rates)
         super()._init_response_field(field, value)
 
-    @property
+    @cached_property
     def base(self) -> str | None:
         """The base currency used to get the exchange rates."""
         return self._get_response_field("base")
 
-    @property
+    @cached_property
     def exchange_rates(self) -> tuple[ExchangeRate] | None:
         """Target currencies exchange rates versus the base currency."""
         return self._get_response_field("exchange_rates")

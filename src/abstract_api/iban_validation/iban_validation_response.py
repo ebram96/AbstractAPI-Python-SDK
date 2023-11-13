@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import requests
 
 from ..core.bases import JSONResponse
@@ -11,12 +13,12 @@ class IBANValidationResponse(JSONResponse):
         """Initializes a new IBANValidationResponse."""
         super().__init__(response, RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def iban(self) -> str:
         """The IBAN submitted for validation."""
         return self._get_response_field("iban")
 
-    @property
+    @cached_property
     def is_valid(self) -> bool:
         """Whether the IBAN submitted is valid."""
         return self._get_response_field("is_valid")

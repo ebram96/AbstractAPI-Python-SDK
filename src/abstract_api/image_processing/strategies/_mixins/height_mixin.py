@@ -1,3 +1,4 @@
+from functools import cache
 from typing import TYPE_CHECKING
 
 from ._json_representable_protocol import JSONRepresentableProtocol
@@ -15,6 +16,7 @@ class HeightMixin(_Base):
         super().__init__(**kwargs)
         self._height = height
 
+    @cache
     def json(self) -> dict[str, int | str]:
         """Returns a dict with strategy attributes to be used with requests."""
         return super().json() | {  # type: ignore[safe-super]

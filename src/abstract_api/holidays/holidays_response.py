@@ -1,3 +1,4 @@
+from functools import cached_property
 from typing import Any
 
 import requests
@@ -134,13 +135,13 @@ class HolidaysResponse(JSONResponse):
         holidays = []
         for c in value:
             holidays.append(Holiday(**c))
-        self._holidays = tuple(holidays)
+        self._holidays: tuple[Holiday, ...] = tuple(holidays)
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new HolidaysResponse."""
         super().__init__(response, RESPONSE_FIELDS, list_response=True)
 
-    @property
-    def holidays(self) -> tuple[Holiday]:
+    @cached_property
+    def holidays(self) -> tuple[Holiday, ...]:
         """The returned holidays."""
         return self._get_response_field("holidays")

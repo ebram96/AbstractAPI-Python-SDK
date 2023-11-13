@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import requests
 
 from ..core.bases import JSONResponse
@@ -101,12 +103,12 @@ class TimezoneConversionResponse(NestedEntitiesMixin, JSONResponse):
         """Initializes a new TimezoneConversionResponse."""
         super().__init__(response, CONVERSION_RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def base_location(self) -> Timezone:
         """The time and timezone details of base location from request."""
         return self._get_response_field("base_location")
 
-    @property
+    @cached_property
     def target_location(self) -> Timezone:
         """The time and timezone details of target location from request."""
         return self._get_response_field("target_location")

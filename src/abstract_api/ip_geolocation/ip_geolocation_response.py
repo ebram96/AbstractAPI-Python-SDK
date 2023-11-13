@@ -1,3 +1,5 @@
+from functools import cached_property
+
 from ..core.bases import JSONResponse
 from ..core.mixins import NestedEntitiesMixin
 
@@ -9,7 +11,6 @@ class Security:
         """Initializes a new Security."""
         self._is_vpn = is_vpn
 
-    # TODO: type hint
     @property
     def is_vpn(self) -> bool | None:
         """Whether the IP address is using from a VPN or using a proxy."""
@@ -164,107 +165,107 @@ class IPGeolocationResponse(NestedEntitiesMixin, JSONResponse):
         "connection": Connection
     }
 
-    @property
+    @cached_property
     def ip_address(self) -> str | None:
         """The IP address submitted for geolocation."""
         return self._get_response_field("ip_address")
 
-    @property
+    @cached_property
     def city(self) -> str | None:
         """City's name."""
         return self._get_response_field("city")
 
-    @property
+    @cached_property
     def city_geoname_id(self) -> int | None:
         """City's geoname ID."""
         return self._get_response_field("city_geoname_id")
 
-    @property
+    @cached_property
     def region(self) -> str | None:
         """State or province in which the city is located."""
         return self._get_response_field("region")
 
-    @property
+    @cached_property
     def region_iso_code(self) -> str | None:
         """State or province's ISO 3166-2 code."""
         return self._get_response_field("region_iso_code")
 
-    @property
+    @cached_property
     def region_geoname_id(self) -> int | None:
         """State or province's geoname ID."""
         return self._get_response_field("region_geoname_id")
 
-    @property
+    @cached_property
     def postal_code(self) -> str | None:
         """ZIP or postal code."""
         return self._get_response_field("postal_code")
 
-    @property
+    @cached_property
     def country(self) -> str | None:
         """Country's name."""
         return self._get_response_field("country")
 
-    @property
+    @cached_property
     def country_code(self) -> str | None:
         """Country's ISO 3166-1 alpha-2 code."""
         return self._get_response_field("country_code")
 
-    @property
+    @cached_property
     def country_geoname_id(self) -> int | None:
         """Country's geoname ID."""
         return self._get_response_field("country_geoname_id")
 
-    @property
+    @cached_property
     def country_is_eu(self) -> bool | None:
         """True if the country is in the EU, false if it is not."""
         return self._get_response_field("country_is_eu")
 
-    @property
+    @cached_property
     def continent(self) -> str | None:
         """Continent's name."""
         return self._get_response_field("continent")
 
-    @property
+    @cached_property
     def continent_code(self) -> str | None:
         """2 letter continent code: AF, AS, EU, NA, OC, SA, AN."""
         return self._get_response_field("continent_code")
 
-    @property
+    @cached_property
     def continent_geoname_id(self) -> int | None:
         """Continent's geoname ID."""
         return self._get_response_field("continent_geoname_id")
 
-    @property
+    @cached_property
     def longitude(self) -> float | None:
         """Decimal of the longitude."""
         return self._get_response_field("longitude")
 
-    @property
+    @cached_property
     def latitude(self) -> float | None:
         """Decimal of the latitude."""
         return self._get_response_field("latitude")
 
-    @property
+    @cached_property
     def security(self) -> Security | None:
         """Whether the IP address is using from a VPN or using a proxy."""
         return self._get_response_field("security")
 
-    @property
+    @cached_property
     def timezone(self) -> Timezone | None:
         """Timezone details."""
         return self._get_response_field("timezone")
 
-    @property
+    @cached_property
     def flag(self) -> Flag | None:
         """Flag details."""
         return self._get_response_field("flag")
 
-    @property
+    @cached_property
     def currency(self) -> Currency | None:
         """Currency details."""
         return self._get_response_field("currency")
 
-    @property
+    @cached_property
     def connection(self) -> Connection | None:
         """Connection details."""
         return self._get_response_field("connection")

@@ -1,3 +1,4 @@
+from functools import lru_cache
 from io import BytesIO
 from typing import TYPE_CHECKING, Any, Final, Generic, Type, TypeVar
 
@@ -36,7 +37,8 @@ class BaseService(Generic[BaseResponseT]):
         """
         self._api_key: str = api_key
 
-    def _service_url(self, action: str = "") -> str:
+    @lru_cache(maxsize=5)
+    def __service_url(self, action: str = "") -> str:
         """Builds and returns an API URL for a service using its subdomain.
 
         Args:
@@ -80,7 +82,7 @@ class BaseService(Generic[BaseResponseT]):
 
         request_kwargs: dict[str, Any] = {
             "method": _method,
-            "url": self._service_url(_action)
+            "url": self.__service_url(_action)
         }
 
         if _method == "get":

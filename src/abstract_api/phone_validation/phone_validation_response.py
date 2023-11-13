@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import requests
 
 from ..core.bases import JSONResponse
@@ -59,27 +61,27 @@ class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
         """Initializes a new PhoneValidationResponse."""
         super().__init__(response, RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def phone(self) -> str | None:
         """The phone number submitted for validation and verification."""
         return self._get_response_field("phone")
 
-    @property
+    @cached_property
     def valid(self) -> bool | None:
         """Is true if the phone number submitted is valid."""
         return self._get_response_field("valid")
 
-    @property
+    @cached_property
     def format(self) -> Format | None:
         """International and local formats of the submitted number."""
         return self._get_response_field("format")
 
-    @property
+    @cached_property
     def country(self) -> Country | None:
         """The of the phone number's country."""
         return self._get_response_field("country")
 
-    @property
+    @cached_property
     def location(self) -> str | None:
         """As much location details as are available from AbstractAPI's data.
 
@@ -88,7 +90,7 @@ class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
         """
         return self._get_response_field("location")
 
-    @property
+    @cached_property
     def type(self) -> str | None:
         """The type of phone number.
 
@@ -98,7 +100,7 @@ class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
         # TODO: Use enum.
         return self._get_response_field("type")
 
-    @property
+    @cached_property
     def carrier(self) -> str | None:
         """The carrier that the number is registered with."""
         return self._get_response_field("carrier")

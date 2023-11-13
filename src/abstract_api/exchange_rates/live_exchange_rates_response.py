@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import requests
 
 from ._multiple_exchange_rates_response import MultipleExchangeRatesResponse
@@ -11,7 +13,7 @@ class LiveExchangeRatesResponse(MultipleExchangeRatesResponse):
         """Initializes a new LiveExchangeRatesResponse."""
         super().__init__(response, LIVE_RESPONSE_FIELDS)
 
-    @property
+    @cached_property
     def last_updated(self) -> int | None:
         """The Unix timestamp of when the returned data was last updated."""
         return self._get_response_field("last_updated")
