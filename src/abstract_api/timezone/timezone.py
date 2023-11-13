@@ -1,4 +1,7 @@
+from typing import Annotated
+
 from ..core.bases import BaseService
+from ..core.exceptions import ClientRequestError
 from .current_timezone_response import CurrentTimezoneResponse
 from .timezone_conversion_response import TimezoneConversionResponse
 
@@ -14,8 +17,25 @@ class Timezone(BaseService):
     _subdomain = "timezone"
 
     @staticmethod
+    def _validate_location(
+        param: str,
+        location: str | Annotated[list[float], 2] | tuple[float, float]
+    ) -> None:
+        """Validates a given location.
+
+        Args:
+            param: Name of the parameter passed to service.
+            location: Value of location passed.
+        """
+        if isinstance(location, (list, tuple)):
+            if len(location) != 2:
+                raise ClientRequestError(
+                    f"'{param}' must contain both/only longitude and latitude."
+                )
+
+    @staticmethod
     def _location_as_param(
-        location: str | list[float] | tuple[float, ...]
+        location:  str | Annotated[list[float], 2] | tuple[float, float]
     ) -> str:
         """Converts location to a request query parameter value.
 
@@ -29,14 +49,13 @@ class Timezone(BaseService):
         Returns:
             A string with location as query parameter value.
         """
-        if isinstance(location, list) or isinstance(location, tuple):
+        if isinstance(location, (list, tuple)):
             location = ",".join(map(str, location))
-
         return location
 
     def current(
         self,
-        location: str | list[float] | tuple[float, ...]
+        location: str | Annotated[list[float], 2] | tuple[float, float]
     ) -> CurrentTimezoneResponse:
         """Finds the current time, date, and timezone of a given location.
 
@@ -50,6 +69,7 @@ class Timezone(BaseService):
         Returns:
             CurrentTimezoneResponse representing API call response.
         """
+        self._validate_location("location", location)
         return self._service_request(
             _response_class=CurrentTimezoneResponse,
             _action="current_time",
@@ -58,8 +78,8 @@ class Timezone(BaseService):
 
     def convert(
         self,
-        base_location: str | list[float] | tuple[float, ...],
-        target_location: str | list[float] | tuple[float, ...],
+        base_location: str | Annotated[list[float], 2] | tuple[float, float],
+        target_location: str | Annotated[list[float], 2] | tuple[float, float],
         base_datetime: str | None = None
     ) -> TimezoneConversionResponse:
         """Converts datetime of base location to target location's datetime.
@@ -83,6 +103,8 @@ class Timezone(BaseService):
         Returns:
             TimezoneConversionResponse representing API call response.
         """
+        self._validate_location("base_location", base_location)
+        self._validate_location("target_location", target_location)
         return self._service_request(
             _response_class=TimezoneConversionResponse,
             _action="convert_time",
