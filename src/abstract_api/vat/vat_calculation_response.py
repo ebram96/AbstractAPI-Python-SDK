@@ -20,12 +20,12 @@ class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
         super().__init__(response, CALCULATION_RESPONSE_FIELDS)
 
     @cached_property
-    def amount_excluding_vat(self) -> float | None:
+    def amount_excluding_vat(self) -> str | None:
         """The amount excluding the VAT."""
         return self._get_response_field("amount_excluding_vat")
 
     @cached_property
-    def amount_including_vat(self) -> float | None:
+    def amount_including_vat(self) -> str | None:
         """The sum of the base amount and the VAT.
 
         It is amount_excl_vat + vat_amount.
@@ -33,7 +33,7 @@ class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
         return self._get_response_field("amount_including_vat")
 
     @cached_property
-    def vat_amount(self) -> float | None:
+    def vat_amount(self) -> str | None:
         """The calculated amount of VAT."""
         return self._get_response_field("vat_amount")
 
@@ -46,7 +46,7 @@ class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):
         return self._get_response_field("vat_category")
 
     @cached_property
-    def vat_rate(self) -> float | None:
+    def vat_rate(self) -> str | None:
         """The VAT rate, from 0.01 to 0.99."""
         return self._get_response_field("vat_rate")
 
