@@ -1,3 +1,4 @@
+fail_fast: true
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
@@ -12,6 +13,7 @@ repos:
     hooks:
     -   id: flake8
         args: [--max-line-length=79]
+        exclude: "tests"
 
 -   repo: https://github.com/pycqa/isort
     rev: 5.11.5
@@ -26,12 +28,23 @@ repos:
         args:
         -    --convention=google
         -    --add-ignore=D100,D104  # Ignore missing docstring in public module or package
+        exclude: "tests"
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.6.1
     hooks:
     -   id: mypy
         additional_dependencies: ['types-requests']
+        exclude: "tests"
+
+-   repo: local
+    hooks:
+      - id: unit-tests
+        name: unit tests
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true
 
 -   repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.5.4
