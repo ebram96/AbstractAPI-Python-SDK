@@ -102,8 +102,8 @@ class BaseService(Generic[BaseResponseT]):
             Parsed AbstractAPI's response.
         """
         # Prepare HTTP method
-        _method = _method.lower()
-        if _method not in ["get", "post"]:
+        _method = _method.upper()
+        if _method not in ["GET", "POST"]:
             raise ClientRequestError(
                 f"Invalid or not allowed HTTP method '{_method}'"
             )
@@ -113,7 +113,7 @@ class BaseService(Generic[BaseResponseT]):
             "method": _method,
             "url": self.__service_url(_action)
         }
-        if _method == "get":
+        if _method == "GET":
             request_kwargs["params"] = {"api_key": self._api_key} | {
                 # Ignore all None parameters, no need to transfer them over
                 # the network call.
@@ -122,9 +122,9 @@ class BaseService(Generic[BaseResponseT]):
                 if value is not None
             }
         else:
-            if _files:
+            if _files is not None:
                 request_kwargs["files"] = _files
-            if _body:
+            if _body is not None:
                 request_kwargs["json"] = _body
 
         # Make call
