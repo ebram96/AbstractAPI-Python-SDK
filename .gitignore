@@ -9,3 +9,6 @@ __pycache__/
 
 # Distribution / packaging
 *.egg-info/
+
+# Coverage.py
+.coverage
