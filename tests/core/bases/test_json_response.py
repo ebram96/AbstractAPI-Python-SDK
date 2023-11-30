@@ -4,6 +4,7 @@ from abstract_api.core.bases.json_response import (
     JSONResponse,
     JSONResponseMeta
 )
+from tests.common_assertions import assert_unchangeable_fields
 
 
 class TestJSONResponseMeta:
@@ -24,6 +25,17 @@ class TestJSONResponse:
     def response_fields(self):
         return frozenset(["wanted1", "wanted2", "wanted3"])
 
+    @pytest.mark.parametrize(
+        "content_response",
+        [dict(data={"wanted1": "value1", "wanted2": "value2", "unwanted": "value3"})],
+        indirect=True
+    )
+    def test_setattr(self, response_fields, content_response):
+        instance = JSONResponse(content_response, response_fields)
+
+        assert_unchangeable_fields(instance, ["wanted1", "wanted2", "_response_fields"])
+        instance.new_random_attr = "value"
+
     def test__init_response_field(self, blank_response):
         field = "some_key"
         value = "some_value"
@@ -33,12 +45,12 @@ class TestJSONResponse:
 
         assert getattr(instance, f"_{field}") == value
 
-    def test_initialization_meta(self, blank_response, response_fields):
+    def test_initialization_meta(self, response_fields, blank_response):
         instance = JSONResponse(blank_response, response_fields)
         assert isinstance(instance.meta, JSONResponseMeta)
 
     def test_initialization_blank_response(
-        self, blank_response, response_fields
+        self, response_fields, blank_response
     ):
         instance = JSONResponse(blank_response, response_fields)
 
@@ -51,7 +63,7 @@ class TestJSONResponse:
         indirect=True
     )
     def test_initialization_content_response(
-        self, content_response, response_fields
+        self, response_fields, content_response
     ):
         instance = JSONResponse(content_response, response_fields)
 
@@ -79,7 +91,7 @@ class TestJSONResponse:
         [dict(data={"wanted1": "value1", "wanted2": "value2", "unwanted": "value3"})],
         indirect=True
     )
-    def test__get_response_field(self, content_response, response_fields):
+    def test__get_response_field(self, response_fields, content_response):
         instance = JSONResponse(content_response, response_fields)
 
         assert instance._get_response_field("wanted1") == instance._wanted1
