@@ -1,5 +1,3 @@
-from io import BytesIO
-
 import pytest
 
 from abstract_api.core.bases.json_response import (
@@ -11,7 +9,7 @@ from abstract_api.core.bases.json_response import (
 class TestJSONResponseMeta:
     @pytest.mark.parametrize(
         "content_response",
-        [dict(raw=BytesIO(b'{"key":"value"}'))],
+        [dict(data={"key": "value"})],
         indirect=["content_response"]
     )
     def test_initialization(self, content_response):
@@ -49,7 +47,7 @@ class TestJSONResponse:
 
     @pytest.mark.parametrize(
         "content_response",
-        [dict(raw=BytesIO(b'{"wanted1":"value1","wanted2":"value2","unwanted":"value3"}'))],
+        [dict(data={"wanted1": "value1", "wanted2": "value2", "unwanted": "value3"})],
         indirect=True
     )
     def test_initialization_content_response(
@@ -64,7 +62,7 @@ class TestJSONResponse:
 
     @pytest.mark.parametrize(
         "content_response",
-        [dict(raw=BytesIO(b'[{"key1":"value1","key2":"value2"},{"key1":"value1","key2":"value2"}]'))],
+        [dict(data=[{"key1": "value1", "key2": "value2"}, {"key1": "value1", "key2": "value2"}])],
         indirect=True
     )
     def test_initialization_content_list_response(self, content_response):
@@ -78,7 +76,7 @@ class TestJSONResponse:
 
     @pytest.mark.parametrize(
         "content_response",
-        [dict(raw=BytesIO(b'{"wanted1":"value1","wanted2":"value2","unwanted":"value3"}'))],
+        [dict(data={"wanted1": "value1", "wanted2": "value2", "unwanted": "value3"})],
         indirect=True
     )
     def test__get_response_field(self, content_response, response_fields):

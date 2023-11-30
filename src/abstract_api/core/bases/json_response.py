@@ -28,6 +28,25 @@ class JSONResponse(BaseResponse):
     _meta_class: ClassVar[Type[JSONResponseMeta]] = JSONResponseMeta
     meta: JSONResponseMeta
 
+    def __setattr__(self, key: str, value: Any) -> None:
+        """Sets a property only if it is not a response field.
+
+        The main reason for customizing the original method is that we use
+        functools.cached_property, and it allows setting a property value after
+        it is cached, even if it has no setter.
+        """
+        response_fields_attr = "_response_fields"
+        if key == response_fields_attr:
+            if response_fields_attr in self.__dict__:
+                raise AttributeError(
+                    f"'{response_fields_attr}' should not be changed"
+                )
+        elif key in self._response_fields:
+            raise AttributeError(
+                f"value of response field '{key}' should not be changed"
+            )
+        return super().__setattr__(key, value)
+
     def _init_response_field(self, field: str, value: Any) -> None:
         """Sets a response field's value during instance initialization.
 
@@ -47,8 +66,9 @@ class JSONResponse(BaseResponse):
         list_response: bool = False
     ) -> None:
         """Initialize a new JSONResponse."""
+        self._response_fields = response_fields  # Must be set first.
+
         super().__init__(response)
-        self._response_fields = response_fields
 
         if self.meta.body_json is None:
             return

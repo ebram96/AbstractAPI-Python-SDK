@@ -1,7 +1,7 @@
-from io import BytesIO
-
 import pytest
 import requests
+
+from tests.utils import generate_response
 
 
 @pytest.fixture
@@ -24,20 +24,20 @@ def ok_response(blank_response):
     return r
 
 
-_DEFAULT_CONTENT = BytesIO(b"some-random-testing-content")
+_DEFAULT_CONTENT = b"some-random-testing-content"
 _DEFAULT_STATUS_CODE = requests.codes.OK
 
 
 @pytest.fixture(
     scope="function",
-    params=[dict(raw=_DEFAULT_CONTENT, status_code=_DEFAULT_STATUS_CODE)]
+    params=[dict(data=_DEFAULT_CONTENT, status_code=_DEFAULT_STATUS_CODE)]
 )
-def content_response(request, blank_response):
-    """Response instance with given raw content and status code.
+def content_response(request):
+    """Response instance with given data and status code.
 
-    If raw content or status_code were omitted, default values are used.
+    If data or status_code were omitted, default values are used.
     """
-    r = blank_response
-    r.raw = request.param.get("raw", _DEFAULT_CONTENT)
-    r.status_code = request.param.get("status_code", _DEFAULT_STATUS_CODE)
-    return r
+    return generate_response(
+        request.param.get("data", _DEFAULT_CONTENT),
+        request.param.get("status_code", _DEFAULT_STATUS_CODE)
+    )
