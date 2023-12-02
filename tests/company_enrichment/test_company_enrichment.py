@@ -1,5 +1,4 @@
 import pytest
-import requests
 
 from abstract_api import CompanyEnrichment
 from abstract_api.company_enrichment import CompanyEnrichmentResponse
@@ -11,22 +10,31 @@ class TestCompanyEnrichment:
     def service(self) -> CompanyEnrichment:
         return CompanyEnrichment(api_key="no-api-key")
 
-    @pytest.fixture
-    def domain(self):
-        return "google.com"
-
     def test_check(
-        self, service, domain, company_enrichment_sample, base_url, requests_mock
+        self,
+        service,
+        company_enrichment_sample,
+        base_url,
+        requests_mock,
+        mocker
     ):
         url = base_url.format(subdomain=CompanyEnrichment._subdomain)
         requests_mock.get(url, json=company_enrichment_sample)
+        mocked__service_request = mocker.patch.object(
+            service, "_service_request", wraps=service._service_request
+        )
 
-        response = service.check(domain=domain)
+        response = service.check(domain=company_enrichment_sample["domain"])
 
-        assert response.meta.http_status == requests.codes.OK
         assert isinstance(response, CompanyEnrichmentResponse)
         for field in service.response_fields:
             assert company_enrichment_sample[field] == getattr(response, field)
+        mocked__service_request.assert_called_once_with(
+            _response_class=CompanyEnrichmentResponse,
+            _response_class_kwargs={"response_fields": service.response_fields},
+            domain=company_enrichment_sample["domain"],
+            fields=service._response_fields_as_param(service.response_fields)
+        )
 
     @pytest.mark.parametrize(
         "service", [
@@ -38,21 +46,29 @@ class TestCompanyEnrichment:
         ]
     )
     def test_check_with_response_fields(
-        self, service, domain, company_enrichment_sample, base_url, requests_mock
+        self,
+        service,
+        company_enrichment_sample,
+        base_url,
+        requests_mock,
+        mocker
     ):
         url = base_url.format(subdomain=CompanyEnrichment._subdomain)
         sample_for_fields = {
             "name": "Google",
             "domain": "google.com"
         }
+        selected_fields = service._prepare_selected_fields(sample_for_fields.keys())
         requests_mock.get(url, json=sample_for_fields)
-
-        response = service.check(
-            domain=domain,
-            fields=list(sample_for_fields.keys())
+        mocked__service_request = mocker.patch.object(
+            service, "_service_request", wraps=service._service_request
         )
 
-        assert response.meta.http_status == requests.codes.OK
+        response = service.check(
+            domain=company_enrichment_sample["domain"],
+            fields=selected_fields
+        )
+
         assert isinstance(response, CompanyEnrichmentResponse)
         assert response.name == sample_for_fields["name"]
         assert response.domain == sample_for_fields["domain"]
@@ -61,3 +77,9 @@ class TestCompanyEnrichment:
                 continue
             with pytest.raises(AttributeError):
                 assert company_enrichment_sample[field] == getattr(response, field)
+        mocked__service_request.assert_called_once_with(
+            _response_class=CompanyEnrichmentResponse,
+            _response_class_kwargs={"response_fields": selected_fields},
+            domain=company_enrichment_sample["domain"],
+            fields=service._response_fields_as_param(selected_fields)
+        )
