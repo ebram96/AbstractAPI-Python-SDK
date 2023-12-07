@@ -1,7 +1,18 @@
-from typing import Any, ClassVar, Type
+from typing import TYPE_CHECKING, Any, ClassVar, Protocol, Type
 
 
-class NestedEntitiesMixin:
+class _ResponseFieldProtocol(Protocol):
+    def _init_response_field(self, field: str, value: Any) -> None:
+        ...
+
+
+if TYPE_CHECKING:
+    _Base = _ResponseFieldProtocol
+else:
+    _Base = object
+
+
+class NestedEntitiesMixin(_Base):
     """Nested entities mixin for responses that have nested entities."""
     _nested_entities: ClassVar[dict[str, Type]]
 
@@ -15,9 +26,6 @@ class NestedEntitiesMixin:
             value: Value to be set. The value is parsed to a nested entity
                 if the field is a nested entity.
         """
-        setattr(
-            self,
-            f"_{field}",
-            value if field not in self._nested_entities
-            else self._nested_entities[field](**value)
-        )
+        if field in self._nested_entities:
+            value = self._nested_entities[field](**value)
+        super()._init_response_field(field, value)

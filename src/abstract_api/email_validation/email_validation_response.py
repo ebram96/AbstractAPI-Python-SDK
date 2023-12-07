@@ -30,12 +30,9 @@ class EmailValidationResponse(JSONResponse):
             value: Value to be set. The value is parsed to a nested entity
                 if the field is a nested entity.
         """
-        setattr(
-            self,
-            f"_{field}",
-            value if field not in self._complex_bool_fields
-            else value["value"]
-        )
+        if field in self._complex_bool_fields:
+            value = value["value"]
+        super()._init_response_field(field, value)
 
     def __init__(
         self,

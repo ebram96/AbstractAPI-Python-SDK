@@ -1,4 +1,6 @@
+from abstract_api.core.bases import JSONResponse
 from abstract_api.core.mixins import NestedEntitiesMixin
+from tests.utils import generate_response
 
 
 class NestedEntity:
@@ -10,17 +12,16 @@ class NestedEntity:
         return self._some_field
 
 
-class ConcreteExample(NestedEntitiesMixin):
+class ConcreteExample(NestedEntitiesMixin, JSONResponse):
     _nested_entities = {"nested_entity": NestedEntity}
 
 
 class TestNestedEntitiesMixin:
     def test__init_response_field(self):
-        instance = ConcreteExample()
+        response = generate_response({"nested_entity": {"some_field": "value"}})
 
-        instance._init_response_field(
-            "nested_entity",
-            {"some_field": "value"}
+        instance = ConcreteExample(
+            response, response_fields=frozenset(["nested_entity"])
         )
 
         assert isinstance(instance._nested_entity, NestedEntity)
