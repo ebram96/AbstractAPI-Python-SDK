@@ -1,6 +1,3 @@
-import pytest
-import requests
-
 from abstract_api.core.bases._base_response import (
     BaseResponse,
     BaseResponseMeta
