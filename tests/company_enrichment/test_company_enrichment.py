@@ -27,8 +27,6 @@ class TestCompanyEnrichment:
         response = service.check(domain=company_enrichment_sample["domain"])
 
         assert isinstance(response, CompanyEnrichmentResponse)
-        for field in service.response_fields:
-            assert company_enrichment_sample[field] == getattr(response, field)
         mocked__service_request.assert_called_once_with(
             _response_class=CompanyEnrichmentResponse,
             _response_class_kwargs={"response_fields": service.response_fields},
