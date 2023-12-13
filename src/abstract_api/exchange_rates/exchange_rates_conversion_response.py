@@ -9,9 +9,20 @@ from .response_fields import CONVERSION_RESPONSE_FIELDS
 class ExchangeRatesConversionResponse(JSONResponse):
     """Exchange rate conversion service response."""
 
-    def __init__(self, response: requests.models.Response) -> None:
+    def __init__(
+        self,
+        response: requests.models.Response,
+        date_included_in_request: bool | None = False
+    ) -> None:
         """Initializes a new ExchangeRateConversionResponse."""
-        super().__init__(response, CONVERSION_RESPONSE_FIELDS)
+        super().__init__(
+            response,
+            CONVERSION_RESPONSE_FIELDS - {
+                "last_updated"
+                if date_included_in_request
+                else "date"
+            }
+        )
 
     @cached_property
     def base(self) -> str | None:
@@ -27,7 +38,9 @@ class ExchangeRatesConversionResponse(JSONResponse):
     def date(self) -> str | None:
         """The date the currencies were pulled from.
 
-        This is per successful request.
+        This is per successful request and returned only when 'date' parameter
+        is passed in request.
+        This is mutually-exclusive with 'last_updated' in response.
         """
         return self._get_response_field("date")
 
@@ -52,5 +65,9 @@ class ExchangeRatesConversionResponse(JSONResponse):
 
     @cached_property
     def last_updated(self) -> int | None:
-        """The Unix timestamp of when the returned data was last updated."""
+        """The Unix timestamp of when the returned data was last updated.
+
+        This is returned if 'date' parameter was not passed in request.
+        This is mutually-exclusive with 'date' in response.
+        """
         return self._get_response_field("last_updated")

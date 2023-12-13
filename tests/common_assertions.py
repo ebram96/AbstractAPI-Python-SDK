@@ -1,8 +1,13 @@
 import pytest
 
 
-def assert_unchangeable_fields(instance, fields):
+def assert_unchangeable_fields(instance, fields, ignore=None):
+    if ignore is None:
+        ignore = []
+
     for field in fields:
+        if field in ignore:
+            continue
         with pytest.raises(AttributeError):
             setattr(instance, field, "changed")
 
@@ -22,4 +27,4 @@ def assert_response_fields(response, fields, sample, mocker, ignore=None):
         assert getattr(response, field) == sample[field]
         mocked__get_response_field.assert_called_with(field)
     assert mocked__get_response_field.call_count == len(fields) - len(ignore)
-    assert_unchangeable_fields(response, fields)
+    assert_unchangeable_fields(response, fields, ignore)

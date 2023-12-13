@@ -39,3 +39,15 @@ def exchange_rates_historical_sample():
             "ZAR": 18.897374
         }
     }
+
+
+@pytest.fixture
+def exchange_rates_conversion_sample():
+    return {
+      "base": "USD",
+      "target": "EUR",
+      "base_amount": 1,
+      "converted_amount": 0.925583,
+      "exchange_rate": 0.925583,
+      "last_updated": 1702300500
+    }
