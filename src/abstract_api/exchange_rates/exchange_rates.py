@@ -89,7 +89,9 @@ class ExchangeRates(BaseService):
         Returns:
             ExchangeRatesConversionResponse representing API call response.
         """
-        numerical.greater_or_equal("base_amount", base_amount, 0)
+        if base_amount is not None:
+            numerical.greater_or_equal("base_amount", base_amount, 0)
+
         return self._service_request(
             _response_class=ExchangeRatesConversionResponse,
             _response_class_kwargs={
