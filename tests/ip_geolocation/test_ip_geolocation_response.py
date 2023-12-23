@@ -35,3 +35,4 @@ class TestIPGeolocationResponse:
             instance,
             IPGeolocationResponse._nested_entities.keys()
         )
+        assert mocked__get_response_field.call_count == len(RESPONSE_FIELDS)
