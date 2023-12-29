@@ -15,3 +15,18 @@ def vat_validation_sample():
             "name": "Sweden"
         }
     }
+
+
+@pytest.fixture
+def vat_calculation_sample():
+    return {
+        "amount_excluding_vat": "100.00",
+        "amount_including_vat": "119.00",
+        "vat_amount": "19.00",
+        "vat_category": "standard",
+        "vat_rate": "0.190",
+        "country": {
+            "code": "DE",
+            "name": "Germany"
+        }
+    }
