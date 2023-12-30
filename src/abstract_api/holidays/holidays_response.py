@@ -135,7 +135,7 @@ class HolidaysResponse(JSONResponse):
         holidays = []
         for c in value:
             holidays.append(Holiday(**c))
-        self._holidays: tuple[Holiday, ...] = tuple(holidays)
+        super()._init_response_field(field, tuple(holidays))
 
     def __init__(self, response: requests.models.Response) -> None:
         """Initializes a new HolidaysResponse."""
