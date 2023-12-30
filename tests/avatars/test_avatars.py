@@ -20,9 +20,9 @@ class TestAvatars:
         self, service, image_size, font_size, char_limit, image_format, mocker
     ):
         mocked__validate_params = mocker.patch.object(
-            Avatars,
+            service,
             "_validate_params",
-            wraps=Avatars._validate_params
+            wraps=service._validate_params
         )
         with pytest.raises(ClientRequestError):
             service.create("", image_size=image_size)
