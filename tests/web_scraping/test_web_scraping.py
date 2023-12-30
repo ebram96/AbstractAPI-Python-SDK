@@ -8,11 +8,12 @@ class TestWebScraping:
     """WebScraping service tests."""
     def test_scrape(self, base_url, requests_mock):
         service = WebScraping("no-api-key")
+        website = "https://example.com"
         url = base_url.format(subdomain=WebScraping._subdomain)
         content = b'some-example-web-scraping-content'
         requests_mock.get(url, content=content)
 
-        response = service.scrape("https://example.com")
+        response = service.scrape(website)
 
         assert isinstance(response, WebScrapingResponse)
         assert response.content == content
