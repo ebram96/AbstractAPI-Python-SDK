@@ -97,7 +97,6 @@ class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
         The possible values are: Landline, Mobile, Satellite, Premium,
         Paging, Special, Toll_Free, and Unknown.
         """
-        # TODO: Use enum.
         return self._get_response_field("type")
 
     @cached_property
