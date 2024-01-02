@@ -19,7 +19,11 @@ class Holidays(BaseService[HolidaysResponse]):
 
     @staticmethod
     def _validate_params(**kwargs) -> None:
-        """Validates passed service parameters."""
+        """Validates passed service parameters.
+
+        Raises:
+            ClientRequestError if a parameter has invalid/not acceptable value.
+        """
         ranged = {
             "year": (1800, 2100),
             "month": (1, 12),

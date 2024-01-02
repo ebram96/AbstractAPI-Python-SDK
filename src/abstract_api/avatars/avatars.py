@@ -20,7 +20,11 @@ class Avatars(BaseService[AvatarsResponse]):
 
     @staticmethod
     def _validate_params(**kwargs) -> None:
-        """Validates passed service parameters."""
+        """Validates passed service parameters.
+
+        Raises:
+            ClientRequestError if a parameter has invalid/not acceptable value.
+        """
         ranged = {
             "image_size": (6, 512),
             "font_size": (0.1, 1.0),
