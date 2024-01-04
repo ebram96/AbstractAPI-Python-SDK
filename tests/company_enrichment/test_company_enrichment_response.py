@@ -1,5 +1,5 @@
 from abstract_api.company_enrichment import CompanyEnrichmentResponse
-from abstract_api.company_enrichment.response_fields import RESPONSE_FIELDS
+from abstract_api.company_enrichment._response_fields import RESPONSE_FIELDS
 from tests.common_assertions import assert_response_fields
 from tests.utils import generate_response
 

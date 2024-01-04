@@ -4,7 +4,7 @@ from typing import Any
 import requests
 
 from ..core.bases import JSONResponse
-from .response_fields.categories import CATEGORIES_RESPONSE_FIELDS
+from ._response_fields.categories import CATEGORIES_RESPONSE_FIELDS
 
 
 class Category:

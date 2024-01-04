@@ -19,7 +19,11 @@ class WebsiteScreenshot(BaseService[WebsiteScreenshotResponse]):
 
     @staticmethod
     def _validate_params(**kwargs) -> None:
-        """Validates passed service parameters."""
+        """Validates passed service parameters.
+
+        Raises:
+            ClientRequestError if a parameter has invalid/not acceptable value.
+        """
         capture_full_page = kwargs["capture_full_page"]
         dimensions = ["width", "height"]
         for d in dimensions:

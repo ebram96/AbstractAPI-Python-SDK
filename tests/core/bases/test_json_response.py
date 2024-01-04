@@ -14,10 +14,10 @@ class TestJSONResponseMeta:
         indirect=["content_response"]
     )
     def test_initialization(self, content_response):
-        assert JSONResponseMeta(content_response).body_json == content_response.json()
+        assert JSONResponseMeta(content_response).response_json == content_response.json()
 
     def test_initialization_with_no_content(self, blank_response):
-        assert JSONResponseMeta(blank_response).body_json is None
+        assert JSONResponseMeta(blank_response).response_json is None
 
 
 class TestJSONResponse:
@@ -54,7 +54,7 @@ class TestJSONResponse:
     ):
         instance = JSONResponse(blank_response, response_fields)
 
-        assert instance.meta.body_json is None
+        assert instance.meta.response_json is None
         assert instance._response_fields == response_fields
 
     @pytest.mark.parametrize(
@@ -84,7 +84,7 @@ class TestJSONResponse:
             content_response, response_fields, list_response=True
         )
 
-        assert instance._nested_entities == instance.meta.body_json
+        assert instance._nested_entities == instance.meta.response_json
 
     @pytest.mark.parametrize(
         "content_response",

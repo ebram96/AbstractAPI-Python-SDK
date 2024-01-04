@@ -1,5 +1,5 @@
 from abstract_api.vat import VATCalculationResponse
-from abstract_api.vat.response_fields import CALCULATION_RESPONSE_FIELDS
+from abstract_api.vat._response_fields import CALCULATION_RESPONSE_FIELDS
 from tests.common_assertions import (
     assert_response_fields,
     assert_unchangeable_fields

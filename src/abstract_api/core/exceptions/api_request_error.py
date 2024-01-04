@@ -50,21 +50,21 @@ class APIRequestError(AbstractAPIException):
         return self._details
 
     @staticmethod
-    def _get_error_details(body_json: dict[str, Any]) -> dict[str, Any]:
+    def _get_error_details(response_json: dict[str, Any]) -> dict[str, Any]:
         """Extracts error details from response.
 
         Args:
-            body_json: Returned response body as JSON.
+            response_json: Returned response body as JSON.
 
         Returns:
             A dict containing error details: message, code, and details.
         """
         error_details = {}
 
-        if body_json and body_json.get("error"):
-            error_details["message"] = body_json["error"].get("message")
-            error_details["code"] = body_json["error"].get("code")
-            error_details["details"] = body_json["error"].get("details")
+        if response_json and response_json.get("error"):
+            error_details["message"] = response_json["error"].get("message")
+            error_details["code"] = response_json["error"].get("code")
+            error_details["details"] = response_json["error"].get("details")
 
         return error_details
 
@@ -107,11 +107,11 @@ class APIRequestError(AbstractAPIException):
                 error details returned from API when available.
         """
         try:
-            body_json = response.json()
+            response_json = response.json()
         except Exception:
-            body_json = {}
+            response_json = {}
 
-        error_details = cls._get_error_details(body_json)
+        error_details = cls._get_error_details(response_json)
         raised_error_message = cls._build_raised_error_message(
             error_details, response.status_code
         )

@@ -1,5 +1,5 @@
 from abstract_api.email_validation import EmailValidationResponse
-from abstract_api.email_validation.response_fields import RESPONSE_FIELDS
+from abstract_api.email_validation._response_fields import RESPONSE_FIELDS
 from tests.common_assertions import assert_unchangeable_fields
 from tests.utils import generate_response
 

@@ -1,5 +1,5 @@
 from abstract_api.timezone import CurrentTimezoneResponse
-from abstract_api.timezone.response_fields import CURRENT_RESPONSE_FIELDS
+from abstract_api.timezone._response_fields import CURRENT_RESPONSE_FIELDS
 from tests.common_assertions import assert_response_fields
 from tests.utils import generate_response
 

@@ -10,7 +10,7 @@ class Square(BaseStrategy):
     """
 
     def __init__(self, size: int) -> None:
-        """Initialize a new Square instance."""
+        """Initializes a new Square instance."""
         super().__init__()
         self._size = size
 

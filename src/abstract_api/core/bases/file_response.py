@@ -15,7 +15,7 @@ class FileResponse(BaseResponse):
     meta: FileResponseMeta
 
     def __init__(self, response: requests.models.Response) -> None:
-        """Initialize a new FileResponse."""
+        """Initializes a new FileResponse."""
         super().__init__(response)
         self._content: bytes = response.content
 

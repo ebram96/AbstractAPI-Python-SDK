@@ -5,7 +5,7 @@ import requests
 from ..core.bases import JSONResponse
 from ..core.common_entities import Country as CommonCountry
 from ..core.mixins import NestedEntitiesMixin
-from .response_fields import RESPONSE_FIELDS
+from ._response_fields import RESPONSE_FIELDS
 
 
 class Format:
@@ -97,7 +97,6 @@ class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
         The possible values are: Landline, Mobile, Satellite, Premium,
         Paging, Special, Toll_Free, and Unknown.
         """
-        # TODO: Use enum.
         return self._get_response_field("type")
 
     @cached_property

@@ -13,7 +13,7 @@ class Fill(HeightMixin, WidthMixin, BaseStrategy):
     """
 
     def __init__(self, background: str | None = None, **kwargs) -> None:
-        """Initialize a new Square instance."""
+        """Initializes a new Square instance."""
         super().__init__(**kwargs)
         self._background = background
 

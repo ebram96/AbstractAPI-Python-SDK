@@ -2,8 +2,8 @@ from typing import ClassVar, Iterable
 
 from ..core.bases import BaseService
 from ..core.mixins import ResponseFieldsMixin
+from ._response_fields import RESPONSE_FIELDS
 from .ip_geolocation_response import IPGeolocationResponse
-from .response_fields import RESPONSE_FIELDS
 
 
 class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):

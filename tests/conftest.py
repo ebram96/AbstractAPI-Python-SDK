@@ -13,15 +13,7 @@ def base_url():
 @pytest.fixture
 def blank_response(request):
     """Blank Response instance, no status_code, no content."""
-    return requests.Response()
-
-
-@pytest.fixture(scope="function")
-def ok_response(blank_response):
-    """Response instance with status_code = OK."""
-    r = blank_response
-    r.status_code = requests.codes.OK
-    return r
+    return generate_response(data=None, status_code=requests.codes.NO_CONTENT)
 
 
 _DEFAULT_CONTENT = b"some-random-testing-content"
@@ -40,4 +32,13 @@ def content_response(request):
     return generate_response(
         request.param.get("data", _DEFAULT_CONTENT),
         request.param.get("status_code", _DEFAULT_STATUS_CODE)
+    )
+
+
+@pytest.fixture
+def json_response():
+    """Response instance with given JSON data."""
+    return generate_response(
+        data={"sample1": "value1", "sample2": "value2"},
+        status_code=requests.codes.OK
     )

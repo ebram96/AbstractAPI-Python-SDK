@@ -1,5 +1,5 @@
 from abstract_api.ip_geolocation import IPGeolocationResponse
-from abstract_api.ip_geolocation.response_fields import RESPONSE_FIELDS
+from abstract_api.ip_geolocation._response_fields import RESPONSE_FIELDS
 from tests.common_assertions import (
     assert_response_fields,
     assert_unchangeable_fields

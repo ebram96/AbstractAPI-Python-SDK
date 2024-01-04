@@ -154,11 +154,11 @@ class TestBaseService:
     def test__service_request_parsing_error(
         self,
         child_service,
-        ok_response,
+        blank_response,
         mocker
     ):
         mocked_request = mocker.patch.object(requests, "request")
-        mocked_request.return_value = ok_response
+        mocked_request.return_value = blank_response
 
         with pytest.raises(ResponseParseError):
             child_service._service_request(

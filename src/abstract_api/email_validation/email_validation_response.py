@@ -4,7 +4,7 @@ from typing import Any
 import requests
 
 from ..core.bases import JSONResponse
-from .response_fields import RESPONSE_FIELDS
+from ._response_fields import RESPONSE_FIELDS
 
 
 class EmailValidationResponse(JSONResponse):

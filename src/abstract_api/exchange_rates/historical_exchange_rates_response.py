@@ -3,7 +3,7 @@ from functools import cached_property
 import requests
 
 from ._multiple_exchange_rates_response import MultipleExchangeRatesResponse
-from .response_fields import HISTORICAL_RESPONSE_FIELDS
+from ._response_fields import HISTORICAL_RESPONSE_FIELDS
 
 
 class HistoricalExchangeRatesResponse(MultipleExchangeRatesResponse):
