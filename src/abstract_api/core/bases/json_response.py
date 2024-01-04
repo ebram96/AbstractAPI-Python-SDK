@@ -11,13 +11,13 @@ class JSONResponseMeta(BaseResponseMeta):
     def __init__(self, response: requests.models.Response) -> None:
         """Initialize a new JSONResponseMeta."""
         super().__init__(response)
-        try:
-            self._body_json = response.json()
-        except:  # noqa: E722
+        if response.status_code == requests.codes.NO_CONTENT:
             self._body_json = None
+        else:
+            self._body_json = response.json()
 
     @property
-    def body_json(self) -> dict[str, Any] | list[dict[str, Any]]:
+    def body_json(self) -> dict[str, Any] | list[dict[str, Any]] | None:
         """JSON representation of response body returned from API request."""
         return self._body_json
 
