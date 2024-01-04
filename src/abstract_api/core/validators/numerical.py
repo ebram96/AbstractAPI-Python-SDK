@@ -1,6 +1,6 @@
 from typing import Any
 
-from abstract_api.core.exceptions import ClientRequestError
+from ..exceptions import ClientRequestError
 
 
 def between(
