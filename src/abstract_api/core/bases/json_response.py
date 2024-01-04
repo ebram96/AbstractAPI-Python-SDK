@@ -12,14 +12,14 @@ class JSONResponseMeta(BaseResponseMeta):
         """Initializes a new JSONResponseMeta."""
         super().__init__(response)
         if response.status_code == requests.codes.NO_CONTENT:
-            self._body_json = None
+            self._response_json = None
         else:
-            self._body_json = response.json()
+            self._response_json = response.json()
 
     @property
-    def body_json(self) -> dict[str, Any] | list[dict[str, Any]] | None:
+    def response_json(self) -> dict[str, Any] | list[dict[str, Any]] | None:
         """JSON representation of response body returned from API request."""
-        return self._body_json
+        return self._response_json
 
 
 class JSONResponse(BaseResponse):
@@ -70,18 +70,18 @@ class JSONResponse(BaseResponse):
 
         super().__init__(response)
 
-        if self.meta.body_json is None:
+        if self.meta.response_json is None:
             return
 
         if TYPE_CHECKING:
-            assert isinstance(self.meta.body_json, dict)
+            assert isinstance(self.meta.response_json, dict)
 
         not_in_response = object()
         for field in response_fields:
             value = (
-                self.meta.body_json.get(field, not_in_response)
+                self.meta.response_json.get(field, not_in_response)
                 if not list_response
-                else self.meta.body_json
+                else self.meta.response_json
             )
             # Initialize property only if field was returned
             if value is not not_in_response:
