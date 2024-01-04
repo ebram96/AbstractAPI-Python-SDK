@@ -2,8 +2,8 @@ import pytest
 
 from abstract_api import IPGeolocation
 from abstract_api.ip_geolocation import IPGeolocationResponse
+from abstract_api.ip_geolocation._response_fields import RESPONSE_FIELDS
 from abstract_api.ip_geolocation.ip_geolocation_response import Timezone
-from abstract_api.ip_geolocation.response_fields import RESPONSE_FIELDS
 
 
 class TestIPGeolocation:

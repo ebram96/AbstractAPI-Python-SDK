@@ -3,7 +3,7 @@ from functools import cached_property
 import requests
 
 from ..core.bases import JSONResponse
-from .response_fields import CURRENT_RESPONSE_FIELDS
+from ._response_fields import CURRENT_RESPONSE_FIELDS
 
 
 class CurrentTimezoneResponse(JSONResponse):

@@ -2,7 +2,7 @@ from abstract_api.exchange_rates import LiveExchangeRatesResponse
 from abstract_api.exchange_rates._multiple_exchange_rates_response import (
     MultipleExchangeRatesResponse
 )
-from abstract_api.exchange_rates.response_fields import LIVE_RESPONSE_FIELDS
+from abstract_api.exchange_rates._response_fields import LIVE_RESPONSE_FIELDS
 from tests.common_assertions import assert_response_fields
 from tests.utils import generate_response
 

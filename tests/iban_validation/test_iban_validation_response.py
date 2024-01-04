@@ -1,5 +1,5 @@
 from abstract_api.iban_validation import IBANValidationResponse
-from abstract_api.iban_validation.response_fields import RESPONSE_FIELDS
+from abstract_api.iban_validation._response_fields import RESPONSE_FIELDS
 from tests.common_assertions import assert_response_fields
 from tests.utils import generate_response
 

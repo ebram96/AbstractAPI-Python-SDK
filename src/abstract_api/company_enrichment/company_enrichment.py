@@ -2,8 +2,8 @@ from typing import ClassVar, Iterable
 
 from ..core.bases import BaseService
 from ..core.mixins import ResponseFieldsMixin
+from ._response_fields import RESPONSE_FIELDS
 from .company_enrichment_response import CompanyEnrichmentResponse
-from .response_fields import RESPONSE_FIELDS
 
 
 class CompanyEnrichment(

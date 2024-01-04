@@ -5,7 +5,7 @@ import requests
 from ..core.bases import JSONResponse
 from ..core.common_entities import Country as CommonCountry
 from ..core.mixins import NestedEntitiesMixin
-from .response_fields import RESPONSE_FIELDS
+from ._response_fields import RESPONSE_FIELDS
 
 
 class Format:

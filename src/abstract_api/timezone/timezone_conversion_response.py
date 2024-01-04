@@ -4,7 +4,7 @@ import requests
 
 from ..core.bases import JSONResponse
 from ..core.mixins import NestedEntitiesMixin
-from .response_fields import CONVERSION_RESPONSE_FIELDS
+from ._response_fields import CONVERSION_RESPONSE_FIELDS
 
 
 class Timezone:

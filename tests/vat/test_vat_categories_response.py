@@ -2,7 +2,7 @@ import pytest
 
 from abstract_api.core.bases import JSONResponse
 from abstract_api.vat import VATCategoriesResponse
-from abstract_api.vat.response_fields import CATEGORIES_RESPONSE_FIELDS
+from abstract_api.vat._response_fields import CATEGORIES_RESPONSE_FIELDS
 from abstract_api.vat.vat_categories_response import Category
 from tests.utils import generate_response
 

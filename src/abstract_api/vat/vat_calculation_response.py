@@ -5,7 +5,7 @@ import requests
 from ..core.bases import JSONResponse
 from ..core.common_entities import Country
 from ..core.mixins import NestedEntitiesMixin
-from .response_fields.calculation import CALCULATION_RESPONSE_FIELDS
+from ._response_fields.calculation import CALCULATION_RESPONSE_FIELDS
 
 
 class VATCalculationResponse(NestedEntitiesMixin, JSONResponse):

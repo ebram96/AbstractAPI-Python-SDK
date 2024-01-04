@@ -1,5 +1,5 @@
 from abstract_api.phone_validation import PhoneValidationResponse
-from abstract_api.phone_validation.response_fields import RESPONSE_FIELDS
+from abstract_api.phone_validation._response_fields import RESPONSE_FIELDS
 from tests.common_assertions import (
     assert_response_fields,
     assert_unchangeable_fields

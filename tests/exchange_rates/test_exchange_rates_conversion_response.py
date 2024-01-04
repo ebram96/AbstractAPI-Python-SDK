@@ -2,7 +2,7 @@ import pytest
 
 from abstract_api.core.bases import JSONResponse
 from abstract_api.exchange_rates import ExchangeRatesConversionResponse
-from abstract_api.exchange_rates.response_fields import (
+from abstract_api.exchange_rates._response_fields import (
     CONVERSION_RESPONSE_FIELDS
 )
 from tests.common_assertions import assert_response_fields

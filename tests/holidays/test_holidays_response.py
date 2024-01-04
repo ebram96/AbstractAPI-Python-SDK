@@ -2,8 +2,8 @@ import pytest
 
 from abstract_api.core.bases import JSONResponse
 from abstract_api.holidays import HolidaysResponse
+from abstract_api.holidays._response_fields import RESPONSE_FIELDS
 from abstract_api.holidays.holidays_response import Holiday
-from abstract_api.holidays.response_fields import RESPONSE_FIELDS
 from tests.utils import generate_response
 
 
