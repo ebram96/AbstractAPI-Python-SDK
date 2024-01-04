@@ -9,7 +9,7 @@ class JSONResponseMeta(BaseResponseMeta):
     """Metadata about a JSON-based API response."""
 
     def __init__(self, response: requests.models.Response) -> None:
-        """Initialize a new JSONResponseMeta."""
+        """Initializes a new JSONResponseMeta."""
         super().__init__(response)
         if response.status_code == requests.codes.NO_CONTENT:
             self._body_json = None
@@ -65,7 +65,7 @@ class JSONResponse(BaseResponse):
         response_fields: frozenset[str],
         list_response: bool = False
     ) -> None:
-        """Initialize a new JSONResponse."""
+        """Initializes a new JSONResponse."""
         self._response_fields = response_fields  # Must be set first.
 
         super().__init__(response)
