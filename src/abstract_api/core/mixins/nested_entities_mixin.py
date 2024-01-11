@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any, ClassVar, Protocol, Type
 
 class _ResponseFieldProtocol(Protocol):
     def _init_response_field(self, field: str, value: Any) -> None:
-        ...
+        ...  # pragma: no cover
 
 
 if TYPE_CHECKING:
