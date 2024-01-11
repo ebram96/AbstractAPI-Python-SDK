@@ -22,13 +22,16 @@ class TestCompanyEnrichment:
         requests_mock,
         mocker
     ):
+        # Given
         requests_mock.get(service_url, json=company_enrichment_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )
 
+        # When
         response = service.check(domain=company_enrichment_sample["domain"])
 
+        # Then
         assert isinstance(response, CompanyEnrichmentResponse)
         mocked__service_request.assert_called_once_with(
             _response_class=CompanyEnrichmentResponse,
@@ -54,6 +57,7 @@ class TestCompanyEnrichment:
         requests_mock,
         mocker
     ):
+        # Given
         sample_for_fields = {
             "name": "Google",
             "domain": "google.com"
@@ -64,11 +68,13 @@ class TestCompanyEnrichment:
             service, "_service_request", wraps=service._service_request
         )
 
+        # When
         response = service.check(
             domain=company_enrichment_sample["domain"],
             fields=selected_fields
         )
 
+        # Then
         assert isinstance(response, CompanyEnrichmentResponse)
         assert response.name == sample_for_fields["name"]
         assert response.domain == sample_for_fields["domain"]

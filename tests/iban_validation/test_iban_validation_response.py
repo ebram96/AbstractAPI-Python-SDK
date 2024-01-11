@@ -6,10 +6,13 @@ from tests.utils import generate_response
 
 class TestIBANValidationResponse:
     def test_instance(self, iban_validation_sample, mocker):
+        # Given
         response = generate_response(iban_validation_sample)
 
+        # When
         instance = IBANValidationResponse(response)
 
+        # Then
         assert_response_fields(
             instance, RESPONSE_FIELDS, iban_validation_sample, mocker
         )

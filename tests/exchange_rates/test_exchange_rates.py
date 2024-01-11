@@ -26,6 +26,7 @@ class TestExchangeRates:
         ]
     )
     def test__target_as_param(self, target, expected):
+        # Then
         assert ExchangeRates._target_as_param(target) == expected
 
     def test_live(

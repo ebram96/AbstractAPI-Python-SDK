@@ -59,6 +59,7 @@ class TestIPGeolocation:
         requests_mock,
         mocker
     ):
+        # Given
         sample_for_fields = {
             "ip_address": ip_geolocation_sample["ip_address"],
             "city": ip_geolocation_sample["city"],
@@ -70,11 +71,13 @@ class TestIPGeolocation:
             service, "_service_request", wraps=service._service_request
         )
 
+        # When
         response = service.check(
             ip=ip_geolocation_sample["ip_address"],
             fields=selected_fields
         )
 
+        # Then
         assert isinstance(response, IPGeolocationResponse)
         assert response.ip_address == sample_for_fields["ip_address"]
         assert response.city == sample_for_fields["city"]
