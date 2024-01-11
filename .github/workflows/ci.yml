@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Unit Tests, Test Coverage, and Pre-Commit Hooks
 
 on:
   pull_request:
@@ -30,8 +30,7 @@ jobs:
         run: coverage run -m pytest -s tests
 
       - name: Test Coverage
-        # TODO: Change this after finishing tests.
-        run: coverage report --fail-under=94
+        run: coverage report --fail-under=96
 
       - name: Run Pre-Commit Hooks
         run: pre-commit run --all-files

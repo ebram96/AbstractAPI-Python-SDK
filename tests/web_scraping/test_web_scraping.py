@@ -7,14 +7,17 @@ from abstract_api.web_scraping import WebScrapingResponse
 class TestWebScraping:
     """WebScraping service tests."""
     def test_scrape(self, base_url, requests_mock):
+        # Given
         service = WebScraping("no-api-key")
         website = "https://example.com"
         url = base_url.format(subdomain=WebScraping._subdomain)
         content = b'some-example-web-scraping-content'
         requests_mock.get(url, content=content)
 
+        # When
         response = service.scrape(website)
 
+        # Then
         assert isinstance(response, WebScrapingResponse)
         assert response.content == content
         assert response.meta.body == content

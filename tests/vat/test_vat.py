@@ -14,19 +14,22 @@ class TestVAT:
     def service(self):
         return VAT(api_key="no-api-key")
 
+    @pytest.fixture
+    def service_url(self, base_url, service):
+        return base_url.format(subdomain=service._subdomain)
+
     def test_check(
         self,
         service,
+        service_url,
         vat_validation_sample,
-        base_url,
         mocker,
         requests_mock
     ):
         # Given
         vat_number = vat_validation_sample["vat_number"]
         action = "validate"
-        url = base_url.format(subdomain=VAT._subdomain)
-        requests_mock.get(url + action, json=vat_validation_sample)
+        requests_mock.get(service_url + action, json=vat_validation_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )
@@ -45,8 +48,8 @@ class TestVAT:
     def test_calculate(
         self,
         service,
+        service_url,
         vat_calculation_sample,
-        base_url,
         mocker,
         requests_mock
     ):
@@ -54,8 +57,7 @@ class TestVAT:
         amount = float(vat_calculation_sample["amount_excluding_vat"])
         country_code = vat_calculation_sample["country"]["code"]
         action = "calculate"
-        url = base_url.format(subdomain=VAT._subdomain)
-        requests_mock.get(url + action, json=vat_calculation_sample)
+        requests_mock.get(service_url + action, json=vat_calculation_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )
@@ -81,16 +83,15 @@ class TestVAT:
     def test_lookup(
         self,
         service,
+        service_url,
         vat_categories_sample,
-        base_url,
         mocker,
         requests_mock
     ):
         # Given
         country_code = vat_categories_sample[0]["country_code"]
         action = "categories"
-        url = base_url.format(subdomain=VAT._subdomain)
-        requests_mock.get(url + action, json=vat_categories_sample)
+        requests_mock.get(service_url + action, json=vat_categories_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )

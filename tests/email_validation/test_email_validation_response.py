@@ -6,10 +6,13 @@ from tests.utils import generate_response
 
 class TestEmailValidationResponse:
     def test_instance(self, email_validation_sample, mocker):
+        # Given
         response = generate_response(email_validation_sample)
 
+        # When
         instance = EmailValidationResponse(response)
 
+        # Then
         mocked__get_response_field = mocker.patch.object(
             instance,
             "_get_response_field",

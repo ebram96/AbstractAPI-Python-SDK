@@ -15,6 +15,10 @@ class TestTimezone:
     def service(self):
         return Timezone(api_key="no-api-key")
 
+    @pytest.fixture
+    def service_url(self, base_url, service):
+        return base_url.format(subdomain=service._subdomain)
+
     @pytest.mark.parametrize(
         # Given
         "location",
@@ -63,15 +67,14 @@ class TestTimezone:
         self,
         location,
         service,
+        service_url,
         current_timezone_sample,
-        base_url,
         requests_mock,
         mocker
     ):
         # Given
         action = "current_time"
-        url = base_url.format(subdomain=Timezone._subdomain) + action
-        requests_mock.get(url, json=current_timezone_sample)
+        requests_mock.get(service_url + action, json=current_timezone_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )
@@ -112,15 +115,14 @@ class TestTimezone:
         base_location,
         target_location,
         service,
+        service_url,
         current_timezone_sample,
-        base_url,
         requests_mock,
         mocker
     ):
         # Given
         action = "convert_time"
-        url = base_url.format(subdomain=Timezone._subdomain) + action
-        requests_mock.get(url, json=current_timezone_sample)
+        requests_mock.get(service_url + action, json=current_timezone_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )

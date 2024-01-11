@@ -18,10 +18,13 @@ class ConcreteExample(NestedEntitiesMixin, JSONResponse):
 
 class TestNestedEntitiesMixin:
     def test__init_response_field(self):
+        # Given
         response = generate_response({"nested_entity": {"some_field": "value"}})
 
+        # When
         instance = ConcreteExample(
             response, response_fields=frozenset(["nested_entity"])
         )
 
+        # Then
         assert isinstance(instance._nested_entity, NestedEntity)

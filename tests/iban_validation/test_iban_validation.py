@@ -11,6 +11,7 @@ class TestIBANValidation:
         requests_mock,
         mocker
     ):
+        # Given
         service = IBANValidation(api_key="no-api-key")
         url = base_url.format(subdomain=IBANValidation._subdomain)
         requests_mock.get(url, json=iban_validation_sample)
@@ -18,8 +19,10 @@ class TestIBANValidation:
             service, "_service_request", wraps=service._service_request
         )
 
+        # When
         response = service.check(iban_validation_sample["iban"])
 
+        # Then
         assert isinstance(response, IBANValidationResponse)
         mocked__service_request.assert_called_once_with(
             _response_class=IBANValidationResponse,
