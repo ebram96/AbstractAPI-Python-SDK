@@ -10,16 +10,19 @@ class TestCompanyEnrichment:
     def service(self) -> CompanyEnrichment:
         return CompanyEnrichment(api_key="no-api-key")
 
+    @pytest.fixture
+    def service_url(self, base_url, service):
+        return base_url.format(subdomain=service._subdomain)
+
     def test_check(
         self,
         service,
+        service_url,
         company_enrichment_sample,
-        base_url,
         requests_mock,
         mocker
     ):
-        url = base_url.format(subdomain=CompanyEnrichment._subdomain)
-        requests_mock.get(url, json=company_enrichment_sample)
+        requests_mock.get(service_url, json=company_enrichment_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )
@@ -46,18 +49,17 @@ class TestCompanyEnrichment:
     def test_check_with_response_fields(
         self,
         service,
+        service_url,
         company_enrichment_sample,
-        base_url,
         requests_mock,
         mocker
     ):
-        url = base_url.format(subdomain=CompanyEnrichment._subdomain)
         sample_for_fields = {
             "name": "Google",
             "domain": "google.com"
         }
         selected_fields = service._prepare_selected_fields(sample_for_fields.keys())
-        requests_mock.get(url, json=sample_for_fields)
+        requests_mock.get(service_url, json=sample_for_fields)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )

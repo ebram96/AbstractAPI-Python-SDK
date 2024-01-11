@@ -12,17 +12,20 @@ class TestIPGeolocation:
     def service(self) -> IPGeolocation:
         return IPGeolocation(api_key="no-api-key")
 
+    @pytest.fixture
+    def service_url(self, base_url, service):
+        return base_url.format(subdomain=service._subdomain)
+
     def test_check(
         self,
         service,
+        service_url,
         ip_geolocation_sample,
-        base_url,
         requests_mock,
         mocker
     ):
         # Given
-        url = base_url.format(subdomain=IPGeolocation._subdomain)
-        requests_mock.get(url, json=ip_geolocation_sample)
+        requests_mock.get(service_url, json=ip_geolocation_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )
@@ -51,19 +54,18 @@ class TestIPGeolocation:
     def test_check_with_response_fields(
         self,
         service,
+        service_url,
         ip_geolocation_sample,
-        base_url,
         requests_mock,
         mocker
     ):
-        url = base_url.format(subdomain=IPGeolocation._subdomain)
         sample_for_fields = {
             "ip_address": ip_geolocation_sample["ip_address"],
             "city": ip_geolocation_sample["city"],
             "timezone": ip_geolocation_sample["timezone"]
         }
         selected_fields = service._prepare_selected_fields(sample_for_fields.keys())
-        requests_mock.get(url, json=sample_for_fields)
+        requests_mock.get(service_url, json=sample_for_fields)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )

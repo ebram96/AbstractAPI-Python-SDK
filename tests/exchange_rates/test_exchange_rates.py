@@ -14,6 +14,10 @@ class TestExchangeRates:
     def service(self):
         return ExchangeRates(api_key="no-api-key")
 
+    @pytest.fixture
+    def service_url(self, base_url, service):
+        return base_url.format(subdomain=service._subdomain)
+
     @pytest.mark.parametrize(
         ["target", "expected"],
         [
@@ -27,8 +31,8 @@ class TestExchangeRates:
     def test_live(
         self,
         service,
+        service_url,
         exchange_rates_live_sample,
-        base_url,
         mocker,
         requests_mock
     ):
@@ -36,8 +40,7 @@ class TestExchangeRates:
         base = exchange_rates_live_sample["base"]
         target = None
         action = "live"
-        url = base_url.format(subdomain=ExchangeRates._subdomain)
-        requests_mock.get(url + action, json=exchange_rates_live_sample)
+        requests_mock.get(service_url + action, json=exchange_rates_live_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )
@@ -57,8 +60,8 @@ class TestExchangeRates:
     def test_convert(
         self,
         service,
+        service_url,
         exchange_rates_conversion_sample,
-        base_url,
         mocker,
         requests_mock
     ):
@@ -67,8 +70,7 @@ class TestExchangeRates:
         target = exchange_rates_conversion_sample["target"]
         base_amount = exchange_rates_conversion_sample["base_amount"]
         action = "convert"
-        url = base_url.format(subdomain=ExchangeRates._subdomain)
-        requests_mock.get(url + action, json=exchange_rates_conversion_sample)
+        requests_mock.get(service_url + action, json=exchange_rates_conversion_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )
@@ -97,8 +99,8 @@ class TestExchangeRates:
     def test_historical(
         self,
         service,
+        service_url,
         exchange_rates_historical_sample,
-        base_url,
         mocker,
         requests_mock
     ):
@@ -107,8 +109,7 @@ class TestExchangeRates:
         target = None
         date = exchange_rates_historical_sample["date"]
         action = "historical"
-        url = base_url.format(subdomain=ExchangeRates._subdomain)
-        requests_mock.get(url + action, json=exchange_rates_historical_sample)
+        requests_mock.get(service_url + action, json=exchange_rates_historical_sample)
         mocked__service_request = mocker.patch.object(
             service, "_service_request", wraps=service._service_request
         )
