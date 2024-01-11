@@ -2,7 +2,6 @@ import json
 from typing import Any, BinaryIO, ClassVar
 
 from ..core.bases import BaseService
-from ..core.exceptions import ClientRequestError
 from ..core.validators import numerical
 from .image_processing_response import ImageProcessingResponse
 from .strategies import BaseStrategy
@@ -107,7 +106,7 @@ class ImageProcessing(BaseService[ImageProcessingResponse]):
     ) -> ImageProcessingResponse:
 
         if image is None and url is None:
-            raise ClientRequestError("Image or URL must be passed")
+            raise ValueError("Image or URL must be passed")
 
         numerical.between("quality", quality, 0, 100)
 
