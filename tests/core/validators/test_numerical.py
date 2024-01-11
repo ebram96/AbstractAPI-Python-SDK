@@ -26,3 +26,14 @@ class TestNumerical:
             # When
             greater_or_equal("example", threshold - 1, threshold)
             greater_or_equal("example", threshold - 0.1, threshold)
+
+    def test_greater_or_equal_with_none(self):
+        # Given
+        value = None
+        threshold = 0
+
+        # Then
+        # Does not raise exception.
+        # If execution continue, an exception will be raised because None can
+        # not be compared with '<' operator.
+        greater_or_equal("example", value, threshold)
