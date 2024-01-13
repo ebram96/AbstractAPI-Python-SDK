@@ -86,7 +86,7 @@ class APIRequestError(AbstractAPIException):
         raised_error_message = f"API request failed "\
                                f"(HTTP status: {http_status})."
         if error_details.get("message"):
-            raised_error_message += f" {error_details["message"]}"
+            raised_error_message += f" {error_details['message']}"
             if error_details["details"]:
                 raised_error_message += " Details: "
                 raised_error_message += str(error_details["details"])

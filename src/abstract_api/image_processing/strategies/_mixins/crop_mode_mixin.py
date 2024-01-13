@@ -44,7 +44,8 @@ class CropModeMixin(_Base):
 
         if crop_mode is not None:
             if isinstance(crop_mode, str):
-                if crop_mode not in CropMode:
+                crop_mode = crop_mode.lower()
+                if crop_mode not in [m.value for m in CropMode]:
                     raise ValueError(
                         f"'{crop_mode}' is not a valid crop mode"
                     )
