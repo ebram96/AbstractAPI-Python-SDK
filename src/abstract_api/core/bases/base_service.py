@@ -1,7 +1,16 @@
 import os
 from functools import lru_cache
 from io import BytesIO
-from typing import TYPE_CHECKING, Any, ClassVar, Final, Generic, Type, TypeVar
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    ClassVar,
+    Final,
+    Generic,
+    Optional,
+    Type,
+    TypeVar
+)
 
 import requests
 from requests import codes
@@ -34,7 +43,7 @@ class BaseService(Generic[BaseResponseT]):
     _service_name_env_var: ClassVar[str]
 
     @classmethod
-    def _read_api_key_from_env(cls) -> str | None:
+    def _read_api_key_from_env(cls) -> Optional[str]:
         """Reads service API key from environment variables.
 
         API key exposed as an environment variable must be exposed using a
@@ -50,7 +59,7 @@ class BaseService(Generic[BaseResponseT]):
             pattern.format(service_name=cls._service_name_env_var)
         )
 
-    def __init__(self, api_key: str | None = None) -> None:
+    def __init__(self, api_key: Optional[str] = None) -> None:
         """Constructs a BaseService.
 
         Args:
@@ -80,10 +89,10 @@ class BaseService(Generic[BaseResponseT]):
     def _service_request(
         self,
         _response_class: Type[BaseResponseT],
-        _response_class_kwargs: dict[str, Any] | None = None,
+        _response_class_kwargs: Optional[dict[str, Any]] = None,
         _method: str = "GET",
-        _body: dict[str, Any] | None = None,
-        _files: dict[str, BytesIO] | None = None,
+        _body: Optional[dict[str, Any]] = None,
+        _files: Optional[dict[str, BytesIO]] = None,
         _action: str = "",
         **params
     ) -> BaseResponseT:

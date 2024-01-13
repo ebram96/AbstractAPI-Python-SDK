@@ -1,4 +1,4 @@
-from typing import ClassVar
+from typing import ClassVar, Optional
 
 from ..core.bases import BaseService
 from ..core.exceptions import ClientRequestError
@@ -39,13 +39,13 @@ class WebsiteScreenshot(BaseService[WebsiteScreenshotResponse]):
     def capture(
         self,
         url: str,
-        capture_full_page: bool | None = None,
-        width: int | None = None,
-        height: int | None = None,
-        delay: int | None = None,
-        css_injection: str | None = None,
-        user_agent: str | None = None,
-        export_format: str | None = None
+        capture_full_page: Optional[bool] = None,
+        width: Optional[int] = None,
+        height: Optional[int] = None,
+        delay: Optional[int] = None,
+        css_injection: Optional[str] = None,
+        user_agent: Optional[str] = None,
+        export_format: Optional[str] = None
     ) -> WebsiteScreenshotResponse:
         """Captures a screenshot of a webpage in the given URL.
 

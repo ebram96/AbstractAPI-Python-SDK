@@ -1,9 +1,11 @@
-from typing import Annotated, ClassVar
+from typing import Annotated, ClassVar, Optional, Union
 
 from ..core.bases import BaseService
 from ..core.exceptions import ClientRequestError
 from .current_timezone_response import CurrentTimezoneResponse
 from .timezone_conversion_response import TimezoneConversionResponse
+
+Location = Union[str, Annotated[list[float], 2], tuple[float, float]]
 
 
 class Timezone(BaseService):
@@ -18,10 +20,7 @@ class Timezone(BaseService):
     _service_name_env_var: ClassVar[str] = "TIMEZONE"
 
     @staticmethod
-    def _validate_location(
-        param: str,
-        location: str | Annotated[list[float], 2] | tuple[float, float]
-    ) -> None:
+    def _validate_location(param: str, location: Location) -> None:
         """Validates a given location.
 
         Args:
@@ -35,9 +34,7 @@ class Timezone(BaseService):
                 )
 
     @staticmethod
-    def _location_as_param(
-        location:  str | Annotated[list[float], 2] | tuple[float, float]
-    ) -> str:
+    def _location_as_param(location: Location) -> str:
         """Converts location to a request query parameter value.
 
         This method converts the location from list/tuple of floats to a
@@ -54,10 +51,7 @@ class Timezone(BaseService):
             location = ",".join(map(str, location))
         return location
 
-    def current(
-        self,
-        location: str | Annotated[list[float], 2] | tuple[float, float]
-    ) -> CurrentTimezoneResponse:
+    def current(self, location: Location) -> CurrentTimezoneResponse:
         """Finds the current time, date, and timezone of a given location.
 
         Args:
@@ -79,9 +73,9 @@ class Timezone(BaseService):
 
     def convert(
         self,
-        base_location: str | Annotated[list[float], 2] | tuple[float, float],
-        target_location: str | Annotated[list[float], 2] | tuple[float, float],
-        base_datetime: str | None = None
+        base_location: Location,
+        target_location: Location,
+        base_datetime: Optional[str] = None
     ) -> TimezoneConversionResponse:
         """Converts datetime of base location to target location's datetime.
 

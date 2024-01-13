@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 from ._json_representable_protocol import JSONRepresentableProtocol
 
@@ -15,7 +15,7 @@ class WidthMixin(_Base):
         super().__init__(**kwargs)
         self._width = width
 
-    def json(self) -> dict[str, int | str]:
+    def json(self) -> dict[str, Union[int, str]]:
         """Returns a dict with strategy attributes to be used with requests."""
         return super().json() | {  # type: ignore[safe-super]
             "width": self.width

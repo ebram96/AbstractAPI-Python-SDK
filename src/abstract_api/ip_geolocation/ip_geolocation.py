@@ -1,4 +1,4 @@
-from typing import ClassVar, Iterable
+from typing import ClassVar, Iterable, Optional
 
 from ..core.bases import BaseService
 from ..core.mixins import ResponseFieldsMixin
@@ -23,7 +23,7 @@ class IPGeolocation(ResponseFieldsMixin, BaseService[IPGeolocationResponse]):
     def check(
         self,
         ip: str,
-        fields: Iterable[str] | None = None
+        fields: Optional[Iterable[str]] = None
     ) -> IPGeolocationResponse:
         """Analyzes an IP address for geographical data.
 

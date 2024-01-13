@@ -1,5 +1,5 @@
 from functools import cache
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 from ._json_representable_protocol import JSONRepresentableProtocol
 
@@ -17,7 +17,7 @@ class HeightMixin(_Base):
         self._height = height
 
     @cache
-    def json(self) -> dict[str, int | str]:
+    def json(self) -> dict[str, Union[int, str]]:
         """Returns a dict with strategy attributes to be used with requests."""
         return super().json() | {  # type: ignore[safe-super]
             "height": self.height

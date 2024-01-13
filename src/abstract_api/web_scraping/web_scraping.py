@@ -1,4 +1,4 @@
-from typing import ClassVar
+from typing import ClassVar, Optional
 
 from ..core.bases import BaseService
 from .web_scraping_response import WebScrapingResponse
@@ -18,9 +18,9 @@ class WebScraping(BaseService[WebScrapingResponse]):
     def scrape(
         self,
         url: str,
-        render_js: bool | None = None,
-        block_ads: bool | None = None,
-        proxy_country: str | None = None
+        render_js: Optional[bool] = None,
+        block_ads: Optional[bool] = None,
+        proxy_country: Optional[str] = None
     ) -> WebScrapingResponse:
         """Extracts data from the given URL.
 

@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, Optional
 
 from ..exceptions import ClientRequestError
 
@@ -13,7 +13,7 @@ class ResponseFieldsMixin:
     def __init__(
         self,
         *,
-        response_fields: Iterable[str] | None = None,
+        response_fields: Optional[Iterable[str]] = None,
         **kwargs
     ) -> None:
         """Initializes a new instance.
@@ -68,7 +68,7 @@ class ResponseFieldsMixin:
 
     def _prepare_selected_fields(
         self,
-        fields: Iterable[str] | None = None
+        fields: Optional[Iterable[str]] = None
     ) -> frozenset[str]:
         """Prepares selected fields to be used in service call.
 

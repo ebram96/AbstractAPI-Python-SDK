@@ -1,4 +1,5 @@
 from functools import cached_property
+from typing import Optional
 
 import requests
 
@@ -44,7 +45,7 @@ class Country(CommonCountry):
         self._prefix = prefix
 
     @property
-    def prefix(self) -> str | None:
+    def prefix(self) -> Optional[str]:
         """The country's calling code prefix."""
         return self._prefix
 
@@ -62,27 +63,27 @@ class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
         super().__init__(response, RESPONSE_FIELDS)
 
     @cached_property
-    def phone(self) -> str | None:
+    def phone(self) -> Optional[str]:
         """The phone number submitted for validation and verification."""
         return self._get_response_field("phone")
 
     @cached_property
-    def valid(self) -> bool | None:
+    def valid(self) -> Optional[bool]:
         """Is true if the phone number submitted is valid."""
         return self._get_response_field("valid")
 
     @cached_property
-    def format(self) -> Format | None:
+    def format(self) -> Optional[Format]:
         """International and local formats of the submitted number."""
         return self._get_response_field("format")
 
     @cached_property
-    def country(self) -> Country | None:
+    def country(self) -> Optional[Country]:
         """The of the phone number's country."""
         return self._get_response_field("country")
 
     @cached_property
-    def location(self) -> str | None:
+    def location(self) -> Optional[str]:
         """As much location details as are available from AbstractAPI's data.
 
         This can include the region, state / province, and in some cases down
@@ -91,7 +92,7 @@ class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
         return self._get_response_field("location")
 
     @cached_property
-    def type(self) -> str | None:
+    def type(self) -> Optional[str]:
         """The type of phone number.
 
         The possible values are: Landline, Mobile, Satellite, Premium,
@@ -100,6 +101,6 @@ class PhoneValidationResponse(NestedEntitiesMixin, JSONResponse):
         return self._get_response_field("type")
 
     @cached_property
-    def carrier(self) -> str | None:
+    def carrier(self) -> Optional[str]:
         """The carrier that the number is registered with."""
         return self._get_response_field("carrier")

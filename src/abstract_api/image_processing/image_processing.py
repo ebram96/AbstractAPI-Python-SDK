@@ -1,5 +1,5 @@
 import json
-from typing import Any, BinaryIO, ClassVar
+from typing import Any, BinaryIO, ClassVar, Optional
 
 from ..core.bases import BaseService
 from ..core.validators import numerical
@@ -21,9 +21,9 @@ class ImageProcessing(BaseService[ImageProcessingResponse]):
     def upload(
         self,
         image: BinaryIO,
-        lossy: bool | None = None,
-        quality: int | None = None,
-        resize: BaseStrategy | None = None
+        lossy: Optional[bool] = None,
+        quality: Optional[int] = None,
+        resize: Optional[BaseStrategy] = None
     ) -> ImageProcessingResponse:
         """Converts, compresses, or optimizes an image.
 
@@ -60,9 +60,9 @@ class ImageProcessing(BaseService[ImageProcessingResponse]):
     def url(
         self,
         url: str,
-        lossy: bool | None = None,
-        quality: int | None = None,
-        resize: BaseStrategy | None = None
+        lossy: Optional[bool] = None,
+        quality: Optional[int] = None,
+        resize: Optional[BaseStrategy] = None
     ) -> ImageProcessingResponse:
         """Converts, compresses, or optimizes an image in the given URL.
 
@@ -98,11 +98,11 @@ class ImageProcessing(BaseService[ImageProcessingResponse]):
 
     def _process(
         self,
-        image: BinaryIO | None = None,
-        url: str | None = None,
-        lossy: bool | None = None,
-        quality: int | None = None,
-        resize: BaseStrategy | None = None
+        image: Optional[BinaryIO] = None,
+        url: Optional[str] = None,
+        lossy: Optional[bool] = None,
+        quality: Optional[int] = None,
+        resize: Optional[BaseStrategy] = None
     ) -> ImageProcessingResponse:
 
         if image is None and url is None:

@@ -1,4 +1,4 @@
-from typing import ClassVar, Iterable
+from typing import ClassVar, Iterable, Optional
 
 from ..core.bases import BaseService
 from ..core.validators import numerical
@@ -21,7 +21,9 @@ class ExchangeRates(BaseService):
     _service_name_env_var: ClassVar[str] = "EXCHANGE_RATES"
 
     @staticmethod
-    def _target_as_param(target: Iterable[str] | None = None) -> str | None:
+    def _target_as_param(
+        target: Optional[Iterable[str]] = None
+    ) -> Optional[str]:
         """Builds 'target' URL query parameter.
 
         Builds a string that contains selected target currencies to be used
@@ -41,7 +43,7 @@ class ExchangeRates(BaseService):
     def live(
         self,
         base: str,
-        target: Iterable[str] | None = None
+        target: Optional[Iterable[str]] = None
     ) -> LiveExchangeRatesResponse:
         """Finds exchange rates from base currency to target currency/ies.
 
@@ -67,8 +69,8 @@ class ExchangeRates(BaseService):
         self,
         base: str,
         target: str,
-        date: str | None = None,
-        base_amount: float | None = None
+        date: Optional[str] = None,
+        base_amount: Optional[float] = None
     ) -> ExchangeRatesConversionResponse:
         """Converts amount of money from base currency to target currency/ies.
 
@@ -108,7 +110,7 @@ class ExchangeRates(BaseService):
         self,
         base: str,
         date: str,
-        target: Iterable[str] | None = None
+        target: Optional[Iterable[str]] = None
     ) -> HistoricalExchangeRatesResponse:
         """Finds historical exchange rates from base to target currencies.
 

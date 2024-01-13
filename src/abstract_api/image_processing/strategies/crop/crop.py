@@ -1,4 +1,5 @@
 from functools import cache
+from typing import Optional, Union
 
 from .._mixins import CropModeMixin, HeightMixin, WidthMixin
 from ..base_strategy import BaseStrategy
@@ -37,9 +38,9 @@ class Crop(HeightMixin, WidthMixin, CropModeMixin, BaseStrategy):
 
     def __init__(
         self,
-        scale: int | None = None,
-        x: int | None = None,
-        y: int | None = None,
+        scale: Optional[int] = None,
+        x: Optional[int] = None,
+        y: Optional[int] = None,
         **kwargs
     ) -> None:
         """Initializes a new Crop instance."""
@@ -49,7 +50,7 @@ class Crop(HeightMixin, WidthMixin, CropModeMixin, BaseStrategy):
         self._y = y
 
     @cache
-    def json(self) -> dict[str, int | str]:
+    def json(self) -> dict[str, Union[int, str]]:
         """Returns a dict with strategy attributes to be used with requests."""
         json = super().json()
         optionals = ["x", "y", "scale"]
@@ -59,16 +60,16 @@ class Crop(HeightMixin, WidthMixin, CropModeMixin, BaseStrategy):
         return json
 
     @property
-    def scale(self) -> int | None:
+    def scale(self) -> Optional[int]:
         """The percentage by which you would like to scale the image."""
         return self._scale
 
     @property
-    def x(self) -> int | None:
+    def x(self) -> Optional[int]:
         """X position of the rectangular area to be cropped, if needed."""
         return self._x
 
     @property
-    def y(self) -> int | None:
+    def y(self) -> Optional[int]:
         """Y position of the rectangular area to be cropped, if needed."""
         return self._y

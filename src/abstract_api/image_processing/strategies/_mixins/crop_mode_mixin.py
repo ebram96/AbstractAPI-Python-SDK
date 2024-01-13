@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Union
 
 from ._json_representable_protocol import JSONRepresentableProtocol
 
@@ -36,7 +36,7 @@ class CropModeMixin(_Base):
     def __init__(
         self,
         *,
-        crop_mode: CropMode | str | None = None,
+        crop_mode: Optional[Union[CropMode, str]] = None,
         **kwargs
     ) -> None:
         """Initializes a new instance."""
@@ -53,7 +53,7 @@ class CropModeMixin(_Base):
 
         self._crop_mode = crop_mode
 
-    def json(self) -> dict[str, int | str]:
+    def json(self) -> dict[str, Union[int, str]]:
         """Returns a dict with strategy attributes to be used with requests."""
         json = super().json()  # type: ignore[safe-super]
         if self.crop_mode is not None:
@@ -61,6 +61,6 @@ class CropModeMixin(_Base):
         return json
 
     @property
-    def crop_mode(self) -> CropMode | None:
+    def crop_mode(self) -> Optional[CropMode]:
         """Direction of cropping."""
         return self._crop_mode

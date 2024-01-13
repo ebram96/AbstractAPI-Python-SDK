@@ -1,4 +1,4 @@
-from typing import ClassVar, Iterable
+from typing import ClassVar, Iterable, Optional
 
 from ..core.bases import BaseService
 from ..core.mixins import ResponseFieldsMixin
@@ -25,7 +25,7 @@ class CompanyEnrichment(
     def check(
         self,
         domain: str,
-        fields: Iterable[str] | None = None
+        fields: Optional[Iterable[str]] = None
     ) -> CompanyEnrichmentResponse:
         """Finds a company's details using its domain.
 

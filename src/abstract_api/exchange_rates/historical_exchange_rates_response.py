@@ -1,4 +1,5 @@
 from functools import cached_property
+from typing import Optional
 
 import requests
 
@@ -14,7 +15,7 @@ class HistoricalExchangeRatesResponse(MultipleExchangeRatesResponse):
         super().__init__(response, HISTORICAL_RESPONSE_FIELDS)
 
     @cached_property
-    def date(self) -> str | None:
+    def date(self) -> Optional[str]:
         """The date the currencies were pulled from.
 
         This is per successful request.

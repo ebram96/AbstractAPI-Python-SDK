@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Union
 
 from ..exceptions import ClientRequestError
 
@@ -6,8 +6,8 @@ from ..exceptions import ClientRequestError
 def between(
     param: str,
     value: Any,
-    start: int | float,
-    end: int | float
+    start: Union[int, float],
+    end: Union[int, float]
 ) -> None:
     """Validate a value to be in a range (inclusive).
 
@@ -32,7 +32,7 @@ def between(
 def greater_or_equal(
     param: str,
     value: Any,
-    threshold: int | float
+    threshold: Union[int, float]
 ) -> None:
     """Validate a value to be in a range (inclusive).
 

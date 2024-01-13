@@ -1,4 +1,4 @@
-from typing import Any, NoReturn
+from typing import Any, NoReturn, Optional
 
 import requests.models
 
@@ -12,9 +12,9 @@ class APIRequestError(AbstractAPIException):
         http_status: int,
         body: bytes,
         raised_error_message: str,
-        message: str | None = None,
-        code: str | None = None,
-        details: dict[str, Any] | None = None,
+        message: Optional[str] = None,
+        code: Optional[str] = None,
+        details: Optional[dict[str, Any]] = None,
     ) -> None:
         """Initializes a new APIRequestError."""
         super().__init__(raised_error_message)
@@ -35,17 +35,17 @@ class APIRequestError(AbstractAPIException):
         return self._body
 
     @property
-    def message(self) -> str | None:
+    def message(self) -> Optional[str]:
         """Error message returned from API."""
         return self._message
 
     @property
-    def code(self) -> str | None:
+    def code(self) -> Optional[str]:
         """Error code returned from API."""
         return self._code
 
     @property
-    def details(self) -> dict[str, Any] | None:
+    def details(self) -> Optional[dict[str, Any]]:
         """Error details returned from API."""
         return self._details
 
