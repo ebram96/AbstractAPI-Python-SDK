@@ -9,36 +9,23 @@ on:
       - synchronize
       - closed
 
+# TODO: Use some kind of cache to speed up running.
 jobs:
-  setup:
+  test-main-python:
     runs-on: ubuntu-latest
-    outputs:
-      main-python-version: "3.12"
     steps:
       - uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ outputs.main-python-version }}
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          python-version: "3.12"
 
       - name: Install Dependencies
         run: |
-          pip install -e .
           pip install -r requirements.txt
+          pip install -e .
 
-  test-main-python:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
       - name: Unit Tests
         run: coverage run -m pytest -s tests
 
@@ -51,8 +38,24 @@ jobs:
           pre-commit run --all-files
 
   test-matrix:
-    needs: setup
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.9", "3.10", "3.11" ]
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.version }}
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -e .
+
       - name: Run Test Matrix
-        run: tox run --skip-env ${{ outputs.main-python-version }}
+        run: |
+          pytest -s tests
+          pre-commit run mypy --all-files
