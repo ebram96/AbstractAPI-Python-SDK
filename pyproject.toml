@@ -1,21 +1,37 @@
 [build-system]
 requires = ["setuptools>=68.2.2"]
 build-backend = "setuptools.build_meta"
+
 [project]
 name = "abstract-api"
-version = "0.0.1"
+version = "1.0.0"
+license = {file = "LICENSE"}
 authors = [
   { name="Ebram Shehata", email="ebram96@gmail.com" },
 ]
-description = "A Python SDK for using AbstractAPI services"
+maintainers = [
+  { name="Ebram Shehata", email="ebram96@gmail.com" },
+]
+keywords = ["sdk", "abstract", "api", "abstract api"]
+description = "Python SDK for using AbstractAPI services"
 readme = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+]
+dependencies = [
+    "requests>=2.31.0"
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/ebram96/AbstractAPI-Python-SDK"
+Homepage = "https://github.com/ebram96/AbstractAPI-Python-SDK"
 "Bug Tracker" = "https://github.com/ebram96/AbstractAPI-Python-SDK/issues"
+Repository = "https://github.com/ebram96/AbstractAPI-Python-SDK.git"
