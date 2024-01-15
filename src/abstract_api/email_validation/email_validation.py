@@ -1,4 +1,4 @@
-from typing import ClassVar
+from typing import ClassVar, Optional
 
 from ..core.bases import BaseService
 from .email_validation_response import EmailValidationResponse
@@ -18,7 +18,7 @@ class EmailValidation(BaseService[EmailValidationResponse]):
     def check(
         self,
         email: str,
-        auto_correct: bool | None = False
+        auto_correct: Optional[bool] = False
     ) -> EmailValidationResponse:
         """Validates and verifies an email address.
 

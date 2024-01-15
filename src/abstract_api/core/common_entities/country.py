@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class Country:
     """Country entity."""
 
@@ -7,11 +10,11 @@ class Country:
         self._name = name
 
     @property
-    def code(self) -> str | None:
+    def code(self) -> Optional[str]:
         """The country's two-letter ISO 3166-1 alpha-2 code."""
         return self._code
 
     @property
-    def name(self) -> str | None:
+    def name(self) -> Optional[str]:
         """The name of the country."""
         return self._name

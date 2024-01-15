@@ -1,5 +1,5 @@
 from functools import cached_property
-from typing import Any
+from typing import Any, Optional
 
 import requests
 
@@ -79,6 +79,6 @@ class VATCategoriesResponse(JSONResponse):
         )
 
     @cached_property
-    def categories(self) -> tuple[Category, ...] | None:
+    def categories(self) -> Optional[tuple[Category, ...]]:
         """The returned VAT categories."""
         return self._get_response_field("categories")

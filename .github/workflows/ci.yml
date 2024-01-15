@@ -1,4 +1,4 @@
-name: Unit Tests, Test Coverage, and Pre-Commit Hooks
+name: CI
 
 on:
   pull_request:
@@ -10,27 +10,49 @@ on:
       - closed
 
 jobs:
-  build:
+  cache-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          python-version: "3.9"
+
+  main:
+    needs: cache-dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: ./.github/actions/setup
         with:
-          python-version: "3.12"
+          python-version: "3.9"
 
-      - name: Install Dependencies
-        run: |
-          pip install -e .
-          pip install -r requirements.txt
-          pre-commit install
-
-      - name: Run Unit Tests
+      - name: Unit Tests
         run: coverage run -m pytest -s tests
 
       - name: Test Coverage
         run: coverage report --fail-under=96
 
-      - name: Run Pre-Commit Hooks
-        run: pre-commit run --all-files
+      - name: Pre-Commit Hooks
+        run: |
+          pre-commit install
+          pre-commit run --all-files
+
+  test-matrix:
+    needs: cache-dependencies
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.10", "3.11", "3.12" ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run Test Matrix
+        run: |
+          pytest -s tests
+          pre-commit run mypy --all-files

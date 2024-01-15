@@ -1,8 +1,11 @@
-from typing import TYPE_CHECKING, Any, ClassVar, Type
+from typing import TYPE_CHECKING, Any, ClassVar, Optional, Type, Union
 
 import requests
 
 from ._base_response import BaseResponse, BaseResponseMeta
+
+# JSON represented as a Python dictionary
+JSONDict = Union[dict[str, Any], list[dict[str, Any]]]
 
 
 class JSONResponseMeta(BaseResponseMeta):
@@ -17,7 +20,7 @@ class JSONResponseMeta(BaseResponseMeta):
             self._response_json = response.json()
 
     @property
-    def response_json(self) -> dict[str, Any] | list[dict[str, Any]] | None:
+    def response_json(self) -> Optional[JSONDict]:
         """JSON representation of response body returned from API request."""
         return self._response_json
 

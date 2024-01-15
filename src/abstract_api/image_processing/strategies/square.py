@@ -1,4 +1,5 @@
 from functools import cache
+from typing import Union
 
 from .base_strategy import BaseStrategy
 
@@ -15,7 +16,7 @@ class Square(BaseStrategy):
         self._size = size
 
     @cache
-    def json(self) -> dict[str, int | str]:
+    def json(self) -> dict[str, Union[int, str]]:
         """Returns a dict with strategy attributes to be used with requests."""
         return super().json() | {"size": self.size}
 

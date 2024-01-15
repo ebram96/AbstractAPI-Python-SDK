@@ -1,4 +1,4 @@
-from typing import ClassVar
+from typing import ClassVar, Optional
 
 from ..core.bases import BaseService
 from ..core.exceptions import ClientRequestError
@@ -42,16 +42,16 @@ class Avatars(BaseService[AvatarsResponse]):
     def create(
         self,
         name: str,
-        image_size: int | None = None,
-        image_format: str | None = None,
-        font_size: float | None = None,
-        char_limit: int | None = None,
-        background_color: str | None = None,
-        font_color: str | None = None,
-        is_rounded: bool | None = None,
-        is_uppercase: bool | None = None,
-        is_italic: bool | None = None,
-        is_bold: bool | None = None
+        image_size: Optional[int] = None,
+        image_format: Optional[str] = None,
+        font_size: Optional[float] = None,
+        char_limit: Optional[int] = None,
+        background_color: Optional[str] = None,
+        font_color: Optional[str] = None,
+        is_rounded: Optional[bool] = None,
+        is_uppercase: Optional[bool] = None,
+        is_italic: Optional[bool] = None,
+        is_bold: Optional[bool] = None
     ) -> AvatarsResponse:
         """Create a new avatar with the given parameters.
 

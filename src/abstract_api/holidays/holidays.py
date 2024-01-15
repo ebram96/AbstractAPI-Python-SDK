@@ -1,4 +1,4 @@
-from typing import ClassVar
+from typing import ClassVar, Optional
 
 from ..core.bases import BaseService
 from ..core.validators import numerical
@@ -35,9 +35,9 @@ class Holidays(BaseService[HolidaysResponse]):
     def lookup(
         self,
         country: str,
-        year: int | None = None,
-        month: int | None = None,
-        day: int | None = None
+        year: Optional[int] = None,
+        month: Optional[int] = None,
+        day: Optional[int] = None
     ) -> HolidaysResponse:
         """Gets the list of holidays of a particular country.
 

@@ -6,8 +6,6 @@ repos:
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
 
-# TODO: Add check-hooks-apply and check-useless-excludes
-
 -   repo: https://github.com/PyCQA/flake8
     rev: 6.1.0
     hooks:

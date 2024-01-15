@@ -1,4 +1,4 @@
-from typing import ClassVar
+from typing import ClassVar, Optional
 
 from ..core.bases import BaseService
 from ..core.validators import numerical
@@ -38,8 +38,8 @@ class VAT(BaseService):
         self,
         amount: float,
         country_code: str,
-        is_vat_incl: bool | None = None,
-        vat_category: str | None = None
+        is_vat_incl: Optional[bool] = None,
+        vat_category: Optional[str] = None
     ) -> VATCalculationResponse:
         """Calculates a VAT compliant price given a country and price.
 

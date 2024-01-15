@@ -1,4 +1,5 @@
 from functools import cache
+from typing import Optional, Union
 
 from ._mixins import HeightMixin, WidthMixin
 from .base_strategy import BaseStrategy
@@ -12,13 +13,13 @@ class Fill(HeightMixin, WidthMixin, BaseStrategy):
     The default background color is black.
     """
 
-    def __init__(self, background: str | None = None, **kwargs) -> None:
+    def __init__(self, background: Optional[str] = None, **kwargs) -> None:
         """Initializes a new Square instance."""
         super().__init__(**kwargs)
         self._background = background
 
     @cache
-    def json(self) -> dict[str, int | str]:
+    def json(self) -> dict[str, Union[int, str]]:
         """Returns a dict with strategy attributes to be used with requests."""
         json = super().json()
         if self.background is not None:
@@ -26,6 +27,6 @@ class Fill(HeightMixin, WidthMixin, BaseStrategy):
         return json
 
     @property
-    def background(self) -> str | None:
+    def background(self) -> Optional[str]:
         """The color to be used to fill the unused portions."""
         return self._background

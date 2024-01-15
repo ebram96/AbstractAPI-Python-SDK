@@ -1,4 +1,5 @@
 from functools import cached_property
+from typing import Optional
 
 import requests
 
@@ -37,12 +38,12 @@ class Timezone:
         self._longitude = longitude
 
     @property
-    def datetime(self) -> str | None:
+    def datetime(self) -> Optional[str]:
         """The current date and time."""
         return self._datetime
 
     @property
-    def timezone_name(self) -> str | None:
+    def timezone_name(self) -> Optional[str]:
         """Timezone's name from IANA Time Zone Database.
 
         Read more: https://www.iana.org/time-zones
@@ -50,17 +51,17 @@ class Timezone:
         return self._timezone_name
 
     @property
-    def timezone_location(self) -> str | None:
+    def timezone_location(self) -> Optional[str]:
         """Timezone's location."""
         return self._timezone_location
 
     @property
-    def timezone_abbreviation(self) -> str | None:
+    def timezone_abbreviation(self) -> Optional[str]:
         """Timezone's abbreviation, also from IANA Time Zone Database."""
         return self._timezone_abbreviation
 
     @property
-    def gmt_offset(self) -> int | None:
+    def gmt_offset(self) -> Optional[int]:
         """Timezone's offset from Greenwich Mean Time (GMT).
 
         Read more: https://greenwichmeantime.com/what-is-gmt
@@ -68,7 +69,7 @@ class Timezone:
         return self._gmt_offset
 
     @property
-    def is_dst(self) -> bool | None:
+    def is_dst(self) -> Optional[bool]:
         """Whether the location is currently in Daylight Savings Time (DST).
 
         Read more: https://wikipedia.org/wiki/Daylight_saving_time
@@ -76,17 +77,17 @@ class Timezone:
         return self._is_dst
 
     @property
-    def requested_location(self) -> str | None:
+    def requested_location(self) -> Optional[str]:
         """The location from the request."""
         return self._requested_location
 
     @property
-    def latitude(self) -> float | None:
+    def latitude(self) -> Optional[float]:
         """Decimal of the longitude found for the requested_location."""
         return self._latitude
 
     @property
-    def longitude(self) -> float | None:
+    def longitude(self) -> Optional[float]:
         """Decimal of the longitude found for the requested_location."""
         return self._longitude
 

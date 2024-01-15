@@ -1,4 +1,5 @@
 from functools import cached_property
+from typing import Optional
 
 import requests
 
@@ -12,7 +13,7 @@ class ExchangeRatesConversionResponse(JSONResponse):
     def __init__(
         self,
         response: requests.models.Response,
-        date_included_in_request: bool | None = False
+        date_included_in_request: Optional[bool] = False
     ) -> None:
         """Initializes a new ExchangeRateConversionResponse."""
         super().__init__(
@@ -25,17 +26,17 @@ class ExchangeRatesConversionResponse(JSONResponse):
         )
 
     @cached_property
-    def base(self) -> str | None:
+    def base(self) -> Optional[str]:
         """The base currency used to get the exchange rates."""
         return self._get_response_field("base")
 
     @cached_property
-    def target(self) -> str | None:
+    def target(self) -> Optional[str]:
         """The target currency that the base_amount was converted into."""
         return self._get_response_field("target")
 
     @cached_property
-    def date(self) -> str | None:
+    def date(self) -> Optional[str]:
         """The date the currencies were pulled from.
 
         This is per successful request and returned only when 'date' parameter
@@ -45,12 +46,12 @@ class ExchangeRatesConversionResponse(JSONResponse):
         return self._get_response_field("date")
 
     @cached_property
-    def base_amount(self) -> float | None:
+    def base_amount(self) -> Optional[float]:
         """The amount of the base currency from the request."""
         return self._get_response_field("base_amount")
 
     @cached_property
-    def converted_amount(self) -> float | None:
+    def converted_amount(self) -> Optional[float]:
         """The amount after conversion.
 
         The amount of the target currency that the base_amount has been
@@ -59,12 +60,12 @@ class ExchangeRatesConversionResponse(JSONResponse):
         return self._get_response_field("converted_amount")
 
     @cached_property
-    def exchange_rate(self) -> float | None:
+    def exchange_rate(self) -> Optional[float]:
         """The exchange rate used in conversion."""
         return self._get_response_field("exchange_rate")
 
     @cached_property
-    def last_updated(self) -> int | None:
+    def last_updated(self) -> Optional[int]:
         """The Unix timestamp of when the returned data was last updated.
 
         This is returned if 'date' parameter was not passed in request.
