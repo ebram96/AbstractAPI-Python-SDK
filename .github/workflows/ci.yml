@@ -9,22 +9,24 @@ on:
       - synchronize
       - closed
 
-# TODO: Use some kind of cache to speed up running.
 jobs:
-  test-main-python:
+  cache-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          python-version: "3.9"
+
+  main:
+    needs: cache-dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: ./.github/actions/setup
         with:
-          python-version: "3.12"
-
-      - name: Install Dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install -e .
+          python-version: "3.9"
 
       - name: Unit Tests
         run: coverage run -m pytest -s tests
@@ -38,22 +40,17 @@ jobs:
           pre-commit run --all-files
 
   test-matrix:
+    needs: cache-dependencies
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ "3.9", "3.10", "3.11" ]
+        python-version: [ "3.10", "3.11", "3.12" ]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: ./.github/actions/setup
         with:
-          python-version: ${{ matrix.version }}
-
-      - name: Install Dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install -e .
+          python-version: ${{ matrix.python-version }}
 
       - name: Run Test Matrix
         run: |
