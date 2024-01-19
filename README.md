@@ -1,6 +1,7 @@
 # Abstract API Python SDK
 
 [![Documentation Status](https://readthedocs.org/projects/abstractapi-python-sdk/badge/?version=latest)](https://abstractapi-python-sdk.readthedocs.io/en/latest/?badge=latest)
+[![PyPI version](https://badge.fury.io/py/abstract-api.svg)](https://badge.fury.io/py/abstract-api)
 
 This is a simple and intuitive Python SDK for using [AbstractAPI's](https://www.abstractapi.com/) services.
 
