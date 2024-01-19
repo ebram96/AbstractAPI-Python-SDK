@@ -242,7 +242,7 @@ Pythonic way for handling responses.
   except ClientRequestError as e:
       print("Some error happended from client's side")
       print(str(e))
-  'quality must be in range from 1 to 100 (inclusive)'
+  # 'quality must be in range from 1 to 100 (inclusive)'
   ```
 2. If the service endpoint returns a status code that is not 200 or 204.\
    (200 and 204 are -currently- the only accepted status codes.)
