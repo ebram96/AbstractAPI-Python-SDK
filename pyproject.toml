@@ -35,3 +35,4 @@ dependencies = [
 Homepage = "https://github.com/ebram96/AbstractAPI-Python-SDK"
 "Bug Tracker" = "https://github.com/ebram96/AbstractAPI-Python-SDK/issues"
 Repository = "https://github.com/ebram96/AbstractAPI-Python-SDK.git"
+Documentation = "https://abstractapi-python-sdk.readthedocs.io/en/latest/"
