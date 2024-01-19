@@ -73,7 +73,7 @@ Pythonic way for handling responses.
   The `EmailValidation` class's `check()` method expects the same parameters `email` and `auto_correct`.\
   (No need to pass `api_key`. It is already passed during service instantiation.)
 
-**Recommended**:\
+**Recommended**:
 - Check service class and service class response documentations.
 - Response fields used in examples are not only the ones. Check documentation to see\
   all the capabilities.
@@ -88,8 +88,8 @@ Pythonic way for handling responses.
   if response.is_disposable_email:
      print("Email is disposable, not this time :( ")
   ```
-  `EmailValidation` documentation can be found [here](TODO)\
-  `EmailValidationResponse` documentation can be found [here](TODO)
+  `EmailValidation` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.email_validation.email_validation.html#abstract_api.email_validation.email_validation.EmailValidation)\
+  `EmailValidationResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.email_validation.email_validation_response.html#abstract_api.email_validation.email_validation_response.EmailValidationResponse)
 
 - Phone Validation
   ```python
@@ -99,8 +99,8 @@ Pythonic way for handling responses.
   if response.valid:
      print("Phone number is valid!")
   ```
-  `PhoneValidation` documentation can be found [here](TODO)\
-  `PhoneValidationResponse` documentation can be found [here](TODO)
+  `PhoneValidation` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.phone_validation.phone_validation.html#abstract_api.phone_validation.phone_validation.PhoneValidation)\
+  `PhoneValidationResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.phone_validation.phone_validation_response.html#abstract_api.phone_validation.phone_validation_response.PhoneValidationResponse)
 
 - VAT Validation/Calculation/Inquiry
   ```python
@@ -110,10 +110,10 @@ Pythonic way for handling responses.
   calculation_response = service.calculate(amount=100, country_code="EG")
   categories_response = service.categories("EG")
   ```
-  `VAT` documentation can be found [here](TODO)\
-  `VATValidationResponse` documentation can be found [here](TODO)\
-  `VATCalculationResponse` documentation can be found [here](TODO)\
-  `VATCategoriesResponse` documentation can be found [here](TODO)
+  `VAT` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.vat.vat.html#abstract_api.vat.vat.VAT)\
+  `VATValidationResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.vat.vat_validation_response.html#abstract_api.vat.vat_validation_response.VATValidationResponse)\
+  `VATCalculationResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.vat.vat_calculation_response.html#abstract_api.vat.vat_calculation_response.VATCalculationResponse)\
+  `VATCategoriesResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.vat.vat_categories_response.html#abstract_api.vat.vat_categories_response.VATCategoriesResponse)
 
 - IBAN Validation
   ```python
@@ -123,8 +123,8 @@ Pythonic way for handling responses.
   if response.is_valid:
      print("IBAN is valid!")
   ```
-  `IBANValidation` documentation can be found [here](TODO)\
-  `IBANValidationResponse` documentation can be found [here](TODO)
+  `IBANValidation` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.iban_validation.iban_validation.html#abstract_api.iban_validation.iban_validation.IBANValidation)\
+  `IBANValidationResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.iban_validation.iban_validation_response.html#abstract_api.iban_validation.iban_validation_response.IBANValidationResponse)
 
 - IP Geolocation
   ```python
@@ -133,8 +133,8 @@ Pythonic way for handling responses.
   response = service.check("156.215.70.7", fields=["city"])
   print("IP is in: ", response.city)
   ```
-  `IPGeolocation` documentation can be found [here](TODO)\
-  `IPGeolocationResponse` documentation can be found [here](TODO)
+  `IPGeolocation` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.ip_geolocation.ip_geolocation.html#abstract_api.ip_geolocation.ip_geolocation.IPGeolocation)\
+  `IPGeolocationResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.ip_geolocation.ip_geolocation_response.html#abstract_api.ip_geolocation.ip_geolocation_response.IPGeolocationResponse)
 
 - Holidays Lookup
   ```python
@@ -143,8 +143,8 @@ Pythonic way for handling responses.
   response = service.check("EG")
   print(response.holidays)
   ```
-  `Holidays` documentation can be found [here](TODO)\
-  `HolidaysResponse` documentation can be found [here](TODO)
+  `Holidays` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.holidays.holidays.html#abstract_api.holidays.holidays.Holidays)\
+  `HolidaysResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.holidays.holidays_response.html#abstract_api.holidays.holidays_response.HolidaysResponse)
 
 - Exchange Rates Live/Convert/Historical
   ```python
@@ -154,10 +154,10 @@ Pythonic way for handling responses.
   conversion_response = service.convert("USD", "EGP", "2023-01-17", 150)
   historical_response = service.historical("USD", "2023-01-17", 150)
   ```
-  `ExchangeRates` documentation can be found [here](TODO)\
-  `LiveExchangeRatesResponse` documentation can be found [here](TODO)\
-  `HistoricalExchangeRatesResponse` documentation can be found [here](TODO)\
-  `ExchangeRatesConversionResponse` documentation can be found [here](TODO)
+  `ExchangeRates` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.exchange_rates.exchange_rates.html#abstract_api.exchange_rates.exchange_rates.ExchangeRates)\
+  `LiveExchangeRatesResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.exchange_rates.live_exchange_rates_response.html#abstract_api.exchange_rates.live_exchange_rates_response.LiveExchangeRatesResponse)\
+  `HistoricalExchangeRatesResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.exchange_rates.historical_exchange_rates_response.html#abstract_api.exchange_rates.historical_exchange_rates_response.HistoricalExchangeRatesResponse)\
+  `ExchangeRatesConversionResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.exchange_rates.exchange_rates_conversion_response.html#abstract_api.exchange_rates.exchange_rates_conversion_response.ExchangeRatesConversionResponse)
 
 - Company Enrichment
   ```python
@@ -166,8 +166,8 @@ Pythonic way for handling responses.
   response = service.check("EG")
   print(response.holidays)
   ```
-  `CompanyEnrichment` documentation can be found [here](TODO)\
-  `CompanyEnrichmentResponse` documentation can be found [here](TODO)
+  `CompanyEnrichment` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.company_enrichment.company_enrichment.html#abstract_api.company_enrichment.company_enrichment.CompanyEnrichment)\
+  `CompanyEnrichmentResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.company_enrichment.company_enrichment_response.html#abstract_api.company_enrichment.company_enrichment_response.CompanyEnrichmentResponse)
 
 - Timezone Current/Conversion
   ```python
@@ -176,9 +176,9 @@ Pythonic way for handling responses.
   current_response = service.current("Cairo, Egypt", "82.111.111.111")
   conversion_response = service.convert((30.0594627, 31.1758899), "Cairo, Egypt")
   ```
-  `Timezone` documentation can be found [here](TODO)\
-  `CurrentTimezoneResponse` documentation can be found [here](TODO)\
-  `TimezoneConversionResponse` documentation can be found [here](TODO)
+  `Timezone` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.timezone.timezone.html#abstract_api.timezone.timezone.Timezone)\
+  `CurrentTimezoneResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.timezone.current_timezone_response.html#abstract_api.timezone.current_timezone_response.CurrentTimezoneResponse)\
+  `TimezoneConversionResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.timezone.timezone_conversion_response.html#abstract_api.timezone.timezone_conversion_response.TimezoneConversionResponse)
 
 - Avatars Generation
   ```python
@@ -188,8 +188,8 @@ Pythonic way for handling responses.
   file = open("logo.png", "wb+")
   file.write(response.content)
   ```
-  `Avatars` documentation can be found [here](TODO)\
-  `AvatarsResponse` documentation can be found [here](TODO)
+  `Avatars` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.avatars.avatars.html#abstract_api.avatars.avatars.Avatars)\
+  `AvatarsResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.avatars.avatars_response.html#abstract_api.avatars.avatars_response.AvatarsResponse)
 
 - Website Screenshot
   ```python
@@ -199,8 +199,8 @@ Pythonic way for handling responses.
   file = open("github-home-screenshot.png", "wb+")
   file.write(response.content)
   ```
-  `WebsiteScreenshot` documentation can be found [here](TODO)\
-  `WebsiteScreenshotResponse` documentation can be found [here](TODO)
+  `WebsiteScreenshot` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.website_screenshot.website_screenshot.html#abstract_api.website_screenshot.website_screenshot.WebsiteScreenshot)\
+  `WebsiteScreenshotResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.website_screenshot.website_screenshot_response.html#abstract_api.website_screenshot.website_screenshot_response.WebsiteScreenshotResponse)
 
 - Website Scrape
   ```python
@@ -210,8 +210,8 @@ Pythonic way for handling responses.
   file = open("github-home-screenshot.png", "wb+")
   file.write(response.content)
   ```
-  `WebScraping` documentation can be found [here](TODO)\
-  `WebScrapingResponse` documentation can be found [here](TODO)
+  `WebScraping` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.web_scraping.web_scraping.html#abstract_api.web_scraping.web_scraping.WebScraping)\
+  `WebScrapingResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.web_scraping.web_scraping_response.html#abstract_api.web_scraping.web_scraping_response.WebScrapingResponse)
 
 - Image Processing
   ```python
@@ -225,8 +225,8 @@ Pythonic way for handling responses.
   response = service.url("https://example.com/image.jpeg", lossy=False, resize=resize)
   print(response.url)
   ```
-  `ImageProcessing` documentation can be found [here](TODO)\
-  `ImageProcessingResponse` documentation can be found [here](TODO)
+  `ImageProcessing` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.image_processing.image_processing.html#abstract_api.image_processing.image_processing.ImageProcessing)\
+  `ImageProcessingResponse` documentation can be found [here](https://abstractapi-python-sdk.readthedocs.io/en/latest/api_reference/abstract_api.image_processing.image_processing_response.html#abstract_api.image_processing.image_processing_response.ImageProcessingResponse)
 
 ### Handling Errors
 1. If something wrong happened on client side:
