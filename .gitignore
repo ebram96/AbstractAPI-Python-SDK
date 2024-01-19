@@ -15,3 +15,6 @@ __pycache__/
 
 # Tox
 .tox
+
+# Docs build
+docs/build/
